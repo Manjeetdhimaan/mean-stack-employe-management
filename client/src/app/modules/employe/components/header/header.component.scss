@@ -1,0 +1,17 @@
+.mobile {
+    visibility: hidden;
+    opacity:0;
+    display: none;
+}
+
+.p-submenu-list {
+    z-index: 1000!important;
+}
+
+@media screen and (max-width: 480px) {
+    .mobile {
+        visibility: visible;
+        opacity:1;
+        display: block;
+    }
+  }

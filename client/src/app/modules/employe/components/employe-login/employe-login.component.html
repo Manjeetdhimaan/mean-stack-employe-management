@@ -1,0 +1,54 @@
+<mat-toolbar class="login-toolbar" color="primary">Employe Management</mat-toolbar>
+
+
+<main class="login login-page" @fade>
+    <div class="top-section">
+        <div class="center-content">
+            <div class="main-box">
+                
+                <h2 class="title">Sign in to your account</h2>
+                
+                <!-- <ng-container *ngIf="errMsg">
+                    <app-auth-error [error]="errMsg" [success]="accountCreationMessage"></app-auth-error>
+                </ng-container> -->
+
+                <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="input-color">
+                    <p class="label">Email</p>
+                    <input formControlName="email" type="text" class="input form-control">
+                    <div class="password-row">
+                        <p class="label">Password</p>
+                        <a class="label forgot" routerLink="/forget-password">Forgot your password?</a>
+                    </div>
+
+                    <div class="password-wrapper  form-group">
+                        <input formControlName="password" [type]="!isShowPassword?'password' : 'text'" name="password" class="input form-control" id="password">
+                        <span class="show-hide graymedium" (click)="toggleShowPasswordFeild()">
+                          <i class="fa"   [ngClass]="{
+                            'fa-eye-slash': !isShowPassword,
+                            'fa-eye': isShowPassword
+                          }"></i>
+
+                        </span>
+                    </div>
+
+                    <div class="stay-row">
+                        <input type="checkbox" name="stay-signed-in" id="stay-signed-in">
+                        <p class="normal stay">
+                            Stay signed in for a week
+                        </p>
+                    </div>
+                    <div class="alert" *ngIf="serverErrorMessages">
+                        {{serverErrorMessages}} 
+                        <i class="pi pi-fw pi-trash" (click)="onClearErrMsg()"></i>
+                      </div>
+                    <button class="continue-btn">Continue</button>
+                    <p class="normal text-center no-account">Don’t have an account?
+                        <a routerLink="/sign-up" class="link"> Sign up</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</main>

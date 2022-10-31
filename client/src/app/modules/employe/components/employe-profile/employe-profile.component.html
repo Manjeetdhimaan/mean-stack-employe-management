@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div @slideUp>
+  <div class="row mx-0">
+    <!-- -------------------------- First Name feild --------------------------- -->
+    <div class="col-lg-12 col-md-12 col-sm-12 centred">
+      <mat-tab-group animationDuration="500ms">
+
+        <!-------------- Timeline tab -------------->
+        <mat-tab label="Timeline">
+          <app-timeline [firstName]="firstName" [lastName]="lastName" [userDetails]="userDetails"
+            [profileImageUrl]="profileImageUrl"></app-timeline>
+        </mat-tab>
+        <!-------------- Timeline tab ends-------------->
+
+
+        <!-------------- Attendance tab -------------->
+        <mat-tab label="Attendance">
+          <app-attendance [attendance]="attendance"></app-attendance>
+        </mat-tab>
+        <!-------------- Attendance tab ends-------------->
+        
+
+        <!-------------- Salary Slips tab -------------->
+        <mat-tab label="Salary Slips">
+          <app-payroll></app-payroll>
+        </mat-tab>
+        <!-------------- Salary Slips tab ends -------------->
+
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.toggle {
+    display: none;
+  }
+  
+  .toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    margin:0 7px;
+    color:#fff;
+  }
+  
+  .sun,
+  .moon {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: auto;
+    transition: top 0.3s;
+    user-select: none;
+    color:#fff
+  }
+  
+  .sun {
+    top: 0;
+  }
+  
+  .moon {
+    top: -150%;
+  }
+  
+  .toggle:checked + .toggle-label .sun {
+    top: 150%;
+  }
+  
+  .toggle:checked + .toggle-label .moon {
+    top: 0;
+  }
+  

@@ -1,0 +1,414 @@
+/* You can add global styles to this file, and also import other style files */
+/* Add application styles & imports to this file! */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+
+body:not(.dark-mode-preloading) {
+    transition: all 0.3s linear;
+  }
+
+body.dark-mode {
+    background-color: #2d3436;
+    color: #dfe6e9;
+  }
+  
+  body.dark-mode .card {
+    background-color: #2d3436;
+    color: #dfe6e9;
+  }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+
+
+
+
+/* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+
+// @import '~ngx-toastr/toastr';
+* {
+    box-sizing: border-box;
+}
+
+table,
+tr,
+td,
+th,
+div,
+input,
+textarea,
+button,
+label,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", "Ubuntu"; */
+    font-family: 'Raleway', sans-serif;
+}
+
+p {
+    font-weight: 500;
+}
+
+body,
+button,
+html,
+input {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.bg-gray .right-sidebar{
+  margin-left: 1em;
+  height: 100%;
+
+}
+
+.box-shadow-light{
+  box-shadow: 0px 4px 90px rgba(163, 171, 185, 0.24);
+  border-radius: 8px;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+.graymedium {
+    color: #3C4257;
+}
+
+.input-color input,
+.input-color {
+    color: #3C4257;
+}
+.bg-gray{
+  background-color: #F5F7FB;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.header-section{
+  position: sticky;
+  top: 0px;
+  z-index: 55;
+}
+/* --------------------------used in Change password ------------------------- */
+
+.input-type2 {
+    background: #F5F7FB;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 8px;
+    height: 40px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-type2 label {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    letter-spacing: 0.008em;
+    color: #404452;
+    padding-bottom: 10px;
+}
+.form-type2 .form-group.has-error textarea,
+.form-type2 .form-group.has-error input {
+    background: rgba(255, 64, 64, 0.2);
+    border: 1px solid #FF4040;
+}
+
+.form-type2 .form-group .has-success {
+    background: rgba(199, 239, 255, 0.2);
+    border: 1px solid #3f51b5;
+}
+
+.form-type2 .form-group .error {
+    display: none;
+}
+
+.form-type2 .form-group.has-error .error {
+    display: block;
+}
+
+.btn-regular {
+  min-height: 31px;
+  border-radius: 6px;
+  padding: 0px 20px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+
+}
+
+.btn-regular span{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+
+.btn-regular:active .btn-text {
+    transform: translateY(-2px);
+}
+
+.btn-regular:focus,
+.btn-regular:hover {
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn-regular:disabled {
+    cursor: not-allowed;
+}
+
+.btn-save {
+    background: #3f51b5;
+    box-shadow: 0 0 0 0 #0000, 0 0 0 0 #0000, 0 1px 1px 0 #0000001f, 0 0 0 1px #3f51b5, 0 0 0 0 #0000, 0 0 0 0 #0000, 0 2px 5px 0 #40445214;
+}
+
+.btn-cancel {
+    background: #bdc0c4;
+}
+
+.btn-delete {
+    background: red;
+}
+
+.button-flex .btn-regular:nth-child(1) {
+    margin-right: 1em;
+}
+
+
+/* -------------------------------------------------------------------------- */
+
+
+/*                              login signup css                              */
+
+
+/* -------------------------------------------------------------------------- */
+
+.login-page {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background-image: url('https://g99plus.b-cdn.net/AA%20new%20g99%20app/images/Grey%20background%20shape.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.login-geometric-bg {
+    width: 100%;
+    position: absolute;
+    top: 33vh;
+    z-index: 1;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+p.normal {
+    font-size: 14px;
+    line-height: 16px;
+    color: #3c4257;
+    font-weight: 500;
+}
+
+p.small-size {
+    font-size: 12px;
+    line-height: 14px;
+}
+
+p.blue-text {
+    color: #3f51b5;
+}
+
+.blue-box {
+    padding: 30px 20px;
+    background-color: #c7efff33;
+    border: 1px solid #3f51b5;
+    border-radius: 4px;
+}
+
+.blue-btn {
+    background-color: #3f51b5;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.link {
+    font-size: 14px;
+    line-height: 16px;
+    color: #3f51b5;
+    text-decoration: none;
+}
+
+.error,
+.error div {
+    color: red;
+    font-size: 13px;
+    padding-top: 5px;
+    font-weight: 500;
+}
+
+.input-color .form-control {
+    font-size: 16px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                  Modal Css                                 */
+/* -------------------------------------------------------------------------- */
+.p-dialog .p-dialog-header{
+  background-color: #3f51b5 !important;
+}
+.p-dialog .p-dialog-header span,
+.p-dialog .p-dialog-header p,
+.p-dialog .p-dialog-header h3,
+.p-dialog .p-dialog-header h4,
+.p-dialog .p-dialog-header h5,
+.p-dialog .p-dialog-header h2{
+  color: #fff !important;
+}
+.p-dialog .p-dialog-header .p-dialog-header-icon{
+  border-radius: 50% !important;
+  border: 2px solid #ffff !important;
+  color: #fff !important;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                             grape js custom css                            */
+/* -------------------------------------------------------------------------- */
+
+.gjs-four-color-h:hover {
+  color: #009efb !important;
+}
+
+.gjs-two-color {
+  color: #121213 !important;
+}
+
+.gjs-one-bg {
+  background-color: #fff !important;
+}
+
+.gjs-pn-btn {
+  color: #150202 !important;
+}
+
+.gjs-block-category .gjs-title,
+.gjs-layer-title {
+  background-color: #009efb !important;
+  color: white !important;
+}
+
+.error-red {
+    color: red;
+}
+
+
+.btn-new {
+    --bs-btn-padding-x: 0.75rem;
+    --bs-btn-padding-y: 0.375rem;
+    --bs-btn-font-family: ;
+    --bs-btn-font-size: 1rem;
+    --bs-btn-font-weight: 400;
+    --bs-btn-line-height: 1.5;
+    --bs-btn-color: #212529;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-width: 1px;
+    --bs-btn-border-color: transparent;
+    --bs-btn-border-radius: 0.375rem;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+    --bs-btn-disabled-opacity: 0.65;
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
+    display: inline-block;
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: var(--bs-btn-color);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+    border-radius: var(--bs-btn-border-radius);
+    background-color: var(--bs-btn-bg);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+.alert {
+    padding: 10px;
+    background-color: hwb(4 65% 2% / 0.744); /* Red */
+    color: rgb(211, 42, 42);
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+//   .mat-tab-body {
+//     padding: 20px;
+//   }
+  
+//   .mat-tab-body.mat-tab-body-active {
+//     animation: fade 0.9s;
+//   }
+  
+  
+//   @keyframes fade {
+//     0% {
+//       opacity: 0;
+//     }
+  
+//     100% {
+//       opacity: 1;
+//     }
+//   }

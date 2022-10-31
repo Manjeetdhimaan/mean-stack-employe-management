@@ -1,0 +1,320 @@
+<div class="bg-white datatable-table">
+    <div class="title">
+        <h3>Timeline
+         </h3>
+    </div>
+    </div>
+    <div class="blue-card" @fade>
+        <form >
+          <div class="row mx-0">
+      
+            <!-- -------------------------- left card section -------------------------- -->
+            <div class="col-lg-8 col-md-12 col-sm-12 px-0 left-card order-1 order-lg-0">
+              <!-- -------------------------- profile page form -------------------------- -->
+              <div class="add-edit-form">
+                <!-- <div class="title" >
+                  <h3>Users Profile</h3>
+                </div> -->
+                <div class="form form-type2">
+      
+                  <div class="row mx-0">
+                    <!-- -------------------------- First Name feild --------------------------- -->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>First Name<span class="error-red">*</span></label>
+                        <p class="form-control input-type2" 
+                          appErrorStylingDirective>{{ firstName }}</p>
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is required.
+                          </div>
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is invalid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <!-- --------------------------- Last Name feild --------------------------- -->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Last Name<span class="error-red">*</span></label>
+                        <p class="form-control input-type2" 
+                          appErrorStylingDirective>{{ lastName.trim() }}</p>
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is required.
+                          </div>
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is invalid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <!-- ----------------------------- Email Feild ----------------------------- -->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Email<span class="error-red">*</span></label>
+                        <p class="form-control input-type2" 
+                          appErrorStylingDirective>{{ userDetails?.email }}</p>
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is required.
+                          </div>
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is invalid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <!-- ------------------------- Phone number field -------------------------- -->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Phone Number<span class="error-red">*</span></label>
+                        <p class="form-control input-type2" 
+                          appErrorStylingDirective>{{ userDetails?.phone }}</p>
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is required.
+                          </div>
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is invalid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+      
+                    <!-- ---------------------------- Role field ----------------------------- -->
+      
+      
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Role<span class="error-red">*</span></label>
+                        <!-- <p-dropdown [options]="roles" formControlName="roleId" [filter]="true" filterBy="name"
+                          placeholder="Select Role" optionLabel="name" optionValue="id">
+                          <ng-template let-item pTemplate="clinics">
+                            {{item.name}}
+                          </ng-template>
+                        </p-dropdown> -->
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Clinic is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <!-- --------------------------- Designation feild --------------------------- -->
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Designation<span class="error-red">*</span></label>
+                        <input type="text" class="form-control input-type2" 
+                          appErrorStylingDirective>
+                      </div>
+                    </div>
+      
+                    <!-- ----------------------- User Description field ------------------------ -->
+                    <div class="col-lg-12 col-md-12 col-sm-12" >
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea rows="5" cols="80" class="form-control textarea" 
+                          appErrorStylingDirective></textarea>
+      
+                        <div class="error error-msg">
+                          <div>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            Description should not exceed 200 characters
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- -------------------------- user is provider --------------------------- -->
+                  
+      
+                    <!-- <div class="col-lg-6">
+                      <div class="form-group">
+                        <div class="button-conditional">
+                          <button type="submit" class="btn btn-save btn-regular">
+                            <span class="btn-text">Save</span>
+                          </button>
+                          <button type="button" class="btn btn-cancel btn-regular">
+                            <span class="btn-text">Cancel</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div> -->
+      
+                    <div>
+      
+                      <!-- -------------------------- Clinic Selection --------------------------- -->
+      
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <!-- <label>Clinics<span class="error-red">*</span></label> -->
+                          <!-- <p-multiSelect [options]="clinicList" formControlName="clinicIds" optionLabel="name"
+                            optionValue="id" display="chip">
+                          </p-multiSelect> -->
+      
+                          <div class="error error-msg">
+                            <div>
+                              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Clinics are required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+                      <!-- --------------------- Service Category Selection ---------------------- -->
+      
+                      <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <!-- <label>Service Category<span class="error-red">*</span></label> -->
+                          <!-- <p-multiSelect [options]="serviceCategory" formControlName="serviceCategoryIds" optionLabel="name"
+                            optionValue="id" display="chip">
+                          </p-multiSelect> -->
+      
+                          <div class="error error-msg">
+                            <div>
+                              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Services Categories are required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+      
+                      <!-- ------------------------- Service Feild Start ------------------------- -->
+                      <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <!-- <label>Services<span class="error-red">*</span></label>
+                          <p-multiSelect [options]="servicesList" formControlName="serviceIds" optionLabel="name"
+                            optionValue="id" display="chip">
+                          </p-multiSelect> -->
+      
+                          <div class="error error-msg">
+                            <div>
+                              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Services are required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+      
+      
+                      <!-- ----------------------------- button div ------------------------------ -->
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <label></label>
+                          <div class="button-flex">
+                            <button class="btn btn-save btn-regular">
+                              <span class="btn-text">Save</span>
+                            </button>
+                            <button type="button" class="btn btn-cancel btn-regular">
+                              <span class="btn-text">Cancel</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ------------------------- Row ends below div -------------------------- -->
+                  </div>
+      
+                  <!-- ------------------------- FOrm ends below div ------------------------- -->
+      
+                </div>
+              </div>
+            </div>
+      
+            <!-- ------------------------- right card  section ------------------------- -->
+            <div class="col-lg-4 col-md-12 col-sm-12 px-0 right-card order-0 order-lg-1">
+              <div class="right-card-wrapper">
+                <!-- <div class="title">
+                  <h3>Users Profile</h3>
+                </div> -->
+                <div class="profile-img-section">
+                  <div class="edit-icon">
+                    <input type="file" #myFileInput class="form-control d-none" id="file-input"
+                       accept="image/*" />
+                    <label for="file-input">
+                      <div class="icon-round">
+                        <span>
+                          <i class="fa fa-pencil"></i>
+                        </span>
+                      </div>
+                    </label>
+      
+                  </div>
+                  <img [src]="profileImageUrl || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
+                  <div class="about-section">
+                    <h4 class="title text-white">Test Name</h4>
+                    <p class="text-white badge">
+                      Role
+                    </p>
+                  </div>
+                </div>
+      
+                <div class="description-field row mx-0">
+                  <!-- ----------------------- User Description field ------------------------ -->
+                  <div class="col-lg-12 col-md-12 col-sm-12" >
+                    <div class="form-group"                  >
+                      <label>Description</label>
+                      <textarea rows="3" cols="80" class="form-control textarea" 
+                        appErrorStylingDirective></textarea>
+      
+                      <div class="error error-msg">
+                        <div >
+                          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                          Description should not exceed 200 characters
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="quick-links">
+                  <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
+                  <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
+                </div>
+      
+      
+              </div>
+      
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      
+      <!-- ----------------------------------------------------------------------- -->
+      <!--                           Image upload modal                            -->
+      <!-- ----------------------------------------------------------------------- -->
+      <!-- <div class="editTitleModal">
+        <p-dialog [modal]="true" [breakpoints]="{'1024px': '75vw','960px': '75vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          header="Edit Title" [(visible)]="showModalForImage" (onHide)="cancelImageUpload()"> -->
+      
+          <!-- ---------------------------- image cropper ---------------------------- -->
+          <!-- <div class="modal-body">
+            <div class="image-cropper-wrapper row mx-0">
+              <div class="col-lg-6 col-md-6">
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3"
+                  (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                  (loadImageFailed)="loadImageFailed()"></image-cropper>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <img [src]="croppedImage" class="img-responsive" />
+              </div>
+            </div>
+          </div> -->
+      
+      
+          <!-- ------------------------- Image cropper ends -------------------------- -->
+          <!-- <ng-template pTemplate="footer">
+            <div class="modal-footer-section">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveImage()">
+                <i [ngClass]="isImageUploading? 'pi-spin pi-spinner' : 'pi-check'" class="pi"></i> Save</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancelImageUpload()">
+                <i class="pi pi-times-circle"></i> Cancel</button>
+            </div>
+          </ng-template>
+        </p-dialog>
+      </div> -->

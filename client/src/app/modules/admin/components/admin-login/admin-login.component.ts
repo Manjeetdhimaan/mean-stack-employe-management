@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fade, slideUp } from 'src/app/shared/common/animations/animations';
-import { UserService } from '../../services/user.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
-  selector: 'app-employe-login',
-  templateUrl: './employe-login.component.html',
-  styleUrls: ['./employe-login.component.scss'],
-  animations: [
-    fade,
-    slideUp
-  ]
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss', '../../../employe/components/employe-login/employe-login.component.scss']
 })
-export class EmployeLoginComponent implements OnInit {
+export class AdminLoginComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private adminService: AdminService, private router: Router, private formBuilder: FormBuilder) { }
 
   loginForm: FormGroup;
   errMsg: String = '';
@@ -28,8 +23,8 @@ export class EmployeLoginComponent implements OnInit {
       password: ['', [Validators.required]]
     });
 
-    if (this.userService.isLoggedIn()) {
-      this.router.navigateByUrl(`/employee/profile`);
+    if (this.adminService.isLoggedIn()) {
+      this.router.navigateByUrl(`/admin/employees`);
     }
 
   }
@@ -52,12 +47,13 @@ export class EmployeLoginComponent implements OnInit {
     // );
 
 
-    this.userService.login(this.loginForm.value).subscribe(
+    this.adminService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        this.userService.setToken(res['token']);
-        this.router.navigateByUrl(`/employee/profile`);
+        this.adminService.setToken(res['token']);
+        this.router.navigateByUrl(`/admin/employees`);
       },
       err => {
+        this.adminService.isAdmin= false;
         this.serverErrorMessages = err.error.message;
         // setTimeout(() => {
         //   this.serverErrorMessages = '';

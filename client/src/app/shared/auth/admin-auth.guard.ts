@@ -14,7 +14,7 @@ export class AdminAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
       if (!this.adminService.isLoggedIn()) {
-        this.router.navigateByUrl('/admin-login');
+        this.router.navigateByUrl('/admin/login');
         this.adminService.deleteToken();
         return false;
       }

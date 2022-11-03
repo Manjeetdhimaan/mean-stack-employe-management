@@ -21,7 +21,7 @@ export class UserService {
 
   //HttpMethods
 
-  postUser(user: User){
+  postUser(user: any){
     return this.http.post(environment.apiBaseUrl+'/register',user,this.noAuthHeader);
   }
 
@@ -33,9 +33,14 @@ export class UserService {
     return this.http.put(environment.apiBaseUrl + '/updateUserProfile', userBody);
   }
 
+  applyLeave(leaveBody:any) {
+    return this.http.post(environment.apiBaseUrl + '/applyLeave', leaveBody);
+  }
+
   getUserProfile() {
     return this.http.get(environment.apiBaseUrl + '/userProfile');
   }
+
 
 
   //Helper Methods

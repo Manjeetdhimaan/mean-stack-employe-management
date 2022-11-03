@@ -1,0 +1,28 @@
+<div #card class="card-wrap">
+  <div class="card" [ngStyle]="cardStyle()" (click)="onSelectUser()">
+    <div class="details">
+      <p>{{ name }}</p>
+      <p class="content">{{ designation }}</p>
+    </div>
+    <div class="card-bg" [ngStyle]="cardBgTransform()">
+      <div class="image-placeholder">
+        <img [src]="cardBgImage" />
+      </div>
+    </div>
+  </div>
+  <div class="action">
+    <div class="card-bg" [ngStyle]="cardBgTransform()">
+      <div class="image-placeholder">
+        <div style="width: 200px;">
+          <button class="btn btn-success" (click)="onCheck('checkIn')">
+            <span class="btn-text">Check In</span>
+          </button>
+          <button class="btn btn-warning" style="float: right;" (click)="onCheck('checkOut'); $event.stopImmediatePropagation()">
+            <span class="btn-text">Check Out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

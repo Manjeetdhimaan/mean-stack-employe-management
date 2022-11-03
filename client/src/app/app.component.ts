@@ -14,7 +14,7 @@ import { filter, map } from 'rxjs';
 
 export class AppComponent {
 
-  title = 'client';
+  title = 'Employee Management - Younedia';
   category: string;
   @ViewChild('sidenav') sidenav: MatSidenav;
   opened: boolean;

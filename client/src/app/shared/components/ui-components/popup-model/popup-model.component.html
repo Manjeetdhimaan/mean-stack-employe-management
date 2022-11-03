@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Exit Type</h1>
+<div mat-dialog-content>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let exitType of data; let i = index">
+      <mat-radio-button color="primary" [checked]="(i === 0)" [value]="exitType" (change)="selection = $event.value">
+        {{exitType}}
+      </mat-radio-button>
+    </mat-list-item>
+  </mat-list>
+  <!-- <mat-card style="margin-top: 1rem">
+    Currently selected: {{selection}}
+  </mat-card> -->
+</div>
+<div mat-dialog-actions align="end" style="margin-top: 1rem">
+  <button mat-button (click)="onClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="{exitType: selection}" >Submit</button>
+</div>

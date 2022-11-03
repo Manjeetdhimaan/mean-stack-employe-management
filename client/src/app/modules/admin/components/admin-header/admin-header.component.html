@@ -1,0 +1,68 @@
+<div style="height: 89vh;" [style.visibility]="displayNavbar ? 'visible' : 'hidden'">
+  <mat-toolbar color="primary" class="desktop topnav">
+    <mat-toolbar-row>
+
+      <span style="cursor: pointer" class="nav-brand">
+        Admin Panel
+      </span>
+      <span class="menu-spacer"></span>
+      <div fxShow="true" fxHide.lt-md class="topnav-right">
+        <a mat-button routerLinkActive="active" routerLink="/admin/employees" (click)="navigate('/admin/employees')">
+          <mat-icon matPrefix>people</mat-icon> Employees
+        </a>
+        <a mat-button routerLink="my-vehicles" (click)="navigate('my-vehicles')">
+          <mat-icon matPrefix>book</mat-icon> Check Leaves
+        </a>
+        <a mat-button routerLink="notifications" (click)="navigate('notifications')">
+          <mat-icon matPrefix>notifications</mat-icon> Notifications
+        </a>
+        <a mat-button routerLink="settings" (click)="navigate('settings')">
+          <mat-icon matPrefix>settings</mat-icon> Settings
+        </a>
+        <a mat-button (click)="onLogOut()">
+          <mat-icon matPrefix>logout</mat-icon> Logout
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-toolbar color="primary" class="mobile">
+    <mat-toolbar-row>
+      <button mat-mini-fab color="primary" (click)="sidenav.toggle(); toggleBodyScroll()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlexFill (click)="toggleBodyScroll()">
+    <mat-sidenav #sidenav class="sidenav">
+      <mat-nav-list class="inner-sidenav">
+        <!-- <a (click)="sidenav.toggle()" mat-list-item>Close</a> -->
+        <a mat-list-item (click)="navigate('/admin/profile/edit')">
+          <mat-icon matPrefix class="material-icon">book</mat-icon> Edit
+        </a>
+        <a mat-list-item routerLinkActive="active" routerLink="/admin/employees" (click)="navigate('/admin/employees')">
+          <mat-icon matPrefix class="material-icon">account_circle</mat-icon> Employees
+        </a>
+        <a mat-list-item routerLink="my-vehicles" (click)="navigate('my-vehicles')">
+          <mat-icon matPrefix class="material-icon">directions_car</mat-icon> My Vehicles
+        </a>
+        <a mat-list-item routerLink="notifications" (click)="navigate('notifications')" matBadge="2">
+          <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications
+        </a>
+        <a mat-list-item routerLink="settings" (click)="navigate('settings')">
+          <mat-icon matPrefix class="material-icon">settings</mat-icon> Settings
+        </a>
+        <a mat-list-item (click)="onLogOut()">
+          <mat-icon matPrefix class="material-icon">logout</mat-icon> Logout
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+
+      <div class="container" style="padding: 10px; min-height: 100vh;">
+        <router-outlet></router-outlet>
+      </div>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

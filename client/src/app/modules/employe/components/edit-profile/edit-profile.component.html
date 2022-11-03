@@ -1,94 +1,93 @@
-<app-header></app-header>
 
 <div class="blue-card" @fade>
-    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-      <div class="row mx-0">
-  
-        <!-- -------------------------- left card section -------------------------- -->
-        <div class="col-lg-8 col-md-12 col-sm-12 px-0 left-card order-1 order-lg-0">
-          <!-- -------------------------- profile page form -------------------------- -->
-          <div class="add-edit-form">
-            <div class="title" *ngIf="!isMobileDevice">
-              <h3>Edit Profile</h3>
-            </div>
-            <div class="form form-type2">
-  
-              <div class="row mx-0">
-                <!-- -------------------------- First Name feild --------------------------- -->
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                  <div class="form-group"
-                    [ngClass]="f['firstName'].invalid && ((f['firstName'].dirty || f['firstName'].touched))?'has-error':''">
-                    <label>First Name<span class="error-red">*</span></label>
-                    <input type="text" class="form-control input-type2" formControlName="firstName"
-                      appErrorStylingDirective>
-                    <div class="error error-msg">
-                      <div *ngIf="f['firstName'].errors?.['required']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is required.
-                      </div>
-                      <div *ngIf="f['firstName'].errors?.['pattern']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is invalid.
-                      </div>
+  <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <div class="row mx-0">
+
+      <!-- -------------------------- left card section -------------------------- -->
+      <div class="col-lg-8 col-md-12 col-sm-12 px-0 left-card order-1 order-lg-0">
+        <!-- -------------------------- profile page form -------------------------- -->
+        <div class="add-edit-form">
+          <div class="title" *ngIf="!isMobileDevice">
+            <h3>Edit Profile</h3>
+          </div>
+          <div class="form form-type2">
+
+            <div class="row mx-0">
+              <!-- -------------------------- First Name feild --------------------------- -->
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group"
+                  [ngClass]="f['firstName'].invalid && ((f['firstName'].dirty || f['firstName'].touched))?'has-error':''">
+                  <label>First Name<span class="error-red">*</span></label>
+                  <input type="text" class="form-control input-type2" formControlName="firstName"
+                    appErrorStylingDirective>
+                  <div class="error error-msg">
+                    <div *ngIf="f['firstName'].errors?.['required']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is required.
+                    </div>
+                    <div *ngIf="f['firstName'].errors?.['pattern']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is invalid.
                     </div>
                   </div>
                 </div>
-  
-                <!-- --------------------------- Last Name feild --------------------------- -->
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                  <div class="form-group"
-                    [ngClass]="f['lastName'].invalid && ((f['lastName'].dirty || f['lastName'].touched))?'has-error':''">
-                    <label>Last Name<span class="error-red">*</span></label>
-                    <input type="text" class="form-control input-type2" formControlName="lastName"
-                      appErrorStylingDirective>
-                    <div class="error error-msg">
-                      <div *ngIf="f['lastName'].errors?.['required']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is required.
-                      </div>
-                      <div *ngIf="f['lastName'].errors?.['pattern']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is invalid.
-                      </div>
+              </div>
+
+              <!-- --------------------------- Last Name feild --------------------------- -->
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group"
+                  [ngClass]="f['lastName'].invalid && ((f['lastName'].dirty || f['lastName'].touched))?'has-error':''">
+                  <label>Last Name<span class="error-red">*</span></label>
+                  <input type="text" class="form-control input-type2" formControlName="lastName"
+                    appErrorStylingDirective>
+                  <div class="error error-msg">
+                    <div *ngIf="f['lastName'].errors?.['required']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is required.
+                    </div>
+                    <div *ngIf="f['lastName'].errors?.['pattern']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is invalid.
                     </div>
                   </div>
                 </div>
-  
-                <!-- ----------------------------- Email Feild ----------------------------- -->
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                  <div class="form-group"
-                    [ngClass]="f['email'].invalid && ((f['email'].dirty || f['email'].touched))?'has-error':''">
-                    <label>Email<span class="error-red">*</span></label>
-                    <input type="text" class="form-control input-type2" formControlName="email" appErrorStylingDirective>
-                    <div class="error error-msg">
-                      <div *ngIf="f['email'].errors?.['required']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is required.
-                      </div>
-                      <div *ngIf="f['email'].errors?.['pattern']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is invalid.
-                      </div>
+              </div>
+
+              <!-- ----------------------------- Email Feild ----------------------------- -->
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group"
+                  [ngClass]="f['email'].invalid && ((f['email'].dirty || f['email'].touched))?'has-error':''">
+                  <label>Email<span class="error-red">*</span></label>
+                  <input type="text" class="form-control input-type2" formControlName="email" appErrorStylingDirective>
+                  <div class="error error-msg">
+                    <div *ngIf="f['email'].errors?.['required']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is required.
+                    </div>
+                    <div *ngIf="f['email'].errors?.['pattern']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Email is invalid.
                     </div>
                   </div>
                 </div>
-  
-                <!-- ------------------------- Phone number field -------------------------- -->
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                  <div class="form-group"
-                    [ngClass]="f['phone'].invalid && ((f['phone'].dirty || f['phone'].touched))?'has-error':''">
-                    <label>Phone Number<span class="error-red">*</span></label>
-                    <input type="text" class="form-control input-type2" formControlName="phone" appErrorStylingDirective>
-                    <div class="error error-msg">
-                      <div *ngIf="f['phone'].errors?.['required']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is required.
-                      </div>
-                      <div *ngIf="f['phone'].errors?.['pattern']">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is invalid.
-                      </div>
+              </div>
+
+              <!-- ------------------------- Phone number field -------------------------- -->
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group"
+                  [ngClass]="f['phone'].invalid && ((f['phone'].dirty || f['phone'].touched))?'has-error':''">
+                  <label>Phone Number<span class="error-red">*</span></label>
+                  <input type="text" class="form-control input-type2" formControlName="phone" appErrorStylingDirective>
+                  <div class="error error-msg">
+                    <div *ngIf="f['phone'].errors?.['required']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is required.
+                    </div>
+                    <div *ngIf="f['phone'].errors?.['pattern']">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Phone Number is invalid.
                     </div>
                   </div>
                 </div>
-  
-  
-                <!-- ---------------------------- Role field ----------------------------- -->
-  
-  
-                <div class="col-lg-6 col-md-12 col-sm-12">
+              </div>
+
+
+              <!-- ---------------------------- Role field ----------------------------- -->
+
+
+              <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                   <div class="form-group"
                     [ngClass]="f['roleId'].invalid && ((f['roleId'].dirty || f['roleId'].touched))?'has-error':''">
                     <label>Role<span class="error-red">*</span></label>
@@ -104,24 +103,24 @@
                       </div>
                     </div>
                   </div>
-                </div>
-  
-                <!-- --------------------------- Designation feild --------------------------- -->
-                <div class="col-lg-6 col-md-12 col-sm-12">
+                </div> -->
+
+              <!-- --------------------------- Designation feild --------------------------- -->
+              <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                   <div class="form-group"
                     [ngClass]="f['designation'].invalid && ((f['designation'].dirty || f['designation'].touched))?'has-error':''">
                     <label>Designation<span class="error-red">*</span></label>
-                    <input type="text" class="form-control input-type2" formControlName="designation"
+                    <input type="text" class="form-control input-type2" 
                       appErrorStylingDirective>
                   </div>
-                </div>
-  
-                <!-- ----------------------- User Description field ------------------------ -->
-                <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!isProvider || isMobileDevice">
+                </div> -->
+
+              <!-- ----------------------- User Description field ------------------------ -->
+              <!-- <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!isProvider || isMobileDevice">
                   <div class="form-group"
                     [ngClass]="f['description'].invalid && ((f['description'].dirty || f['description'].touched))?'has-error':''">
                     <label>Description</label>
-                    <textarea rows="5" cols="80" class="form-control textarea" formControlName="description"
+                    <textarea rows="5" cols="80" class="form-control textarea" 
                       appErrorStylingDirective></textarea>
   
                     <div class="error error-msg">
@@ -131,35 +130,35 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- -------------------------- user is provider --------------------------- -->
-                <div class="col-lg-6">
+                </div> -->
+              <!-- -------------------------- user is provider --------------------------- -->
+              <!-- <div class="col-lg-6">
                   <div class="form-group">
                     <div class="flex-sb">
                       <label>User is a Provider?</label>
-                      <!-- <p-inputSwitch formControlName="isProvider" (onChange)="toggleProvider($event)"></p-inputSwitch> -->
+                      <p-inputSwitch formControlName="isProvider" (onChange)="toggleProvider($event)"></p-inputSwitch>
                     </div>
                   </div>
-                </div>
-  
-                <div class="col-lg-6">
-                  <div class="form-group" *ngIf="!isProvider">
-                    <div class="button-conditional">
-                      <button type="submit" class="btn btn-save btn-regular" [disabled]="!userForm.valid">
-                        <span class="btn-text">Save</span>
-                      </button>
-                      <button type="button" class="btn btn-cancel btn-regular">
-                        <span class="btn-text">Cancel</span>
-                      </button>
-                    </div>
+                </div> -->
+
+              <div class="col-lg-6">
+                <div class="form-group" *ngIf="!isProvider">
+                  <div class="button-conditional">
+                    <button type="submit" class="btn btn-save btn-regular" [disabled]="!userForm.valid">
+                      <span class="btn-text">Save</span>
+                    </button>
+                    <button type="button" class="btn btn-cancel btn-regular" (click)="onCancelSubmit()">
+                      <span class="btn-text">Cancel</span>
+                    </button>
                   </div>
                 </div>
-  
-                <div [ngClass]="isProvider? 'show row' : 'hidden'">
-  
-                  <!-- -------------------------- Clinic Selection --------------------------- -->
-  
-                  <div class="col-lg-12 col-md-12 col-sm-12">
+              </div>
+
+              <div [ngClass]="isProvider? 'show row' : 'hidden'">
+
+                <!-- -------------------------- Clinic Selection --------------------------- -->
+
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group"
                       [ngClass]="f['clinicIds'].invalid && ((f['clinicIds'].dirty || f['clinicIds'].touched))?'has-error':''">
                       <label>Clinics<span class="error-red">*</span></label>
@@ -173,11 +172,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-  
-                  <!-- --------------------- Service Category Selection ---------------------- -->
-  
-                  <div class="col-lg-6 col-md-12 col-sm-12">
+                  </div> -->
+
+                <!-- --------------------- Service Category Selection ---------------------- -->
+
+                <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="form-group"
                       [ngClass]="f['serviceCategoryIds'].invalid && ((f['serviceCategoryIds'].dirty || f['serviceCategoryIds'].touched))?'has-error':''">
                       <label>Service Category<span class="error-red">*</span></label>
@@ -191,11 +190,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-  
-  
-                  <!-- ------------------------- Service Feild Start ------------------------- -->
-                  <div class="col-lg-6 col-md-12 col-sm-12">
+                  </div> -->
+
+
+                <!-- ------------------------- Service Feild Start ------------------------- -->
+                <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="form-group"
                       [ngClass]="f['serviceIds'].invalid && ((f['serviceIds'].dirty || f['serviceIds'].touched))?'has-error':''">
                       <label>Services<span class="error-red">*</span></label>
@@ -209,11 +208,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-  
-  
-                  <!-- ----------------------------- button div ------------------------------ -->
-                  <div class="col-lg-12 col-md-12 col-sm-12">
+                  </div> -->
+
+
+                <!-- ----------------------------- button div ------------------------------ -->
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                       <label></label>
                       <div class="button-flex">
@@ -225,48 +224,49 @@
                         </button>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <!-- ------------------------- Row ends below div -------------------------- -->
+                  </div> -->
               </div>
-  
-              <!-- ------------------------- FOrm ends below div ------------------------- -->
-  
+              <!-- ------------------------- Row ends below div -------------------------- -->
             </div>
+
+            <!-- ------------------------- FOrm ends below div ------------------------- -->
+
           </div>
         </div>
-  
-        <!-- ------------------------- right card  section ------------------------- -->
-        <div class="col-lg-4 col-md-12 col-sm-12 px-0 right-card order-0 order-lg-1">
-          <div class="right-card-wrapper">
-            <div class="title" *ngIf="isMobileDevice">
-              <h3>Users Profile</h3>
+      </div>
+
+      <!-- ------------------------- right card  section ------------------------- -->
+      <div class="col-lg-4 col-md-12 col-sm-12 px-0 right-card order-0 order-lg-1">
+        <div class="right-card-wrapper">
+          <div class="title" *ngIf="isMobileDevice">
+            <h3>Users Profile</h3>
+          </div>
+          <div class="profile-img-section">
+            <div class="edit-icon">
+              <input type="file" #myFileInput class="form-control d-none" id="file-input"
+                (change)="fileChangeEvent($event)" accept="image/*" />
+              <label for="file-input">
+                <div class="icon-round">
+                  <span>
+                    <i class="fa fa-pencil"></i>
+                  </span>
+                </div>
+              </label>
+
             </div>
-            <div class="profile-img-section">
-              <div class="edit-icon">
-                <input type="file" #myFileInput class="form-control d-none" id="file-input"
-                  (change)="fileChangeEvent($event)" accept="image/*" />
-                <label for="file-input">
-                  <div class="icon-round">
-                    <span>
-                      <i class="fa fa-pencil"></i>
-                    </span>
-                  </div>
-                </label>
-  
-              </div>
-              <img [src]="profileImageUrl || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
-              <div class="about-section">
-                <h4 class="title text-white">{{userForm.value.firstName}} {{userForm.value.lastName}}</h4>
-                <p class="text-white badge">
-                  {{userData?.roles?.name}}
-                </p>
-              </div>
+            <img [src]="profileImageUrl || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
+            <div class="about-section">
+              <h4 class="title text-white">{{userForm.value.firstName}} {{userForm.value.lastName}}</h4>
+              <p class="text-white badge">
+                <!-- {{userData?.roles?.name}} -->
+                Employee
+              </p>
             </div>
-  
-            <div class="description-field row mx-0">
-              <!-- ----------------------- User Description field ------------------------ -->
-              <div class="col-lg-12 col-md-12 col-sm-12" *ngIf=" !isMobileDevice && isProvider">
+          </div>
+
+          <div class="description-field row mx-0">
+            <!-- ----------------------- User Description field ------------------------ -->
+            <!-- <div class="col-lg-12 col-md-12 col-sm-12" *ngIf=" !isMobileDevice && isProvider">
                 <div class="form-group"
                   [ngClass]="f['description'].invalid && ((f['description'].dirty || f['description'].touched))?'has-error':''">
                   <label>Description</label>
@@ -280,32 +280,32 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-  
-            <div class="quick-links">
-              <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
-              <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
-            </div>
-  
-  
+              </div> -->
           </div>
-  
+
+          <div class="quick-links">
+            <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
+            <!-- <app-quick-links [businessId]="businessId" [isProvider]="isProvider" [userId]="userId"></app-quick-links> -->
+          </div>
+
+
         </div>
+
       </div>
-    </form>
-  </div>
-  
-  
-  <!-- ----------------------------------------------------------------------- -->
-  <!--                           Image upload modal                            -->
-  <!-- ----------------------------------------------------------------------- -->
-  <!-- <div class="editTitleModal">
+    </div>
+  </form>
+</div>
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                           Image upload modal                            -->
+<!-- ----------------------------------------------------------------------- -->
+<!-- <div class="editTitleModal">
     <p-dialog [modal]="true" [breakpoints]="{'1024px': '75vw','960px': '75vw', '640px': '90vw'}" [style]="{width: '50vw'}"
       header="Edit Title" [(visible)]="showModalForImage" (onHide)="cancelImageUpload()"> -->
-  
-      <!-- ---------------------------- image cropper ---------------------------- -->
-      <!-- <div class="modal-body">
+
+<!-- ---------------------------- image cropper ---------------------------- -->
+<!-- <div class="modal-body">
         <div class="image-cropper-wrapper row mx-0">
           <div class="col-lg-6 col-md-6">
             <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3"
@@ -317,10 +317,10 @@
           </div>
         </div>
       </div> -->
-  
-  
-      <!-- ------------------------- Image cropper ends -------------------------- -->
-      <!-- <ng-template pTemplate="footer">
+
+
+<!-- ------------------------- Image cropper ends -------------------------- -->
+<!-- <ng-template pTemplate="footer">
         <div class="modal-footer-section">
           <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveImage()">
             <i [ngClass]="isImageUploading? 'pi-spin pi-spinner' : 'pi-check'" class="pi"></i> Save</button>
@@ -330,4 +330,3 @@
       </ng-template>
     </p-dialog>
   </div> -->
-  

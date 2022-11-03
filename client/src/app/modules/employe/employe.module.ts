@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmployeLoginComponent } from './components/employe-login/employe-login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { EmployeProfileComponent } from './components/employe-profile/employe-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LeavesComponent } from './components/leaves/leaves.component';
+import { ApplyLeavesComponent } from './components/leaves/apply-leaves/apply-leaves.component';
 
 import { EmployeRoutingModule } from './employe-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -21,22 +22,20 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { LeavesComponent } from './components/leaves/leaves.component';
-import { ApplyLeavesComponent } from './components/leaves/apply-leaves/apply-leaves.component';
-import { AttendanceComponent } from './components/employe-profile/attendance/attendance.component';
-import { TimelineComponent } from './components/employe-profile/timeline/timeline.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+
 ;
 @NgModule({
   declarations: [
-    EmployeLoginComponent,
     EmployeProfileComponent,
     EditProfileComponent,
     HeaderComponent,
     LeavesComponent,
     ApplyLeavesComponent,
-    AttendanceComponent,
-    TimelineComponent
   ],
   imports: [
     CommonModule,
@@ -46,15 +45,19 @@ import { TimelineComponent } from './components/employe-profile/timeline/timelin
     HttpClientModule,
     MatFormFieldModule,
     DropdownModule,
-    MultiSelectModule,
+    MultiSelectModule, //
     MenubarModule,
     SidebarModule,
     MatTabsModule,
     MatToolbarModule,
-    TableModule,
+    TableModule, //
     InputSwitchModule,
-    MatCardModule,
-    SharedModule
+    SharedModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   exports: [
   ]

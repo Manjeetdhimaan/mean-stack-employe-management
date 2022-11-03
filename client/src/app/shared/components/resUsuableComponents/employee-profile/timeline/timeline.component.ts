@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-timeline',
+  selector: 'app-reusable-timeline',
   templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.scss', '../employe-profile.component.scss']
+  styleUrls: ['./timeline.component.scss', '../employee-profile.component.scss']
 })
-export class TimelineComponent implements OnInit {
+export class TimelineReusalbleComponent implements OnInit {
 
   constructor() { }
 

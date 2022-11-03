@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
         required: 'Email can\'t be empty',
         unique: true
     },
+    imgUrl: {
+        type: String,
+        trim: true
+    },
     password: {
         type: String,
         required: 'Password can\'t be empty',
@@ -29,7 +33,7 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, 'Provide your mobile number'],
+        required: [false, 'Provide your mobile number'],
         trim: true
     },
     remainingLeaves: {
@@ -72,7 +76,9 @@ const userSchema = new mongoose.Schema({
             type: Date,
             default: Date.now,
         },
-        entry: { type: Date },
+        entry: {
+            type: Date
+        },
         exit: {
             time: {
                 type: Date
@@ -212,6 +218,8 @@ const userSchema = new mongoose.Schema({
         },
     }],
     saltSecret: String
+}, {
+    timestamps: true
 });
 
 // Custom validation for email
@@ -221,15 +229,25 @@ userSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-userSchema.pre('save', function (next) {
+// userSchema.pre('save', function (next) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(this.password, salt, (err, hash) => {
+//             this.password = hash;
+//             this.saltSecret = salt;
+//             next();
+//         });
+//     });
+// });
+
+userSchema.statics.hashPassword = function hashPassword(password) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(this.password, salt, (err, hash) => {
             this.password = hash;
             this.saltSecret = salt;
-            next();
         });
     });
-});
+    return bcrypt.hashSync(password, 10);
+}
 
 
 // Methods
@@ -237,12 +255,15 @@ userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+
+
 userSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id: this._id},
-        process.env.JWT_SECRET,
-    {
-        expiresIn: process.env.JWT_EXP
-    });
+    return jwt.sign({
+            _id: this._id
+        },
+        process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXP
+        });
 }
 
 

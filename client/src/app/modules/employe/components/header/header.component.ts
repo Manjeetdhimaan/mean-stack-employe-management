@@ -1,77 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
-import {MenuItem} from 'primeng/api';
 import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss', '../../../admin/components/admin-header/admin-header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) { }
-  display: boolean = false;
-  items: MenuItem[];
+
+  @ViewChild('sidenav') sidenav: MatSidenav;
+
+  opened: boolean;
+  displayNavbar: boolean;
+  isLeavesActive: boolean = false;
 
   ngOnInit(): void {
-    this.items = [
-      {
-          label: 'Home',
-          items: [{
-                  label: 'New', 
-                  icon: 'pi pi-fw pi-home',
-                  items: [
-                      {label: 'Project'},
-                      {label: 'Other'},
-                  ]
-              },
-              {label: 'Open'},
-              {label: 'Quit'}
-          ]
-      },
-      {
-          label: 'Edit Profile',
-          icon: 'pi pi-fw pi-pencil',
-          routerLink:"/edit-profile",
-        //   items: [
-        //       {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-        //       {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-        //   ]
-      },
-      {
-          label: 'Profile',
-          icon: 'pi pi-fw pi-user',
-          routerLink:"/profile",
-        //   items: [
-        //       {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-        //       {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-        //   ]
-      },
-      {
-          label: 'Leaves',
-          icon: 'pi pi-fw pi-home',
-          items: [
-              {label: 'Check Leaves', icon: 'pi pi-fw pi-trash', routerLink:'/check-leaves'},
-              {label: 'Apply Leaves', icon: 'pi pi-fw pi-refresh', routerLink:'/apply-leaves'}
-          ]
-      },
-      {
-          label: 'Logout',
-          icon: 'pi pi-fw pi-power-off',
-          routerLink:"/",
-          command: () => this.onLogOut(),
-        //   items: [
-        //       {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-        //       {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-        //   ]
-      }
-  ];
+    this.isLeavesActive = this.router.url === '/employee/leaves/check' || this.router.url === '/employee/leaves/apply' ? true : false;
+    this.displayNavbar = true;
   }
-  
+
+  // disable body scrolling while sidenav is opened 
+  toggleBodyScroll() {
+    document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
+  }
+
+  toggleNavbar() {
+    this.sidenav.close();
+    if (!this.displayNavbar) {
+      this.displayNavbar = true;
+    } if (this.displayNavbar) {
+      this.displayNavbar = false;
+    } else {
+      this.displayNavbar = true;
+    }
+  }
+
+
+  navigate(route: string) {
+    // close sidenav while navigating to another component or route
+    this.sidenav.close();
+    // enable body scrolling while sidenav is closed
+    document.body.style.overflow = 'auto';
+    this.isLeavesActive = route === '/employee/leaves/check' || route === '/employee/leaves/apply' ? true : false;
+  }
+
   onLogOut() {
+    this.sidenav.close();
     this.userService.deleteToken();
-    this.router.navigate(['/']);
+    document.body.style.overflow = 'auto';
+    this.router.navigate(['/employee/login']);
   }
 }

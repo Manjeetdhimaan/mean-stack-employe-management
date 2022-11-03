@@ -1,0 +1,120 @@
+.desktop {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+.mobile {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 490px;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+
+
+.topnav {
+  overflow: hidden;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  //   text-align: center;
+  font-size: 14px;
+  padding: 0 12px;
+  margin: auto 2px;
+  text-decoration: none;
+}
+
+
+.topnav-right a.active,
+.inner-sidenav a.active {
+  color: yellow;
+  background: #3345ab;
+}
+
+.inner-sidenav a:hover,
+.topnav a:hover {
+  color: yellow;
+  background: #3a4ec0;
+}
+
+
+.topnav-right {
+  float: right;
+  margin-left: 18rem;
+}
+
+.sidenav {
+  background-color: #3f51b5;
+  z-index: 1000;
+  min-width: 30%;
+}
+
+
+.inner-sidenav a {
+  color: #fff;
+  font-size: 14px;
+  padding: 0 0px;
+}
+
+.material-icon {
+  margin-right: 6px;
+}
+
+@media screen and (max-width: 940px) {
+  .topnav a {
+    font-size: 12px !important;
+  }
+}
+
+
+
+
+@media screen and (max-width: 840px) {
+  .desktop {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 841px) {
+  .mobile {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+  }
+}

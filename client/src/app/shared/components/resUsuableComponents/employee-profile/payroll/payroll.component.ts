@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/modules/employe/services/user.service';
 
 @Component({
-  selector: 'app-payroll',
+  selector: 'app-reusable-payroll',
   templateUrl: './payroll.component.html',
   styleUrls: ['./payroll.component.scss']
 })
-export class PayrollComponent implements OnInit {
+export class PayrollReusalbleComponent implements OnInit {
 
   constructor(private userService: UserService) { }
    payroll:any= [];

@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormatTimeService } from 'src/app/shared/services/time-utils/formatTime.service';
 
 @Component({
-  selector: 'app-attendance',
+  selector: 'app-reusable-attendance',
   templateUrl: './attendance.component.html',
-  styleUrls: ['./attendance.component.scss', '../employe-profile.component.scss']
+  styleUrls: ['./attendance.component.scss']
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceReusalbleComponent implements OnInit {
 
   constructor(public formatTimeService: FormatTimeService) { }
 

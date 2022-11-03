@@ -22,6 +22,7 @@ export class AdminService {
   isAdmin: boolean = false;
 
   postUser(user: Admin){
+    this.isAdmin = true;
     return this.http.post(environment.apiBaseUrl+'/admin/register',user,this.noAuthHeader);
   }
 
@@ -31,6 +32,7 @@ export class AdminService {
   }
 
   updateUserProfile(userBody: any) {
+    this.isAdmin = true;
     return this.http.put(environment.apiBaseUrl + '/admin/updateUserProfile', userBody);
   }
 
@@ -40,8 +42,31 @@ export class AdminService {
   }
 
   getUsers() {
+    this.isAdmin = true;
     return this.http.get(environment.apiBaseUrl + '/admin/getUsers');
   }
+
+
+  checkIn(id: string) {
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl + `/admin/checkIn/${id}`, id);
+  }
+
+  checkOut(id: string, exitType:string) {
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl + `/admin/checkOut/${id}`, exitType);
+  }
+
+  respondToLeaves(id: string, userBody:any) {
+    this.isAdmin = true;
+    return this.http.put(environment.apiBaseUrl + `/admin/respondToLeaves/${id}`, userBody);
+  }
+
+  getUser(id:string) {
+    this.isAdmin = true;
+    return this.http.get(environment.apiBaseUrl + `/admin/getUser/${id}`);
+  }
+
 
 
   //Helper Methods

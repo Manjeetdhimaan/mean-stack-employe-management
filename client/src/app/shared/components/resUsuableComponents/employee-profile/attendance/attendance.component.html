@@ -1,11 +1,11 @@
 <div class="bg-white datatable-table">
     <div class="title">
         <h3>Attendance
-         </h3>
+        </h3>
     </div>
     <div class="table-list">
-        <p-table #dt1 responsiveLayout="stack" [value]="attendance" [reorderableColumns]=true sortField="id" [sortOrder]="-1" [columns]="selectedColumns" [paginator]="true"
-            [rows]="10" [showCurrentPageReport]="true"
+        <p-table #dt1 responsiveLayout="stack" [value]="attendance" [reorderableColumns]=true sortField="id"
+            [sortOrder]="-1" [columns]="selectedColumns" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="globalFilterColumn">
             <ng-template pTemplate="caption">
@@ -26,7 +26,7 @@
                                 </span>
                             </div>
                         </div>
-  
+
                     </span>
                 </div>
             </ng-template>
@@ -46,35 +46,36 @@
                     <ng-container *ngFor="let col of columns">
                         <td>
                             <ng-container [ngSwitch]="col.fieldName">
-                              <!-- <ng-container *ngSwitchCase="'status'">
+                                <!-- <ng-container *ngSwitchCase="'status'">
                                 <p-inputSwitch [trueValue]="data[col.field]==='ACTIVE'" (onChange)="onCheckBoxChange($event, data)"></p-inputSwitch>
                               </ng-container> -->
-  
-                              <ng-container *ngSwitchCase="'entryDate'">
-                                <span class="p-column-title">Manui</span>
-                                {{  data[col.field] | date:'dd-MM-yyyy' }}
-                              </ng-container>
 
-                              <ng-container *ngSwitchCase="'entryTime'">
-                                <span class="p-column-title">Manui</span>
-                                {{  data[col.field] | date:'HH:mm:ss' }}
-                              </ng-container>
+                                <ng-container *ngSwitchCase="'entryDate'">
+                                    <span class="p-column-title">{{col.header}}</span>
+                                    {{ data[col.field] | date:'dd-MM-yyyy' }}
+                                </ng-container>
 
-                              <ng-container *ngSwitchCase="'exitTime'">
-                                <span class="p-column-title">{{col.header}}</span>
-                                {{  data[col.field]?.['time'] | date:'HH:mm:ss' }}
-                              </ng-container>
+                                <ng-container *ngSwitchCase="'entryTime'">
+                                    <span class="p-column-title">{{col.header}}</span>
+                                    {{ data[col.field] | date:'HH:mm:ss' }}
+                                </ng-container>
 
-                              <ng-container *ngSwitchCase="'exitType'">
-                                <span class="p-column-title">{{col.header}}</span>
-                                {{  data[col.field]?.['exitType'] }}
-                              </ng-container>
-  
-                              <ng-container *ngSwitchCase="'updatedAt'">
-                                <span class="p-column-title">{{col.header}}</span> {{ formatTimeService.formatTime( data[col.field])}}
-                              </ng-container>
-  
-  
+                                <ng-container *ngSwitchCase="'exitTime'">
+                                    <span class="p-column-title">{{col.header}}</span>
+                                    {{ data[col.field]?.['time'] | date:'HH:mm:ss' }}
+                                </ng-container>
+
+                                <ng-container *ngSwitchCase="'exitType'">
+                                    <span class="p-column-title">{{col.header}}</span>
+                                    {{ data[col.field]?.['exitType'] }}
+                                </ng-container>
+
+                                <ng-container *ngSwitchCase="'updatedAt'">
+                                    <span class="p-column-title">{{col.header}}</span> {{ formatTimeService.formatTime(
+                                    data[col.field])}}
+                                </ng-container>
+
+
                                 <!-- <ng-container *ngSwitchCase="'actions'">
                                     <span class="p-column-title">{{col.header}}</span>
                                     <a href="javascript:void(0)" (click)="editTemplate(data.id)"><i
@@ -83,7 +84,8 @@
                                             class="far fa-trash-alt ms-text-danger"></i></a>
                                 </ng-container> -->
                                 <ng-container *ngSwitchDefault>
-                                    <span class="p-column-title">{{col.header}}</span> {{data[col.field] ? data[col.field] : '-'}}
+                                    <span class="p-column-title">{{col.header}}</span> {{data[col.field] ?
+                                    data[col.field] : '-'}}
                                 </ng-container>
                             </ng-container>
                         </td>
@@ -92,4 +94,4 @@
             </ng-template>
         </p-table>
     </div>
-  </div>
+</div>

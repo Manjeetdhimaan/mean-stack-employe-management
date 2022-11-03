@@ -145,6 +145,10 @@ p.stay {
     color: #3c4257;
 }
 
+.alert {
+    border: 1px solid red;
+}
+
 span.show-hide {
     position: absolute;
     top: 13.5px;
@@ -156,6 +160,11 @@ span.show-hide {
     font-weight: 600;
 }
 
+.login-toolbar span {
+    margin: auto;
+ }
+
+ 
 @media screen and (max-width: 480px) {
     .login-footer {
         justify-content: center;

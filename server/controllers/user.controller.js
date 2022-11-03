@@ -8,7 +8,7 @@ module.exports.register = (req, res, next) => {
     var user = new User();
     user.fullName = req.body.fullName;
     user.email = req.body.email;
-    user.password = req.body.password;
+    user.password = User.hashPassword(req.body.password);
     user.phone = req.body.phone;
     user.save((err, doc) => {
         if (!err)
@@ -71,20 +71,65 @@ module.exports.getUsers = (req, res, next) => {
                 status: true,
                 user: user
             });
-    }
-);
+    });
 }
 
 module.exports.updateUserProfile = (req, res, next) => {
-    User.findByIdAndUpdate({
-        _id: req._id
-    }, {
-        fullName: req.body.fullname,
-        email: req.body.email
-    }, function (err, docs) {
-        if (err) res.json(err);
-        else {
-            res.send(docs);
+    let id = req._id;
+    User.findOne({
+        _id: id
+    }, (err, foundedObject) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send();
+        } else {
+            if (!foundedObject) {
+                res.status(404).send();
+            } else {
+                if (req.body.firstName && req.body.lastName) {
+                    foundedObject.fullName = req.body.firstName + ' ' + req.body.lastName;
+                }
+                if (req.body.email) {
+                    foundedObject.email = req.body.email;
+                }
+                if (req.body.password) {
+                    foundedObject.password = User.hashPassword(req.body.password);
+                }
+                if (req.body.bio) {
+                    foundedObject.bio = req.body.bio;
+                }
+                foundedObject.save((err, updatedObject) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).send();
+                    } else {
+                        res.send(updatedObject)
+                    }
+                })
+            }
         }
-    });
+    })
 }
+
+module.exports.applyLeave = async (req, res, next) => {
+    try {
+        const data = {
+            from: new Date(req.body.from),
+            to: new Date(req.body.to),
+            reason: req.body.reason,
+            status: req.body.status
+        };
+        const user = await User.findOne({
+            _id: req._id
+        });
+        //check if there is an attendance entry
+
+        user.leaves.push(data)
+        await user.save();
+        res.status(200).json(user);
+
+    } catch (error) {
+        console.log('Cannot find User');
+    }
+}
+

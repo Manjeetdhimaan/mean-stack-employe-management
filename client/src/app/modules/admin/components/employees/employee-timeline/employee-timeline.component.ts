@@ -1,19 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { fade, slideUp } from 'src/app/shared/common/animations/animations';
-import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
-  selector: 'app-employe-profile',
-  templateUrl: './employe-profile.component.html',
-  styleUrls: ['./employe-profile.component.scss'],
-  animations: [
-    fade,
-    slideUp
-  ]
+  selector: 'app-employee-timeline',
+  templateUrl: './employee-timeline.component.html',
+  styleUrls: ['./employee-timeline.component.scss']
 })
-export class EmployeProfileComponent implements OnInit {
+export class EmployeeTimelineComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute) { }
 
   userDetails: any = {};
   firstName: string = '';
@@ -22,9 +18,14 @@ export class EmployeProfileComponent implements OnInit {
     'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png';
 
   attendance: any[];
+  id: string;
 
   ngOnInit(): void {
-    this.userService.getUserProfile().subscribe(
+    this.activatedRoute.params.subscribe((params: Params) => {
+      this.id = params['id'];
+    });
+
+    this.adminService.getUser(this.id).subscribe(
       (res: any) => {
         this.userDetails = res['user'];
         this.attendance = this.userDetails.attendance.reverse();
@@ -39,7 +40,6 @@ export class EmployeProfileComponent implements OnInit {
         console.log(err);
       }
     );
-
   }
 
 }

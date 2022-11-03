@@ -1,0 +1,158 @@
+$hoverEasing: cubic-bezier(0.23, 1, 0.32, 1);
+$returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+:host {
+  display: flex;
+}
+
+.card-wrap {
+  margin: 20px;
+  transform: perspective(800px);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  width: 240px;
+
+  &:hover {
+    .card-info {
+      transform: translateY(0);
+    }
+
+    .card-info p {
+      opacity: 1;
+    }
+
+    .card-info,
+    .card-info p {
+      transition: 0.6s $hoverEasing;
+    }
+
+    .card-info:after {
+      transition: 5s $hoverEasing;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-bg {
+      transition:
+        0.6s $hoverEasing,
+        opacity 5s $hoverEasing;
+      opacity: 0.8;
+    }
+
+    .card {
+      transition:
+        0.6s $hoverEasing,
+        box-shadow 2s $hoverEasing;
+      box-shadow:
+        rgba(#3f51b5, 0.2) 0 0 40px 5px,
+        rgba(yellow, 1) 0 0 0 1px,
+        rgba(black, 0.66) 0 30px 30px 0,
+        inset #424242 0 0 0 5px,
+        inset yellow 0 0 0 6px;
+    }
+  }
+}
+
+.card {
+  // position: relative;
+  flex: 0 0 240px;
+  width: 120%;
+  height: 300px;
+  background-color: #424242;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow:
+    rgba(black, 0.66) 0 30px 30px 0,
+    inset #424242 0 0 0 5px,
+    inset rgba(yellow, 0.5) 0 0 0 6px;
+  transition: 1s $returnEasing;
+}
+
+.action {
+  // position: relative;
+  flex: 0 0 240px;
+  width: 120%;
+  height: 40px;
+  background-color: #424242;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow:
+    rgba(black, 0.66) 0 30px 30px 0,
+    inset #424242 0 0 0 5px,
+    inset rgba(yellow, 0.5) 0 0 0 6px;
+  transition: 1s $returnEasing;
+}
+
+.card-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition:
+    1s $returnEasing,
+    opacity 5s 1s $returnEasing;
+  vertical-align: middle;
+
+  & .image-placeholder {
+    max-width: 80%;
+    left: 10%;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    vertical-align: middle;
+    position: absolute;
+    border-radius: 10px;
+
+    & img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+}
+
+img {
+  border-radius: 4px;
+}
+
+.btn {
+  max-width: 80px;
+  padding: 0px 6px;
+}
+
+.btn-success {
+  background:#3f51b5;
+  border-color:#3f51b5;
+  color: yellow
+}
+
+.btn-warning {
+  // background: yellow;
+  border-color:#3f51b5;
+}
+
+.btn-text {
+  max-width: 80px;
+  font-size: 12px;
+}
+
+.details {
+  color: rgb(216, 208, 208);
+  margin: auto;
+  padding-top: 6px;
+}
+.content {
+  font-size: 11px;
+  margin: auto;
+  text-align: center;
+  margin-top: -8px;
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    max-width: 100%;
+  }
+
+  .action {
+    width: 100%;
+  }
+}

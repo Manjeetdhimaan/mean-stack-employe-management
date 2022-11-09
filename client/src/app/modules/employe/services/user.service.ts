@@ -58,9 +58,9 @@ export class UserService {
   }
 
   getUserPayload() {
-    var token = this.getToken();
+    const token = this.getToken();
     if (token) {
-      var userPayload = atob(token.split('.')[1]);
+      const userPayload = atob(token.split('.')[1]);
       return JSON.parse(userPayload);
     }
     else
@@ -68,7 +68,7 @@ export class UserService {
   }
 
   isLoggedIn() {
-    var userPayload = this.getUserPayload();
+    const userPayload = this.getUserPayload();
     if (userPayload)
       return userPayload.exp > Date.now() / 1000;
     else

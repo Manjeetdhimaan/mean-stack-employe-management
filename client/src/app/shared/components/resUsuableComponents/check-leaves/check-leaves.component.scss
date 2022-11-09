@@ -1,3 +1,25 @@
+.success {
+    color:white;
+    background-color: green;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.warn {
+    color:#fff;
+    background-color: #f0ad4e;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.danger {
+    color:white;
+    background-color: red;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+
 .centred {
     text-align: center;
     align-items: center;
@@ -163,6 +185,33 @@
   .description-field{
     margin-top: 1.5em !important;
   }
+
+
+  .btn {
+    max-width: 80px;
+    padding: 0 6px 3px 6px;
+  }
+  
+  .btn-success {
+    background:#3f51b5;
+    border-color:#3f51b5;
+    color: yellow
+  }
+  
+  .btn-warning {
+    // background: yellow;
+    border-color:#3f51b5;
+  }
+
+  .btn-text {
+    max-width: 80px;
+    font-size: 12px;
+  }
+
+  button[disabled]{
+    cursor: not-allowed;
+  }
+
   @media screen and (max-width:991px) {
     .left-card{
       max-width: 100%;

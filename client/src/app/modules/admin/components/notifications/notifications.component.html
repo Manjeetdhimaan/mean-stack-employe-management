@@ -1,0 +1,14 @@
+<div class="tab-content heroes" [@filterAnimation]="heroTotal">
+    <mat-card  *ngFor="let item of products" class="item-card hero">
+                <b>{{ item.productType }}</b>
+    </mat-card>
+</div>
+
+<!-- <ul class="heroes" [@filterAnimation]="heroTotal">
+    <li *ngFor="let hero of heroes" class="hero">
+      <div class="inner">
+        <span class="badge">{{ hero.id }} 1</span>
+        <span>{{ hero.name }}</span>
+      </div>
+    </li>
+  </ul> -->

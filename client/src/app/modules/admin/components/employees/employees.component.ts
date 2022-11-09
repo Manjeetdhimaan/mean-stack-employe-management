@@ -9,8 +9,16 @@ import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-employees',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+  styleUrls: ['./employees.component.scss'],
+  template: `
+        <div class="container">
+            <div class="row">
+              <div #card class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let user of users">
+                <app-employee [cardBgImage]="user['imgUrl']" [name]="user['fullName']" [designation]="user['service']" (checkEmitter)="onCheck($event, user['_id'])" (selectUserEmitter)="onNavigateToUserProfile(user)"></app-employee>
+              </div>
+            </div>
+        </div>
+`
 })
 export class EmployeesComponent implements OnInit {
 
@@ -74,7 +82,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   onNavigateToUserProfile(user: any) {
-    this.router.navigate([`/admin/employees/employee/profile/${user['_id']}`]);
+    this.router.navigate([`/admin/employees/employee/${user['_id']}`]);
   }
 
   onRespondToLeaves() {

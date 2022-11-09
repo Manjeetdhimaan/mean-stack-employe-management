@@ -70,12 +70,12 @@ export class AppComponent {
                 return child.snapshot.data['title'];
               }
             }
-            if (this.router.url.toLowerCase() === "/category/biographies") {
-              if (child?.snapshot.data['title']) {
-                child.snapshot.data['title'] = 'Biographies - Newsfarmers';
-                return child.snapshot.data['title'];
-              }
-            }
+            // if (this.router.url.toLowerCase() === "/category/biographies") {
+            //   if (child?.snapshot.data['title']) {
+            //     child.snapshot.data['title'] = 'Biographies - Newsfarmers';
+            //     return child.snapshot.data['title'];
+            //   }
+            // }
         
               return child.snapshot.data['title'] as string;
           }

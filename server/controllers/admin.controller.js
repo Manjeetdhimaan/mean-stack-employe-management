@@ -209,8 +209,8 @@ module.exports.respondToLeaves =  (req, res, next) => {
                     leaveArray.push(a)
                 })
                 leaveArray.map(n => {
-                    if (n['_id'] == req.body.id) {
-                        leaveArray[leaveArray.indexOf(n)].status = req.body.event
+                    if (n['_id'] == req.body.leaveId) {
+                        leaveArray[leaveArray.indexOf(n)].status = req.body.status
                         let to = leaveArray[leaveArray.indexOf(n)].to;
                         let from = leaveArray[leaveArray.indexOf(n)].from;
                         let diff = (to.getDate() - from.getDate()) + 1;

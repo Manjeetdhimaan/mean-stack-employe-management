@@ -57,9 +57,9 @@ export class AdminService {
     return this.http.post(environment.apiBaseUrl + `/admin/checkOut/${id}`, exitType);
   }
 
-  respondToLeaves(id: string, userBody:any) {
+  respondToLeaves(id: string, leaveBody:any) {
     this.isAdmin = true;
-    return this.http.put(environment.apiBaseUrl + `/admin/respondToLeaves/${id}`, userBody);
+    return this.http.put(environment.apiBaseUrl + `/admin/respondToLeaves/${id}`, leaveBody);
   }
 
   getUser(id:string) {

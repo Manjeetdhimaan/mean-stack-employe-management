@@ -9,8 +9,8 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
 
+  @ViewChild('sidenav') sidenav: MatSidenav;
   opened: boolean;
   displayNavbar: boolean;
 
@@ -31,7 +31,7 @@ export class AdminHeaderComponent implements OnInit {
     }
   }
 
-  // disable body scrolling while sidenav is opened 
+  // disable body scrolling while sidenav is opened and enabling it while sidenav is closed
   toggleBodyScroll() {
     document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
   }

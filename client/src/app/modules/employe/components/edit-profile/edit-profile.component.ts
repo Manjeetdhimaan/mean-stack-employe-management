@@ -54,7 +54,6 @@ export class EditProfileComponent implements OnInit {
     private router: Router
   ) { }
   ngOnInit(): void {
-    console.log('ngOnINIt Called')
     this.userForm = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
@@ -99,7 +98,7 @@ export class EditProfileComponent implements OnInit {
     try {
       this.userService.updateUserProfile(formData).subscribe((res) => {
         // this.showSucessMessage = true;
-        this.router.navigate([`/employee/profile`])
+        this.router.navigate([`/employee/profile`]);
       },
         err => {
           console.log(err);

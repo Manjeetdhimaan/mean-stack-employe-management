@@ -55,7 +55,7 @@ export class EmployeLoginComponent implements OnInit {
     this.userService.login(this.loginForm.value).subscribe(
       (res: any) => {
         this.userService.setToken(res['token']);
-        this.router.navigateByUrl(`/employee/profile`);
+        this.router.navigate([`/employee/profile`]);
       },
       err => {
         this.serverErrorMessages = err.error.message;

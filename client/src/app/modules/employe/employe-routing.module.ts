@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/shared/auth/auth.guard';
+import { PageNotFoundComponent } from 'src/app/shared/components/404/page-not-found/page-not-found.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { EmployeProfileComponent } from './components/employe-profile/employe-profile.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,24 +13,29 @@ const routes: Routes = [
     path: '', component: HeaderComponent, children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {
-        path: 'profile',
-        component: EmployeProfileComponent, data: { title: 'Employe Profile - Younedia' }, canActivate: [AuthGuard]
-      },
-      {
-        path: 'edit-profile',
-        component: EditProfileComponent, data: { title: 'Edit Profile - Younedia' }, canActivate: [AuthGuard]
+        path: 'profile', children: [
+          {
+            path: '', component: EmployeProfileComponent, data: { title: 'Employe Profile - Younedia' }, canActivate: [AuthGuard]
+          },
+          {
+            path: 'edit',
+            component: EditProfileComponent, data: { title: 'Edit Profile - Younedia' }, canActivate: [AuthGuard]
+          }
+        ],
       },
       {
         path: 'leaves', canActivate: [AuthGuard], children: [
           {
-            path: 'check' , component: LeavesComponent, data: { title: 'Check leaves - Younedia' }, canActivate: [AuthGuard]
+            path: 'check', component: LeavesComponent, data: { title: 'Check leaves - Younedia' }, canActivate: [AuthGuard]
           },
           {
             path: 'apply',
             component: ApplyLeavesComponent, data: { title: 'Apply leaves - Younedia' }, canActivate: [AuthGuard]
           }
         ],
-      }
+      },
+          { path: '404', component: PageNotFoundComponent, data: { title: 'Page Not Found - Younedia' }, canActivate: [AuthGuard] },
+          { path: '**', redirectTo: '404' }
     ]
   }
 

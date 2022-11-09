@@ -9,66 +9,100 @@
 
 
 <div style="height: 89vh;" [style.visibility]="displayNavbar ? 'visible' : 'hidden'">
-  <mat-toolbar color="primary" class="desktop topnav" >
-    <mat-toolbar-row >      
- 
-      <span style="cursor: pointer" class="nav-brand" >
+  <mat-toolbar color="primary" class="desktop topnav">
+    <mat-toolbar-row>
+
+      <span style="cursor: pointer" class="nav-brand">
         Employee Management
       </span>
       <span class="menu-spacer"></span>
-      <div fxShow="true" fxHide.lt-md class="topnav-right">        
-        <a mat-button routerLinkActive="active" routerLink="/employee/edit-profile" (click)="navigate('/employee/edit-profile')"><mat-icon matPrefix>edit</mat-icon> Edit Profile</a>
-        <a mat-button routerLinkActive="active" routerLink="/employee/profile" (click)="navigate('/employee/profile')"><mat-icon matPrefix>person</mat-icon> Profile</a>
-        <a mat-button [ngClass]="isLeavesActive ? 'active' : ''" [matMenuTriggerFor]="leaves" >
-          <mat-icon matPrefix>book</mat-icon> Leaves <mat-icon matPrefix>expand_more</mat-icon></a>
-        <a mat-button routerLink="settings" (click)="navigate('settings')"><mat-icon matPrefix>settings</mat-icon> Settings</a>
-        <a mat-button (click)="onLogOut()"><mat-icon matPrefix>logout</mat-icon> Logout</a>        
+      <div fxShow="true" fxHide.lt-md class="topnav-right">
+        <a mat-button routerLinkActive="active" routerLink="/employee/profile/edit"
+          (click)="navigate('/employee/profile/edit')">
+          <mat-icon matPrefix>edit</mat-icon> Edit Profile
+        </a>
+
+        <a mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/employee/profile"
+          (click)="navigate('/employee/profile')">
+          <mat-icon matPrefix>person</mat-icon>
+          Profile
+        </a>
+
+        <a mat-button routerLinkActive="active" [matMenuTriggerFor]="leaves">
+          <mat-icon matPrefix>book</mat-icon> Leaves <mat-icon matPrefix>expand_more</mat-icon>
+          <mat-menu #leaves="matMenu">
+            <button mat-menu-item routerLink="/employee/leaves/check" (click)="navigate('/employee/leaves/check')">Check
+              Leaves</button>
+            <button mat-menu-item routerLink="/employee/leaves/apply" (click)="navigate('/employee/leaves/apply')">Apply
+              Leaves</button>
+          </mat-menu>
+        </a>
+
+        <a mat-button routerLink="settings" (click)="navigate('settings')">
+          <mat-icon matPrefix>settings</mat-icon> Settings
+        </a>
+
+        <a mat-button (click)="onLogOut()">
+          <mat-icon matPrefix>logout</mat-icon> Logout
+        </a>
       </div>
-      <mat-menu #leaves="matMenu">
-        <button mat-menu-item routerLink="/employee/leaves/check" (click)="navigate('/employee/leaves/check')">Check Leaves</button>
-        <button mat-menu-item routerLink="/employee/leaves/apply" (click)="navigate('/employee/leaves/apply')">Apply Leaves</button>
-      </mat-menu>
+
     </mat-toolbar-row>
   </mat-toolbar>
 
   <mat-toolbar color="primary" class="mobile">
-      <mat-toolbar-row>    
-        <button mat-mini-fab color="primary" (click)="sidenav.toggle(); toggleBodyScroll()" fxShow="true" fxHide.gt-sm>
-          <mat-icon>menu</mat-icon>
-        </button>
-      </mat-toolbar-row>
-    </mat-toolbar>
+    <mat-toolbar-row>
+      <button mat-mini-fab color="primary" (click)="sidenav.toggle(); toggleBodyScroll()" fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
   <mat-sidenav-container fxFlexFill (click)="toggleBodyScroll()">
-      <button mat-icon-button (click)="sidenav.toggle()" >
-          <mat-icon>Home</mat-icon>
-        </button>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>Home</mat-icon>
+    </button>
     <mat-sidenav #sidenav class="sidenav">
       <mat-nav-list class="inner-sidenav">
         <!-- <a (click)="sidenav.toggle()" mat-list-item>Close</a> -->
-        <a mat-list-item routerLinkActive="active" routerLink="/employee/edit-profile" (click)="navigate('/employee/edit-profile')">
-          <mat-icon matPrefix class="material-icon">edit</mat-icon> Edit Profile</a>
+        <a mat-list-item routerLinkActive="active" routerLink="/employee/profile/edit"
+          (click)="navigate('/employee/profile/edit')">
+          <mat-icon matPrefix class="material-icon">edit</mat-icon> Edit Profile
+        </a>
 
-        <a mat-list-item routerLinkActive="active" routerLink="/employee/profile" (click)="navigate('/employee/profile')">
-          <mat-icon matPrefix class="material-icon">person</mat-icon> Profile</a>
+        <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          routerLink="/employee/profile" (click)="navigate('/employee/profile')">
+          <mat-icon matPrefix class="material-icon">person</mat-icon> Profile
+        </a>
 
-        <a mat-list-item [matMenuTriggerFor]="leaves" [ngClass]="isLeavesActive ? 'active' : ''" >
-          <mat-icon matPrefix class="material-icon">book</mat-icon> Leaves <mat-icon matPrefix class="material-icon">expand_more</mat-icon></a>
+        <a mat-list-item [matMenuTriggerFor]="leaves">
+          <mat-icon matPrefix class="material-icon">book</mat-icon> Leaves <mat-icon matPrefix class="material-icon">
+            expand_more</mat-icon>
+          <mat-menu #leaves="matMenu">
+            <button mat-menu-item routerLink="/employee/leaves/check" (click)="navigate('/employee/leaves/check')">Check
+              Leaves</button>
+            <button mat-menu-item routerLink="/employee/leaves/apply" (click)="navigate('/employee/leaves/apply')">Apply
+              Leaves</button>
+          </mat-menu>
+        </a>
 
-        <a mat-list-item  matBadge="2">
-          <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications</a>
+        <a mat-list-item matBadge="2">
+          <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications
+        </a>
 
         <a mat-list-item routerLink="settings" (click)="navigate('settings')">
-          <mat-icon matPrefix class="material-icon">settings</mat-icon> Settings</a>
-          
+          <mat-icon matPrefix class="material-icon">settings</mat-icon> Settings
+        </a>
+
         <a mat-list-item (click)="onLogOut()">
-          <mat-icon matPrefix class="material-icon">logout</mat-icon> Logout</a>
+          <mat-icon matPrefix class="material-icon">logout</mat-icon> Logout
+        </a>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content fxFlexFill [ngStyle] = "{ 'overflow' : sidenav.opened ? 'hidden' : 'auto'}" >
-      
+    <mat-sidenav-content fxFlexFill [ngStyle]="{ 'overflow' : sidenav.opened ? 'hidden' : 'auto'}">
+
       <div class="container" style="padding: 10px; min-height: 100vh;">
         <router-outlet></router-outlet>
-      </div>    
+      </div>
 
     </mat-sidenav-content>
   </mat-sidenav-container>

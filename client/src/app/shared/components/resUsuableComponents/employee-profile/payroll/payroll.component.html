@@ -158,6 +158,6 @@
     <pagination-controls *ngIf="payroll?.length>1" (pageChange)="p = $event"></pagination-controls>
 </div> -->
 
-<div style="text-align: center;" *ngIf="payroll.length<=0">
+<div style="text-align: center;" *ngIf="payroll?.length<=0">
     <h1>No Salary slip yet!</h1>
 </div>

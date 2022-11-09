@@ -9,20 +9,12 @@ import { UserService } from 'src/app/modules/employe/services/user.service';
 export class PayrollReusalbleComponent implements OnInit {
 
   constructor(private userService: UserService) { }
-   payroll:any= [];
-   user:any = {};
+   @Input() payroll:any= [];
+   @Input() user:any = {};
  
   ngOnInit(): void {
 
-    this.userService.getUserProfile().subscribe(
-      (res:any) => {
-        this.user = res['user'];
-        this.payroll = this.user.payroll.sort((a:any,b:any)=> a.month.slice(0,4)-b.month.slice(0,4)).reverse();
-      },
-      err => {
-        console.log(err);
-      }
-    );
+ 
   }
 
 }

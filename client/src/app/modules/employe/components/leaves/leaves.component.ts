@@ -6,7 +6,7 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-leaves',
   templateUrl: './leaves.component.html',
-  styleUrls: ['./leaves.component.scss', '../employe-profile/employe-profile.component.scss'],
+  styleUrls: ['./leaves.component.scss'],
   animations: [
     fade,
     slideUp
@@ -15,7 +15,7 @@ import { UserService } from '../../services/user.service';
 export class LeavesComponent implements OnInit {
 
   constructor(public formatTimeService: FormatTimeService, private userService: UserService) { }
-  @Input() leaves: any[] = [];
+  leaves: any[] = [];
   userDetails: any = {};
 
   globalFilterColumn = [
@@ -44,7 +44,6 @@ export class LeavesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];

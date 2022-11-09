@@ -1,10 +1,15 @@
 import { Component, Input, Output, OnInit, ViewChild, ElementRef, AfterViewInit, EventEmitter } from '@angular/core';
 import { fromEvent } from 'rxjs'
 import { map, merge, delay, mapTo, share, repeat, switchMap, takeUntil } from 'rxjs/operators'
+import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  styleUrls: ['./employee.component.scss'],
+  animations: [
+    fade,
+    slideUp
+  ]
 })
 export class EmployeeComponent implements OnInit, AfterViewInit {
   height: any;
@@ -22,6 +27,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   @Input() cardBgImage: string = '';
   @Input() name: string = '';
   @Input() designation: string = '';
+  @Input() showActions: boolean = true;
   @Output() checkEmitter: EventEmitter<any> = new EventEmitter();
   @Output() selectUserEmitter: EventEmitter<any> = new EventEmitter();
   // @Input() onCheckOut(): string = '';

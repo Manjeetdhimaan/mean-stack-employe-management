@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   opened: boolean;
   displayNavbar: boolean;
   isLeavesActive: boolean = false;
-
+  
   ngOnInit(): void {
     this.isLeavesActive = this.router.url === '/employee/leaves/check' || this.router.url === '/employee/leaves/apply' ? true : false;
     this.displayNavbar = true;
@@ -47,6 +47,8 @@ export class HeaderComponent implements OnInit {
     // enable body scrolling while sidenav is closed
     document.body.style.overflow = 'auto';
     this.isLeavesActive = route === '/employee/leaves/check' || route === '/employee/leaves/apply' ? true : false;
+
+    this.router.navigate([route]);
   }
 
   onLogOut() {

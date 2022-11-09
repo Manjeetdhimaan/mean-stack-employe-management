@@ -11,10 +11,10 @@ const routes: Routes = [
   { path: 'employee/login', component: EmployeLoginComponent },
 
   { path: 'employee', loadChildren: () => import('./modules/employe/employe.module').then(m => m.EmployeModule),
-  data: { title: 'Employe Management - Younedia' }},
+  data: { title: 'Employee Management - Younedia' }},
 
   { path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
-  data: { title: 'Employe Management - Younedia' }},
+  data: { title: 'Employee Management - Younedia' }},
 ];
 
 @NgModule({

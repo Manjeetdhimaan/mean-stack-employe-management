@@ -23,6 +23,8 @@ import { PopupModelComponent } from './components/ui-components/popup-model/popu
 import { EmployeeReusalbleProfileComponent } from './components/resUsuableComponents/employee-profile/employee-profile.component';
 import { AttendanceReusalbleComponent } from './components/resUsuableComponents/employee-profile/attendance/attendance.component';
 import { TimelineReusalbleComponent } from './components/resUsuableComponents/employee-profile/timeline/timeline.component';
+import { PageNotFoundComponent } from './components/404/page-not-found/page-not-found.component';
+import { CheckLeavesComponent } from './components/resUsuableComponents/check-leaves/check-leaves.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { TimelineReusalbleComponent } from './components/resUsuableComponents/em
     EmployeeReusalbleProfileComponent,
     AttendanceReusalbleComponent,
     TimelineReusalbleComponent,
+    PageNotFoundComponent,
+    CheckLeavesComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +59,8 @@ import { TimelineReusalbleComponent } from './components/resUsuableComponents/em
     DarkModeComponent,
     PayrollReusalbleComponent,
     EmployeeComponent,
-    EmployeeReusalbleProfileComponent
+    EmployeeReusalbleProfileComponent,
+    CheckLeavesComponent
   ]
 })
 export class SharedModule { }

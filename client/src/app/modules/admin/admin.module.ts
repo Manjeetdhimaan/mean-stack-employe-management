@@ -16,6 +16,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { EmployeeTimelineComponent } from './components/employees/employee-timeline/employee-timeline.component';
+import { EmployeesLeavesComponent } from './components/employees-leaves/employees-leaves.component';
+import { EmployeeLeavesComponent } from './components/employees-leaves/employee-leaves/employee-leaves.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -23,7 +27,10 @@ import { EmployeeTimelineComponent } from './components/employees/employee-timel
     EditAdminProfileComponent,
     EmployeesComponent,
     AdminHeaderComponent,
-    EmployeeTimelineComponent
+    EmployeeTimelineComponent,
+    EmployeesLeavesComponent,
+    EmployeeLeavesComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -37,10 +44,8 @@ import { EmployeeTimelineComponent } from './components/employees/employee-timel
     MatListModule,
     MatButtonModule,
     SharedModule,
-    MatInputModule
-  ],
-  exports: [
-
+    MatInputModule,
+    MatCardModule
   ]
 })
 export class AdminModule { }

@@ -5,6 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { NgProgress } from 'ngx-progressbar';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent {
   opened: boolean;
   isLoggedIn: boolean = false;
 
-  constructor(private primengConfig: PrimeNGConfig, private titleService: Title, private router: Router, private activatedRoute: ActivatedRoute, private metaService: Meta) { }
+  constructor(private primengConfig: PrimeNGConfig, private titleService: Title, private router: Router, private activatedRoute: ActivatedRoute, private metaService: Meta, private progress: NgProgress) { }
    
   capitalizeFirstLetter(string: String) {
     // window.localStorage.setItem

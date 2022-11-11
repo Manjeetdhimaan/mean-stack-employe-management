@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { AdminService } from '../../services/admin.service';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-admin-header',

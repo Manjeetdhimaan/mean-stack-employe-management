@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss', '../../../admin/components/admin-header/admin-header.component.scss']
+  styleUrls: ['./header.component.scss', '../../../../admin/components/core/admin-header/admin-header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 

@@ -7,7 +7,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 
 import { EditAdminProfileComponent } from './components/edit-admin-profile/edit-admin-profile.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { AdminHeaderComponent } from './components/core/admin-header/admin-header.component';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,7 +20,9 @@ import { EmployeesLeavesComponent } from './components/employees-leaves/employee
 import { EmployeeLeavesComponent } from './components/employees-leaves/employee-leaves/employee-leaves.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { MatCardModule } from '@angular/material/card';
-
+import { AdminChangePasswordComponent } from './components/admin-change-password/admin-change-password.component';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { MatCardModule } from '@angular/material/card';
     EmployeeTimelineComponent,
     EmployeesLeavesComponent,
     EmployeeLeavesComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    AdminChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +48,11 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     SharedModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    NgProgressModule.withConfig({
+      color: "green"
+    }),
+    NgProgressHttpModule
   ]
 })
 export class AdminModule { }

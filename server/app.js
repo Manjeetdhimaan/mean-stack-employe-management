@@ -9,6 +9,7 @@ const passport = require('passport');
 const path = require('path');
 
 const rtsIndex = require('./routes/index.router');
+const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
 app.use('/api', rtsIndex);
+app.use('/api/admin', rtsAdmin);
 
 
 
@@ -39,4 +41,4 @@ app.get('*', (req, res) => {
 });
 
 // start server
-app.listen(3000, () => console.log(`Server started at port : 3000`));
+app.listen(process.env.PORT || 3000, () => console.log(`Server started at port : 3000`));

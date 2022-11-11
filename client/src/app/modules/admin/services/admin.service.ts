@@ -67,6 +67,11 @@ export class AdminService {
     return this.http.get(environment.apiBaseUrl + `/admin/getUser/${id}`);
   }
 
+  changePassword(passwordBody:any) {
+    this.isAdmin = true;
+    return this.http.put(environment.apiBaseUrl + `/admin/change-password`, passwordBody);
+  }
+
 
 
   //Helper Methods

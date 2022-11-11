@@ -1,8 +1,9 @@
-<div class="tab-content heroes" [@filterAnimation]="heroTotal">
+<div class="tab-content heroes" >
     <mat-card  *ngFor="let item of products" class="item-card hero">
                 <b>{{ item.productType }}</b>
     </mat-card>
 </div>
+<ng-progress [thick]="true" ref="router"></ng-progress>
 
 <!-- <ul class="heroes" [@filterAnimation]="heroTotal">
     <li *ngFor="let hero of heroes" class="hero">

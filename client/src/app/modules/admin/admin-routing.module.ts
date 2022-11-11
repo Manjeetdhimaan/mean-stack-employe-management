@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AdminAuthGuard } from 'src/app/shared/auth/admin-auth.guard';
 import { PageNotFoundComponent } from 'src/app/shared/components/404/page-not-found/page-not-found.component';
-import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { AdminChangePasswordComponent } from './components/admin-change-password/admin-change-password.component';
+import { AdminHeaderComponent } from './components/core/admin-header/admin-header.component';
 
 import { EditAdminProfileComponent } from './components/edit-admin-profile/edit-admin-profile.component';
 import { EmployeeLeavesComponent } from './components/employees-leaves/employee-leaves/employee-leaves.component';
@@ -35,6 +36,14 @@ const routes: Routes = [
           {
             path: 'leaves/check/:id', component: EmployeeLeavesComponent, data: { title: 'Employee Profile - Younedia' }, canActivate: [AdminAuthGuard]
           },
+        ]
+      },
+      {
+        path: 'settings', canActivate: [AdminAuthGuard], children: [
+          {
+            path: 'change-password', component: AdminChangePasswordComponent, data: { title: 'Change Admin password - Younedia' }, canActivate: [AdminAuthGuard]
+          },
+          
         ]
       },
       {

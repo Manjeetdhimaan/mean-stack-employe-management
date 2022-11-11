@@ -1,9 +1,10 @@
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 import { PopupModelComponent } from 'src/app/shared/components/ui-components/popup-model/popup-model.component';
+import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 
 import { AdminService } from '../../services/admin.service';
 
@@ -18,11 +19,17 @@ import { AdminService } from '../../services/admin.service';
               </div>
             </div>
         </div>
+<ng-progress [thick]="true"></ng-progress>
 `
 })
 export class EmployeesComponent implements OnInit {
 
-  constructor(private adminService: AdminService, public dialog: MatDialog, private router: Router) { }
+  constructor(private adminService: AdminService, public dialog: MatDialog, private router: Router, 
+    @Inject(Injector) private readonly injector: Injector) { }
+
+    private get toastMessageService() {
+      return this.injector.get(ToasTMessageService);
+  }
 
   imgUrl: string = ''
 
@@ -50,10 +57,12 @@ export class EmployeesComponent implements OnInit {
   onCheck(event: string, id: string) {
     // checkIn
     if (event.toLowerCase() == 'checkin') {
-      this.adminService.checkIn(id).subscribe((res) => {
-        console.log(res)
+      this.adminService.checkIn(id).subscribe((res:any) => {
+        console.log(res);
+        this.toastMessageService.success(res['message']);
       }, error => {
-        console.log("error", error)
+        console.log("error", error);
+        this.toastMessageService.info(error.error.message);
       })
     }
 
@@ -71,10 +80,12 @@ export class EmployeesComponent implements OnInit {
         if (!result) {
           return;
         }
-        this.adminService.checkOut(id, result).subscribe((res) => {
-          console.log(res)
+        this.adminService.checkOut(id, result).subscribe((res:any) => {
+          console.log(res);
+          this.toastMessageService.success(res['message']);
         }, error => {
-          console.log("error", error)
+          console.log("error", error);
+          this.toastMessageService.error(error.error.message);
         })
       });
 

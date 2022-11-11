@@ -58,7 +58,7 @@ export class EmployeeLeavesComponent implements OnInit {
 
     this.adminService.respondToLeaves(this.id, leaveBody).subscribe(
       (res: any) => {
-        this.userDetails = res;
+        this.userDetails = res['user'];
         this.leaves = this.userDetails.leaves.reverse();
       },
       err => {

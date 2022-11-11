@@ -39,7 +39,8 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/quill/dist/quill.snow.css",
-              "node_modules/grapesjs/dist/css/grapes.min.css"
+              "node_modules/grapesjs/dist/css/grapes.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": ["./node_modules/angular-dark-mode/angular-dark-mode.js"]
           },
@@ -118,7 +119,8 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/quill/dist/quill.snow.css",
-              "node_modules/grapesjs/dist/css/grapes.min.css"
+              "node_modules/grapesjs/dist/css/grapes.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           }

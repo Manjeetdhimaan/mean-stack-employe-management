@@ -12,7 +12,9 @@ import { AdminLoginComponent } from './modules/admin/components/admin-login/admi
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeLoginComponent } from './modules/employe/components/employe-login/employe-login.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { ToastrModule } from 'ngx-toastr';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 
 @NgModule({
@@ -25,11 +27,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-top-right'
+    }),
+    NgProgressModule.withConfig({
+      color: "yellow"
+    }),
+    NgProgressHttpModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

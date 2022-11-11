@@ -41,6 +41,10 @@ export class UserService {
     return this.http.get(environment.apiBaseUrl + '/userProfile');
   }
 
+  changePassword(passwordBody:any) {
+    return this.http.put(environment.apiBaseUrl + `/change-password`, passwordBody);
+  }
+
 
 
   //Helper Methods

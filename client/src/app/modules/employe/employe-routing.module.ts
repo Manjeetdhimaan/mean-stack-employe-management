@@ -4,7 +4,8 @@ import { AuthGuard } from 'src/app/shared/auth/auth.guard';
 import { PageNotFoundComponent } from 'src/app/shared/components/404/page-not-found/page-not-found.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { EmployeProfileComponent } from './components/employe-profile/employe-profile.component';
-import { HeaderComponent } from './components/header/header.component';
+import { EmployeeChangePasswordComponent } from './components/employee-change-password/employee-change-password.component';
+import { HeaderComponent } from './components/core/header/header.component';
 import { ApplyLeavesComponent } from './components/leaves/apply-leaves/apply-leaves.component';
 import { LeavesComponent } from './components/leaves/leaves.component';
 
@@ -13,13 +14,20 @@ const routes: Routes = [
     path: '', component: HeaderComponent, children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {
-        path: 'profile', children: [
+        path: 'profile', canActivate: [AuthGuard], children: [
           {
             path: '', component: EmployeProfileComponent, data: { title: 'Employe Profile - Younedia' }, canActivate: [AuthGuard]
           },
           {
             path: 'edit',
             component: EditProfileComponent, data: { title: 'Edit Profile - Younedia' }, canActivate: [AuthGuard]
+          }
+        ],
+      },
+      {
+        path: 'settings', canActivate: [AuthGuard], children: [
+          {
+            path: 'change-password', component: EmployeeChangePasswordComponent, data: { title: 'Change Employee Password - Younedia' }, canActivate: [AuthGuard]
           }
         ],
       },

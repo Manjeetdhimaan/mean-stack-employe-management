@@ -6,94 +6,159 @@ const Admin = mongoose.model('Admin');
 const User = mongoose.model('User');
 
 module.exports.register = (req, res, next) => {
-    var admin = new Admin();
-    admin.fullName = req.body.fullName;
-    admin.email = req.body.email;
-    admin.password = User.hashPassword(req.body.password);
-    admin.save((err, doc) => {
-        if (!err)
-            res.send(doc);
-        else {
-            if (err.code == 11000)
-                res.status(422).send(['Duplicate email adrress found.']);
-            else
-                return next(err);
-        }
+    try {
+        const admin = new Admin();
+        admin.fullName = req.body.fullName;
+        admin.email = req.body.email;
+        admin.password = User.hashPassword(req.body.password);
+        admin.save((err, doc) => {
+            if (!err)
+                res.status(200).send({
+                    success: true,
+                    message: 'Registration Successfull!'
+                });
+            else {
+                if (err.code == 11000)
+                    res.status(422).send({
+                        success: false,
+                        message: 'Duplicate email adrress found.'
+                    });
+                else
+                    return next(err);
+            }
 
-    });
+        });
+    } catch (err) {
+        return next(err);
+    }
 }
 
 module.exports.authenticate = (req, res, next) => {
+    try {
+        passport.authenticate('admin', (err, user, info) => {
+            // error from passport middleware
+            if (err) return res.status(400).json(err);
+            // registered user
+            else if (user) {
+                return res.status(200).json({
+                    "token": user.generateJwt(),
+                    "_id": user['_id']
+                });
+            }
+
+            // unknown user or wrong password
+            else {
+                return res.status(404).json(info);
+            }
+        })(req, res, next);
+    } catch (err) {
+        return next(err);
+    }
     // call for passport authentication
-    passport.authenticate('admin', (err, user, info) => {
-        // error from passport middleware
-        if (err) return res.status(400).json(err);
-        // registered user
-        else if (user) {
-            return res.status(200).json({
-                "token": user.generateJwt(),
-                "_id": user['_id']
-            });
-        }
-          
-        // unknown user or wrong password
-        else {
-            return res.status(404).json(info);
-        }
-    })(req, res, next);
+
 }
 
 module.exports.adminProfile = (req, res, next) => {
-    Admin.findOne({
-            _id: req._id
-        },
-        (err, admin) => {
-            if (!admin)
+    try {
+        Admin.findOne({
+                _id: req._id
+            },
+            (err, admin) => {
+                if (!admin)
+                    return res.status(404).json({
+                        status: false,
+                        message: 'Admin record not found.'
+                    });
+                else
+                    return res.status(200).json({
+                        status: true,
+                        user: admin
+                    });
+            }
+        );
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.getUsers = (req, res, next) => {
+    try {
+        User.find((err, users) => {
+            if (!users)
                 return res.status(404).json({
                     status: false,
-                    message: 'Admin record not found.'
+                    message: 'User record not found.'
                 });
             else
                 return res.status(200).json({
                     status: true,
-                    user: admin
+                    users: users
                 });
-        }
-    );
-}
-
-module.exports.getUsers = (req, res, next) => {
-    User.find((err, users) => {
-        if (!users)
-            return res.status(404).json({
-                status: false,
-                message: 'User record not found.'
-            });
-        else
-            return res.status(200).json({
-                status: true,
-                users: users
-            });
+        });
+    } catch (err) {
+        return next(err);
     }
-);
 }
 
 module.exports.updateUserProfile = (req, res, next) => {
-    Admin.findByIdAndUpdate({
-        _id: req._id
-    }, {
-        fullName: req.body.fullName,
-        email: req.body.email
-    }, function (err, docs) {
-        if (err) res.json(err);
-        else {
-            res.send(docs);
-        }
-    });
+    try {
+
+        Admin.findOne({
+            _id: req._id
+        }, (err, foundedObject) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send();
+            } else {
+                if (!foundedObject) {
+                    res.status(404).send();
+                } else {
+                    if (req.body.firstName && req.body.lastName) {
+                        foundedObject.fullName = req.body.firstName + ' ' + req.body.lastName;
+                    }
+                    if (req.body.email) {
+                        foundedObject.email = req.body.email;
+                    }
+                    if (req.body.password) {
+                        foundedObject.password = Admin.hashPassword(req.body.password);
+                    }
+                    if (req.body.bio) {
+                        foundedObject.bio = req.body.bio;
+                    }
+                    foundedObject.save((err, updatedObject) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(500).send();
+                        } else {
+                            res.status(200).send({
+                                success: true,
+                                message: 'Profile updated successfully'
+                            })
+                        }
+                    })
+                }
+            }
+        })
+
+        // Admin.findByIdAndUpdate({
+        //     _id: req._id
+        // }, {
+
+        //     fullName: req.body.fullName,
+        //     email: req.body.email
+        // }, function (err, docs) {
+        //     if (err) res.json(err);
+        //     else {
+        //         res.send(docs);
+        //     }
+        // });
+
+    } catch (err) {
+        return next(err);
+    }
 }
 
-
-module.exports.checkIn = async(req, res, next) => {
+module.exports.checkIn = async (req, res, next) => {
     try {
         const data = {
             entry: Date.now()
@@ -127,7 +192,10 @@ module.exports.checkIn = async(req, res, next) => {
                 }
             }
             if (!lastCheckIn.exit.time) {
-                return res.status(406).send(`Please checkout ${user.fullName}\'s previous check in first`)
+                return res.status(406).send({
+                    success: false,
+                    message: `Please checkout ${user.fullName}\'s previous check in first`
+                })
             }
             let nextMidNight = new Date();
             nextMidNight.setHours(24, 0, 0, 0);
@@ -140,10 +208,16 @@ module.exports.checkIn = async(req, res, next) => {
             if (pastMidNight > lastCheckIn.entry) {
                 user.attendance.push(data)
                 await user.save();
-                res.status(200).json(user);
+                res.status(200).json({
+                    success: true,
+                    message: `${user.fullName} signed in successfully`
+                });
 
             } else {
-                return res.status(406).send(`${user.fullName} have signed in today already`)
+                return res.status(406).send({
+                    success: false,
+                    message: `${user.fullName} have signed in today already`
+                })
             }
         } else {
             user.attendance.push(data);
@@ -151,14 +225,13 @@ module.exports.checkIn = async(req, res, next) => {
         }
 
     } catch (error) {
-        console.log("something went wrong");
         console.log(error);
+        return next(error);
     }
 };
 
-
 //check out
-module.exports.checkOut =  async(req, res, next) => {
+module.exports.checkOut = async (req, res, next) => {
     // the attendance than can be checked out must be last entry in the attendance array
     try {
         const user = await User.findOne({
@@ -171,96 +244,176 @@ module.exports.checkOut =  async(req, res, next) => {
             //check whether the exit time of the last element of the attedance entry has a value
             const lastAttendance = user.attendance[user.attendance.length - 1];
             if (lastAttendance.exit.time) {
-               return res.status(406).send(`${user.fullName} has already checked out today`);
+                return res.status(406).send({
+                    success: false,
+                    message: `${user.fullName} has already checked out today`
+                });
             }
-            
+
             lastAttendance.exit.time = Date.now();
             lastAttendance.exit.exitType = req.body.exitType;
             await user.save();
-            res.status(200).json(user)
+            return res.status(200).json({
+                success: true,
+                message: `${user.fullName} checked out successfully`
+            })
 
         } else { //if no entry
             return res.status(401).send(`${user.fullName} do not have an attendance entry`)
         }
     } catch (error) {
+
         console.log('Cannot find User');
+        return next(error);
     }
 };
 
 
-
-module.exports.respondToLeaves =  (req, res, next) => {
-    const id = req.params.id;
-    if (req.params.id === req._id) {
-        return res.status(401).send({ message: 'You Are not authorized'});
-    }
-    User.findOne({
-        _id: id
-    }, (err, foundedObject) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).send();
-        } else {
-            if (!foundedObject) {
-                return res.status(404).send();
+module.exports.respondToLeaves = (req, res, next) => {
+    try {
+        const id = req.params.id;
+        if (req.params.id === req._id) {
+            return res.status(401).send({
+                message: 'You Are not authorized'
+            });
+        }
+        User.findOne({
+            _id: id
+        }, (err, foundedObject) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send({
+                    success: false,
+                    message: 'Something went wrong! Please try again later.'
+                });
             } else {
-                let leaveArray = [];;
-                foundedObject.leaves.map(a => {
-                    leaveArray.push(a)
-                })
-                leaveArray.map(n => {
-                    if (n['_id'] == req.body.leaveId) {
-                        leaveArray[leaveArray.indexOf(n)].status = req.body.status
-                        let to = leaveArray[leaveArray.indexOf(n)].to;
-                        let from = leaveArray[leaveArray.indexOf(n)].from;
-                        let diff = (to.getDate() - from.getDate()) + 1;
-                        if (leaveArray[leaveArray.indexOf(n)].status == "Denied" && req.body.prevStatus !== "Pending") {
-                            if (foundedObject.appliedLeaves > 0) {
-                                // foundedObject.appliedLeaves = Number(foundedObject.appliedLeaves) - Number(diff);
-                                if (foundedObject.remainingLeaves <= 24) {
-                                    foundedObject.remainingLeaves = Number(foundedObject.totalLeaves) + Number(diff);
-                                    foundedObject.totalLeaves = Number(foundedObject.remainingLeaves)
+                if (!foundedObject) {
+                    return res.status(404).send({
+                        success: false,
+                        message: 'Cannot find user with this name or ID'
+                    });
+                } else {
+                    let leaveArray = [];;
+                    foundedObject.leaves.map(a => {
+                        leaveArray.push(a)
+                    })
+                    leaveArray.map(n => {
+                        if (n['_id'] == req.body.leaveId) {
+                            leaveArray[leaveArray.indexOf(n)].status = req.body.status
+                            let to = leaveArray[leaveArray.indexOf(n)].to;
+                            let from = leaveArray[leaveArray.indexOf(n)].from;
+                            let diff = (to.getDate() - from.getDate()) + 1;
+                            if (leaveArray[leaveArray.indexOf(n)].status == "Denied" && req.body.prevStatus !== "Pending") {
+                                if (foundedObject.appliedLeaves > 0) {
+                                    // foundedObject.appliedLeaves = Number(foundedObject.appliedLeaves) - Number(diff);
+                                    if (foundedObject.remainingLeaves <= 24) {
+                                        foundedObject.remainingLeaves = Number(foundedObject.totalLeaves) + Number(diff);
+                                        foundedObject.totalLeaves = Number(foundedObject.remainingLeaves)
                                         // foundedObject.appliedLeaves = leaveArray.length
+                                    }
                                 }
                             }
-                        }
-                        if (leaveArray[leaveArray.indexOf(n)].status === "Approved") {
-                            // foundedObject.appliedLeaves = Number(foundedObject.appliedLeaves) + Number(diff);
-                            foundedObject.remainingLeaves = Number(foundedObject.totalLeaves) - Number(diff);
-                            foundedObject.totalLeaves = Number(foundedObject.remainingLeaves)
+                            if (leaveArray[leaveArray.indexOf(n)].status === "Approved") {
+                                // foundedObject.appliedLeaves = Number(foundedObject.appliedLeaves) + Number(diff);
+                                foundedObject.remainingLeaves = Number(foundedObject.totalLeaves) - Number(diff);
+                                foundedObject.totalLeaves = Number(foundedObject.remainingLeaves)
                                 // foundedObject.appliedLeaves = leaveArray.length
+                            }
                         }
-                    }
-                })
-                foundedObject.save((err, updatedObject) => {
-                    if (err) {
-                        console.log(err)
-                        return res.status(500).send();
-                    } else {
-                        return res.send(updatedObject)
-                    }
-                })
+                    })
+                    foundedObject.save((err, updatedObject) => {
+                        if (err) {
+                            console.log(err)
+                            return res.status(500).send({
+                                success: false,
+                                message: 'An error occured! Please try again after sometime'
+                            });
+                        } else {
+                            return res.status(200).send({
+                                success: true,
+                                message: 'Leave ' + req.body.status,
+                                user: updatedObject
+                            })
+                        }
+                    })
+                }
             }
-        }
-    })
+        })
+    } catch (err) {
+        return next(err);
+    }
 }
 
-
 module.exports.getUser = (req, res, next) => {
-    User.findOne({
-            _id: req.params.id
-        },
-        (err, user) => {
-            if (!user)
-                return res.status(404).json({
-                    status: false,
-                    message: 'User record not found.'
-                });
-            else
-                return res.status(200).json({
-                    status: true,
-                    user: user
-                });
-        }
-    );
+    try {
+        User.findOne({
+                _id: req.params.id
+            },
+            (err, user) => {
+                if (!user)
+                    return res.status(404).json({
+                        status: false,
+                        message: 'User record not found.'
+                    });
+                else
+                    return res.status(200).json({
+                        status: true,
+                        user: user
+                    });
+            }
+        );
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.changePassword = (req, res, next) => {
+    try {
+        Admin.findOne({
+            _id: req._id
+        }, (err, admin) => {
+            // Check if error connecting
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: err
+                }); // Return error
+            } else {
+                // Check if user was found in database
+                if (!admin) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'Admin not found'
+                    }); // Return error, user was not found in db
+                } else {
+                    if (!admin.verifyPassword(req.body.oldPassword)) {
+                        return res.status(401).json({
+                            success: false,
+                            message: 'Admin Old password is incorrect'
+                        });
+                    }
+                    if (req.body.newPassword !== req.body.confirmNewPassword) {
+                        return res.status(401).json({
+                            success: false,
+                            message: 'Paswords do no match'
+                        });
+                    }
+                    admin.password = Admin.hashPassword(req.body.newPassword);
+                    admin.save((err, doc) => {
+                        if (!err)
+                            return res.status(200).send({
+                                success: true,
+                                message: 'Admin password Changed succussfully'
+                            });
+                        else {
+                            return next(err);
+                        }
+
+                    });
+                }
+            }
+        });
+    } catch (err) {
+        return next(err);
+    }
 }

@@ -27,16 +27,25 @@ adminSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-adminSchema.pre('save', function (next) {
+// adminSchema.pre('save', function (next) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(this.password, salt, (err, hash) => {
+//             this.password = hash;
+//             this.saltSecret = salt;
+//             next();
+//         });
+//     });
+// });
+
+adminSchema.statics.hashPassword = function hashPassword(password) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(this.password, salt, (err, hash) => {
             this.password = hash;
             this.saltSecret = salt;
-            next();
         });
     });
-});
-
+    return bcrypt.hashSync(password, 10);
+}
 
 // Methods
 adminSchema.methods.verifyPassword = function (password) {

@@ -164,6 +164,17 @@ span.show-hide {
     margin: auto;
  }
 
+ .ng-progress-bar {
+    top: calc(100% - 2px) !important;
+  
+    /** or 3px for if [thick]=true */
+    top: calc(100% - 3px) !important;
+  }
+  
+  .spinner {
+    top: unset !important;
+    bottom: 15px;
+  }
  
 @media screen and (max-width: 480px) {
     .login-footer {

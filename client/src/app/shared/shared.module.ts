@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,7 +25,9 @@ import { AttendanceReusalbleComponent } from './components/resUsuableComponents/
 import { TimelineReusalbleComponent } from './components/resUsuableComponents/employee-profile/timeline/timeline.component';
 import { PageNotFoundComponent } from './components/404/page-not-found/page-not-found.component';
 import { CheckLeavesComponent } from './components/resUsuableComponents/check-leaves/check-leaves.component';
-
+import { ChangePasswordFormComponent } from './components/resUsuableComponents/change-password-form/change-password-form.component';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { CheckLeavesComponent } from './components/resUsuableComponents/check-le
     TimelineReusalbleComponent,
     PageNotFoundComponent,
     CheckLeavesComponent,
+    ChangePasswordFormComponent,
   ],
   imports: [
     CommonModule,
@@ -53,14 +56,21 @@ import { CheckLeavesComponent } from './components/resUsuableComponents/check-le
     MatCardModule,
     TableModule,
     MultiSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgProgressModule.withConfig({
+      color: "green"
+    }),
+    NgProgressHttpModule
   ],
   exports: [
     DarkModeComponent,
     PayrollReusalbleComponent,
     EmployeeComponent,
     EmployeeReusalbleProfileComponent,
-    CheckLeavesComponent
+    CheckLeavesComponent,
+    ChangePasswordFormComponent
   ]
 })
 export class SharedModule { }

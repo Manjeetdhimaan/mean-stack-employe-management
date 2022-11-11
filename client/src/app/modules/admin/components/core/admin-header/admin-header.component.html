@@ -17,7 +17,7 @@
         <a mat-button routerLinkActive="active" routerLink="/admin/notifications" (click)="navigate('/admin/notifications')">
           <mat-icon matPrefix>notifications</mat-icon> Notifications
         </a>
-        <a mat-button routerLink="settings" (click)="navigate('settings')">
+        <a mat-button routerLinkActive="active" routerLink="/admin/settings/change-password" (click)="navigate('/admin/settings/change-password')">
           <mat-icon matPrefix>settings</mat-icon> Settings
         </a>
         <a mat-button (click)="onLogOut()">
@@ -38,7 +38,7 @@
     <mat-sidenav #sidenav class="sidenav">
       <mat-nav-list class="inner-sidenav">
         <!-- <a (click)="sidenav.toggle()" mat-list-item>Close</a> -->
-        <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/admin/employees" (click)="navigate('/admin/employees')">
+        <a mat-list-item routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}" routerLink="/admin/employees" (click)="navigate('/admin/employees')">
           <mat-icon matPrefix class="material-icon">account_circle</mat-icon> Employees
         </a>
         <a mat-list-item routerLinkActive="active" routerLink="/admin/employees/leaves/check"
@@ -48,7 +48,7 @@
         <a mat-list-item routerLinkActive="active" routerLink="/admin/notifications" (click)="navigate('/admin/notifications')" matBadge="2">
           <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications
         </a>
-        <a mat-list-item routerLink="settings" (click)="navigate('settings')">
+        <a mat-list-item routerLinkActive="active" routerLink="/admin/settings/change-password" (click)="navigate('/admin/settings/change-password')">
           <mat-icon matPrefix class="material-icon">settings</mat-icon> Settings
         </a>
         <a mat-list-item (click)="onLogOut()">

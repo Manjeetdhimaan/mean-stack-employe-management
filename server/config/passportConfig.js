@@ -34,7 +34,7 @@ passport.use('admin',
                         return done(err);
                     // unknown user
                     else if (!user)
-                        return done(null, false, { message: 'Email is not registered' });
+                        return done(null, false, { message: 'You are not admin!' });
                     // wrong password
                     else if (!user.verifyPassword(password))
                         return done(null, false, { message: 'Wrong password.' });

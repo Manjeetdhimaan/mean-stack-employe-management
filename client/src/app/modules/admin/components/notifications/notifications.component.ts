@@ -85,39 +85,6 @@ export class NotificationsComponent implements OnInit {
     {
       productType: 'Notification '
     },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
-    {
-      productType: 'Notification '
-    },
   ];
 
   ngOnInit(): void {

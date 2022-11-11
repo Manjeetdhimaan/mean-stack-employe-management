@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
@@ -42,8 +42,8 @@ export class EditProfileComponent implements OnInit {
   // 
   userDetails: any;
 
+
   constructor(
-    public formBuilder: FormBuilder,
     // private roleService: RolesService,
     private activatedRoute: ActivatedRoute,
     // private toastService: ToasTMessageService,
@@ -66,9 +66,10 @@ export class EditProfileComponent implements OnInit {
       // serviceCategoryIds: new FormControl(''),
       // serviceIds: new FormControl(''),
       // isProvider: new FormControl(false),
+
+      
     })
     this.onResize();
-
 
     this.userService.getUserProfile().subscribe(
       (res: any) => {
@@ -107,10 +108,7 @@ export class EditProfileComponent implements OnInit {
     catch {
       console.log('some error occured')
     }
-
   }
-
-
 
   fileChangeEvent(e: any) {
     console.log(e);

@@ -81,8 +81,8 @@
                                         <ng-container *ngSwitchCase="'actions'" >
                                             <span class="p-column-title">{{col.header}}</span>
                                             <span *ngIf="!isAdmin">-</span>
-                                            <button class="btn btn-success" href="javascript:void(0)" *ngIf="isAdmin" [disabled]="data.status=='Approved'"  (click)="onRespondToLeaves(data, 'Approved')"><span class="btn-text">Approve</span></button>
-                                            <button class="btn btn-danger" href="javascript:void(0)" *ngIf="isAdmin" [disabled]="data.status=='Denied'" (click)="onRespondToLeaves(data, 'Denied')"><span class="btn-text">Deny</span></button>
+                                            <button class="button btn-success" href="javascript:void(0)" *ngIf="isAdmin" [disabled]="data.status=='Approved'" (click)="onRespondToLeaves(data, 'Approved')"><span class="btn-text">Approve</span></button>
+                                            <button class="button btn-danger" href="javascript:void(0)" *ngIf="isAdmin" [disabled]="data.status=='Denied'" (click)="onRespondToLeaves(data, 'Denied')"><span class="btn-text">Deny</span></button>
                                            
                                         </ng-container>
 
@@ -112,8 +112,10 @@
                             </ng-container>
                         </tr>
                     </ng-template>
+                    
                 </p-table>
             </div>
         </div>
     </div>
 </div>
+<ng-progress [thick]="true"></ng-progress>

@@ -17,6 +17,8 @@ export class AdminLoginComponent implements OnInit {
   isShowPassword: boolean = false;
   serverErrorMessages: string;
 
+  thick: boolean = true
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],

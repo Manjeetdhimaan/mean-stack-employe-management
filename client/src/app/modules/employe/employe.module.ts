@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { EmployeProfileComponent } from './components/employe-profile/employe-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/core/header/header.component';
 import { LeavesComponent } from './components/leaves/leaves.component';
 import { ApplyLeavesComponent } from './components/leaves/apply-leaves/apply-leaves.component';
 
@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { EmployeeChangePasswordComponent } from './components/employee-change-password/employee-change-password.component';
 
 ;
 @NgModule({
@@ -36,6 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
     HeaderComponent,
     LeavesComponent,
     ApplyLeavesComponent,
+    EmployeeChangePasswordComponent,
   ],
   imports: [
     CommonModule,

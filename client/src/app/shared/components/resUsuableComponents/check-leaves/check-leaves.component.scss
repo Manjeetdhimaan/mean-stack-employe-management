@@ -190,6 +190,7 @@
   .btn {
     max-width: 80px;
     padding: 0 6px 3px 6px;
+    margin: 0 4px;
   }
   
   .btn-success {
@@ -209,7 +210,23 @@
   }
 
   button[disabled]{
-    cursor: not-allowed;
+    cursor: not-allowed!important;
+    opacity: 0.7;
+  }
+
+  .button {
+    display: inline-block;
+    max-width: 80px;
+    padding: 3px 6px;
+    margin: 0 4px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
   @media screen and (max-width:991px) {
@@ -239,8 +256,12 @@
     background-color: #bdc0c4;
   }
 
-  .btn {
-    margin: 0 4px;
+  .btn:disabled {
+    cursor: not-allowed;
+  }
+
+  .disabled{
+    cursor: not-allowed;
   }
 
   .loader{

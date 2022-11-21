@@ -11,7 +11,7 @@ import { UserService } from '../../services/user.service';
             [lastName]="lastName" 
             [profileImageUrl]="profileImageUrl" 
             [attendance]="attendance" 
-            [payroll]="payroll" [user]="userDetails"
+            [payroll]="payroll"
             >
       </app-reusable-employee-profile>
   `

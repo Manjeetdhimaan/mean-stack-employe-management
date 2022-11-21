@@ -30,7 +30,7 @@ export class UserService {
   }
 
   updateUserProfile(userBody:any) {
-    return this.http.put(environment.apiBaseUrl + '/updateUserProfile', userBody);
+    return this.http.patch(environment.apiBaseUrl + '/updateUserProfile', userBody);
   }
 
   applyLeave(leaveBody:any) {

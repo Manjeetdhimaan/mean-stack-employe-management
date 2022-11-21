@@ -29,18 +29,18 @@ passport.use('admin',
     new localStrategy({ usernameField: 'email' },
         (username, password, done) => {
             Admin.findOne({ email: username },
-                (err, user) => {
+                (err, adminUser) => {
                     if (err)
                         return done(err);
                     // unknown user
-                    else if (!user)
+                    else if (!adminUser)
                         return done(null, false, { message: 'You are not admin!' });
                     // wrong password
-                    else if (!user.verifyPassword(password))
-                        return done(null, false, { message: 'Wrong password.' });
+                    else if (!adminUser.verifyPassword(password))
+                        return done(null, false, { message: 'Incorrect email or password.' });
                     // authentication succeeded
                     else
-                        return done(null, user);
+                        return done(null, adminUser);
                 });
         })
 );

@@ -1,5 +1,6 @@
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { Component, Inject, Injector, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit, HostBinding } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -11,6 +12,36 @@ import { AdminService } from '../../services/admin.service';
 @Component({
   selector: 'app-employees',
   styleUrls: ['./employees.component.scss'],
+  animations: [
+    trigger('pageAnimations', [
+      transition(':enter', [
+        query('.hero, form', [
+          style({opacity: 0, transform: 'translateY(-100px)'}),
+          stagger(-15, [
+            animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+    trigger('filterAnimation', [
+      transition(':enter, * => 0, * => -1', []),
+      transition(':increment', [
+        query(':enter', [
+          style({ opacity: 0, width: '0px' }),
+          stagger(50, [
+            animate('500ms ease-out', style({ opacity: 1, width: '*' })),
+          ]),
+        ], { optional: true })
+      ]),
+      transition(':decrement', [
+        query(':leave', [
+          stagger(50, [
+            animate('500ms ease-out', style({ opacity: 0, width: '0px' })),
+          ]),
+        ])
+      ]),
+    ]),
+  ],
   template: `
         <div class="container">
             <div class="row">
@@ -31,6 +62,7 @@ export class EmployeesComponent implements OnInit {
       return this.injector.get(ToasTMessageService);
   }
 
+  @HostBinding('@pageAnimations')
   imgUrl: string = ''
 
   users: any;

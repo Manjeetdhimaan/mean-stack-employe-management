@@ -37,7 +37,7 @@ import { EmployeeChangePasswordComponent } from './components/employee-change-pa
     HeaderComponent,
     LeavesComponent,
     ApplyLeavesComponent,
-    EmployeeChangePasswordComponent,
+    EmployeeChangePasswordComponent
   ],
   imports: [
     CommonModule,

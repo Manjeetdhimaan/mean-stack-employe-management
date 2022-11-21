@@ -9,7 +9,8 @@ module.exports.register = (req, res, next) => {
         let user = new User();
         user.fullName = req.body.fullName;
         user.email = req.body.email;
-        user.password = User.hashPassword(req.body.password);
+        user.password = req.body.password;
+        // user.password = User.hashPassword(req.body.password);
         user.phone = req.body.phone;
         user.save((err, doc) => {
             if (!err)
@@ -171,7 +172,7 @@ module.exports.changePassword = (req, res, next) => {
                         message: 'Paswords do no match'
                     });
                 }
-                user.password = User.hashPassword(req.body.newPassword);
+                user.password = req.body.newPassword;
                 user.save((err, doc) => {
                     if (!err)
                         return res.status(200).send({

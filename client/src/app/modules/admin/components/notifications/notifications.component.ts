@@ -1,6 +1,5 @@
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { fade, filterAnimation, slideUp } from 'src/app/shared/common/animations/animations';
 
 @Component({
   selector: 'app-notifications',
@@ -11,8 +10,8 @@ import { fade, filterAnimation, slideUp } from 'src/app/shared/common/animations
       transition(':enter', [
         query('.hero, form', [
           style({opacity: 0, transform: 'translateY(-100px)'}),
-          stagger(-15, [
-            animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
+          stagger(-25, [
+            animate('1500ms cubic-bezier(0.35, 3, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
           ])
         ], { optional: true })
       ])

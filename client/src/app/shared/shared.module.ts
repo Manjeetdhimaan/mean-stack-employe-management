@@ -28,6 +28,10 @@ import { CheckLeavesComponent } from './components/resUsuableComponents/check-le
 import { ChangePasswordFormComponent } from './components/resUsuableComponents/change-password-form/change-password-form.component';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from "ngx-progressbar/http";
+import { CreatePayrollComponent } from './components/resUsuableComponents/employee-profile/create-payroll/create-payroll.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import{ MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,7 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
     PageNotFoundComponent,
     CheckLeavesComponent,
     ChangePasswordFormComponent,
+    CreatePayrollComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +62,10 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
     TableModule,
     MultiSelectModule,
     MatTabsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
     NgProgressModule.withConfig({

@@ -31,11 +31,9 @@ export class AdminChangePasswordComponent implements OnInit {
     try {
       if (!this.changePasswordForm.valid) {
         // show some error message
-        console.log('Form values are not valid');
         return;
       }
       this.adminService.changePassword(formData).subscribe((res: any) => {
-        console.log(res);
         // this.showSucessMessage = true;
         if (res.success === true) {
           this.toastMessageService.success(res.message);

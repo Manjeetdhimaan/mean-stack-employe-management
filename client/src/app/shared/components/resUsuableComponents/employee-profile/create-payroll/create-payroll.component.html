@@ -1,0 +1,240 @@
+<div *ngIf="isAdmin">
+    <div class="bg-white datatable-table">
+        <div class="title">
+            <h3>Pay Slip</h3>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end"> <span>Working Branch:XXX</span> </div>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <div class="d-flex justify-content-end"> <span>Working Branch : XXX</span> </div> -->
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">EMP Code : </span> <strong class="ms-3"> 39124</strong> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">EMP Name : </span> <strong class="ms-3">
+                                    {{userDetails?.fullname}}</strong> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">PF No. : </span> <strong class="ms-3">101523065714</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">NOD : </span> <strong class="ms-3">28</strong> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">ESI No. : </span> <strong class="ms-3"></strong> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">Mode of Pay : </span> <strong class="ms-3">SBI</strong> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">Designation : </span> <strong
+                                    class="ms-3">{{userDetails?.service}}</strong> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div> <span class="fw-bolder">Ac No. : </span> <strong class="ms-3">*******0701</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="col-lg-12 col-sm-12" [formGroup]="payRollForm">
+                    <table class="mt-4 table table-bordered">
+
+                        <thead class="">
+                            <tr>
+                                <th scope="col">Select Month</th>
+                                <th scope="row"><input mat-select
+                                        [ngClass]="{ 'has-error' : (f['month'].errors?.['required'] && payRollForm.controls['month'].touched) || payRollForm.controls['month'].errors?.['required'] && submitted }"
+                                        id="month" type="month" formControlName="month">
+                                        <div class="invalid" *ngIf="(f['month'].errors?.['required'] && payRollForm.controls['month'].touched) || payRollForm.controls['month'].errors?.['required'] && submitted">
+                                            Please select a month for creating pay slip*
+                                          </div></th>
+
+                                       
+                            </tr>
+                            
+                        </thead>
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th scope="col">Earnings (in INR)</th>
+                                <th scope="col">Deductions (in INR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Basic</mat-label><input matInput
+                                            
+                                            type="number" class="question" formControlName="basic">
+                                    </mat-form-field>
+                                </td>
+
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>PF</mat-label><input matInput
+                                            type="number" formControlName="pf">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>DA</mat-label><input matInput type="number" formControlName="da">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>ESI</mat-label><input matInput type="number" formControlName="esi">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>HRA</mat-label><input matInput type="number" formControlName="hra">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>TDS</mat-label><input matInput type="number" formControlName="tds">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>WA</mat-label><input matInput type="number" formControlName="wa">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>LOP</mat-label><input matInput type="number" formControlName="lop">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>CA</mat-label><input matInput type="number" formControlName="ca">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>PT</mat-label><input matInput type="number" formControlName="pt">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>CCA</mat-label><input matInput type="number" formControlName="cca">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>SPL. Deduction</mat-label><input matInput type="number" formControlName="SPL_Deduction">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>MA</mat-label><input matInput type="number" formControlName="ma">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>EWF</mat-label><input matInput type="number" formControlName="ewf">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Sales Incentive</mat-label><input matInput type="number" formControlName="SalesIncentive">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>CD</mat-label><input matInput type="number" formControlName="cd">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Leave Encashment</mat-label><input matInput type="number" formControlName="LeaveEncashment">
+                                    </mat-form-field>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Holiday Wages</mat-label><input matInput type="number" formControlName="HolidayWages">
+                                    </mat-form-field>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Special Allowance</mat-label><input matInput type="number" formControlName="SpecialAllowance">
+                                    </mat-form-field>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Bonus</mat-label><input matInput type="number" formControlName="Bonus">
+                                    </mat-form-field>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-label>Individual Incentive</mat-label><input matInput type="number" formControlName="IndividualIncentive">
+                                    </mat-form-field>
+                                </td>
+                                <td colspan="2">
+                                </td>
+                            </tr>
+                            <tr class="border-top">
+                                <th scope="row">Total Earning : ₹{{ onGetTotalEarning() }}</th>
+                                <th>Total Deductions : ₹{{ onGetTotalDeductions() }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <button class="btn btn-primary" type="submit">Save Salary Slip</button> -->
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-4"> <br> <span class="fw-bold">Net Pay : ₹{{ getNetPay() }}</span> </div>
+                <div class="border col-md-8">
+                    <div class="d-flex flex-column"> <span>In Words</span> <span>Twenty Five thousand nine hundred
+                            seventy only</span> </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="d-flex flex-column mt-2"> <span class="fw-bolder">Younedia</span> <span
+                        class="mt-4">Authorised Signatory</span> </div>
+            </div>
+
+        </div>

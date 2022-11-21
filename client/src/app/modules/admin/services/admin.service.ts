@@ -33,7 +33,7 @@ export class AdminService {
 
   updateUserProfile(userBody: any) {
     this.isAdmin = true;
-    return this.http.put(environment.apiBaseUrl + '/admin/updateUserProfile', userBody);
+    return this.http.patch(environment.apiBaseUrl + '/admin/updateUserProfile', userBody);
   }
 
   getAdminProfile() {
@@ -59,12 +59,17 @@ export class AdminService {
 
   respondToLeaves(id: string, leaveBody:any) {
     this.isAdmin = true;
-    return this.http.put(environment.apiBaseUrl + `/admin/respondToLeaves/${id}`, leaveBody);
+    return this.http.patch(environment.apiBaseUrl + `/admin/respondToLeaves/${id}`, leaveBody);
   }
 
   getUser(id:string) {
     this.isAdmin = true;
     return this.http.get(environment.apiBaseUrl + `/admin/getUser/${id}`);
+  }
+
+  createPayroll(id: string, payrollBody:any) {
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl + `/admin/createPayroll/${id}`, payrollBody);
   }
 
   changePassword(passwordBody:any) {

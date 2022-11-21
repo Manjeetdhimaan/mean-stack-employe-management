@@ -91,129 +91,131 @@ const userSchema = new mongoose.Schema({
 
     }],
     payroll: [{
+        type: Object,
+        required: false,
         month: {
             type: String,
-            required: false,
+            required: true,
             trim: true
         },
         basic: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         da: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         hra: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         wa: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         ca: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         cca: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         ma: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         SalesIncentive: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         LeaveEncashment: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         HolidayWages: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         SpecialAllowance: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         Bonus: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         IndividualIncentive: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         pf: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         esi: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         tds: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         lop: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         pt: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         SPL_Deduction: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         ewf: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         cd: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
-        totalEarning: {
+        totalEarnings: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         totalDeductions: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
         netPay: {
             type: Number,
-            required: false,
+            required: true,
             trim: true
         },
     }],
@@ -229,15 +231,15 @@ userSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-// userSchema.pre('save', function (next) {
-//     bcrypt.genSalt(10, (err, salt) => {
-//         bcrypt.hash(this.password, salt, (err, hash) => {
-//             this.password = hash;
-//             this.saltSecret = salt;
-//             next();
-//         });
-//     });
-// });
+userSchema.pre('save', function (next) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(this.password, salt, (err, hash) => {
+            this.password = hash;
+            this.saltSecret = salt;
+            next();
+        });
+    });
+});
 
 userSchema.statics.hashPassword = function hashPassword(password) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -252,7 +254,7 @@ userSchema.statics.hashPassword = function hashPassword(password) {
 
 // Methods
 userSchema.methods.verifyPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
 

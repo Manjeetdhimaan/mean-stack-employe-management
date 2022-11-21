@@ -35,8 +35,8 @@ export class EmployeLoginComponent implements OnInit {
   }
 
   submitForm() {
-    // let data  = this.loginForm.value
-    // data.fullName = "Shalu Toor"
+    // const data  = this.loginForm.value
+    // data.fullName = "Manjeet Singh"
     // data.phone = "1111222233"
     // this.userService.postUser(data).subscribe(
     //   res => {

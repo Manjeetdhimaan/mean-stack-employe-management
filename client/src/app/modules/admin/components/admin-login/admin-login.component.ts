@@ -32,16 +32,18 @@ export class AdminLoginComponent implements OnInit {
   }
 
   submitForm() {
-    // let data  = this.loginForm.value
-    // data.fullName = "Shalu Toor"
+    // const data  = this.loginForm.value
+    // data.fullName = "Admin"
     // data.phone = "1111222233"
-    // this.userService.postUser(data).subscribe(
+    // this.adminService.postUser(data).subscribe(
     //   res => {
-    //     this.router.navigate(['/'])
+    //     console.log(res)
+    //     // this.router.navigate(['/'])
     //   },
     //   err => {
     //     if (err.status === 422) {
-    //       this.serverErrorMessages = err.error.join('<br/>');
+    //       console.log(err)
+    //       // this.serverErrorMessages = err.error.join('<br/>');
     //     }
     //     else
     //       this.serverErrorMessages = 'Something went wrong.Please contact admin.';
@@ -72,4 +74,5 @@ export class AdminLoginComponent implements OnInit {
     this.serverErrorMessages = '';
   }
 
+  
 }

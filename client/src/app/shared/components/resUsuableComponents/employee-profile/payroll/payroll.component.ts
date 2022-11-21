@@ -10,7 +10,7 @@ export class PayrollReusalbleComponent implements OnInit {
 
   constructor(private userService: UserService) { }
    @Input() payroll:any= [];
-   @Input() user:any = {};
+   @Input() userDetails:any = {};
  
   ngOnInit(): void {
 

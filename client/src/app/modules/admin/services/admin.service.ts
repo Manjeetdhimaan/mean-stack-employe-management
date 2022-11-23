@@ -82,16 +82,16 @@ export class AdminService {
   //Helper Methods
 
   setToken(token: string) {
-    localStorage.setItem('admin-token', token);
+    localStorage.setItem('token', token);
   }
 
   getToken() {
-    return localStorage.getItem('admin-token');
+    return localStorage.getItem('token');
   }
 
   deleteToken() {
     this.isAdmin = false;
-    localStorage.removeItem('admin-token');
+    localStorage.removeItem('token');
   }
 
   getUserPayload() {

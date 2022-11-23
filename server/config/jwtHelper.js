@@ -32,7 +32,7 @@ module.exports.verifyJwtToken = (req, res, next) => {
 
 module.exports.isAdmin =  (req, res, next) => {
     Admin.findOne({
-            id: req._id
+            _id: req._id
         },
         (err, user) => {
             if (err){
@@ -45,10 +45,11 @@ module.exports.isAdmin =  (req, res, next) => {
             else if (!user){
                 return res.status(404).send({
                     auth: false,
-                    message: 'User not found'
+                    message: 'Admin not found'
                 });
            }
             // authentication succeeded
+           
             
             else if ( user['role'] !== 'Admin'){
                 return res.status(401).send({

@@ -25,9 +25,9 @@ export class AdminLoginComponent implements OnInit {
       password: ['', [Validators.required]]
     });
 
-    if (this.adminService.isLoggedIn()) {
-      this.router.navigateByUrl(`/admin/employees`);
-    }
+    // if (this.adminService.isLoggedIn()) {
+    //   this.router.navigateByUrl(`/admin/employees`);
+    // }
 
   }
 

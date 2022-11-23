@@ -33,7 +33,7 @@ export class EmployeProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
-        this.payroll = this.userDetails.payroll.sort((a: any, b: any) => a.month.slice(0, 4) - b.month.slice(0, 4)).reverse();
+        this.payroll = this.userDetails.payroll.sort((a: any, b: any) => a.month?.slice(0, 4) - b.month?.slice(0, 4)).reverse();
         this.profileImageUrl = this.userDetails['imgUrl']
         this.attendance = this.userDetails.attendance.reverse();
         this.firstName = this.userDetails['fullName'].toString().split(" ")[0].trim();
@@ -45,6 +45,9 @@ export class EmployeProfileComponent implements OnInit {
       },
       err => {
         console.log(err);
+        if(err.error.message=== 'User record not found.') {
+          this.userService.redirectToLogin();
+        }
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AdminService } from '../../../services/admin.service';
@@ -15,6 +15,8 @@ export class AdminHeaderComponent implements OnInit {
   displayNavbar: boolean;
 
   constructor(private router: Router, private adminService: AdminService) { }
+
+  @ViewChild('sidenavContent') sidenavContent: ElementRef;
 
   ngOnInit(): void {
     this.displayNavbar = true;
@@ -34,6 +36,8 @@ export class AdminHeaderComponent implements OnInit {
   // disable body scrolling while sidenav is opened and enabling it while sidenav is closed
   toggleBodyScroll() {
     document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
+    this.sidenavContent.nativeElement.style.filter = this.sidenav.opened ? 'blur(8px)' : 'blur(0)'
+    
   }
 
   navigate(route: string) {

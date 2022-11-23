@@ -10,7 +10,7 @@ router.post('/register', ctrlAdmin.register);
 
 router.post('/authenticate', ctrlAdmin.authenticate);
 router.get('Profile', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.adminProfile);
-router.get('/getUsers', ctrlAdmin.getUsers);
+router.get('/getUsers', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUsers);
 router.get('/getUser/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUser);
 
 router.post('/checkIn/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, jwtHelper.isAdmin,  ctrlAdmin.checkIn);

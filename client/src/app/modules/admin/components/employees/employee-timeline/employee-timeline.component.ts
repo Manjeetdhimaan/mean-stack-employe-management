@@ -52,11 +52,8 @@ export class EmployeeTimelineComponent implements OnInit {
         });
 
         // create payroll logic 
-        console.log(res['user'].attendance)
 
         const lastpay = this.userDetails.payroll.reverse();
-
-        console.log(lastpay)
 
         if (lastpay.length > 0) {
           lastpay.map((pay: any) => {
@@ -79,8 +76,6 @@ export class EmployeeTimelineComponent implements OnInit {
             lastpay[0].SpecialAllowance +
             lastpay[0].Bonus +
             lastpay[0].IndividualIncentive;
-
-
 
           this.totalDeductions = lastpay[0].pf +
             lastpay[0].esi +

@@ -28,9 +28,9 @@ export class EmployeLoginComponent implements OnInit {
       password: ['', [Validators.required]]
     });
 
-    if (this.userService.isLoggedIn()) {
-      this.router.navigateByUrl(`/employee/profile`);
-    }
+    // if (this.userService.isLoggedIn()) {
+    //   this.router.navigateByUrl(`/employee/profile`);
+    // }
 
   }
 

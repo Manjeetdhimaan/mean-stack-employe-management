@@ -16,25 +16,27 @@
                     [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="globalFilterColumn">
                     <ng-template pTemplate="caption">
                         <div class="flex">
-                            <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
+                            <p-multiSelect  [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
                                 selectedItemsLabel="{0} Columns" [style]="{minWidth: '120px'}"
                                 placeholder="Choose Columns">
                             </p-multiSelect>
-                            <span class="p-input-icon-left ml-auto"><i class="pi pi-search"></i>
-                                <div class="table-button">
-                                    <input pInputText class="search-table" type="text"
-                                        (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
-                                        placeholder="Search keyword" />
-                                    <div class="table-btn-wrapper" *ngIf="!isAdmin">
+                                <span class="p-input-icon-left ml-auto" ><i class="pi pi-search"></i>
+                                    <div class="table-button">
+                                        <input pInputText class="search-table" type="text"
+                                            (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                            placeholder="Search keyword" />
+                                    </div>
+                                </span>
+                                <span class="p-input-icon-left ml-auto">
+                                    <div class="table-btn-wrapper table-button" *ngIf="!isAdmin" >
                                         <span class="icon">
                                             <i class="fa fa-plus"></i>
                                             <a routerLink="/employee/leaves/apply">Apply for leave
                                             </a>
                                         </span>
                                     </div>
-                                </div>
-
-                            </span>
+                                </span>
+                              
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header" let-columns>

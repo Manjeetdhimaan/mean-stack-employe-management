@@ -9,6 +9,11 @@ import { EditAdminProfileComponent } from './components/edit-admin-profile/edit-
 import { EmployeesComponent } from './components/employees/employees.component';
 import { AdminHeaderComponent } from './components/core/admin-header/admin-header.component';
 
+import { AdminChangePasswordComponent } from './components/admin-change-password/admin-change-password.component';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
+import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,9 +25,12 @@ import { EmployeesLeavesComponent } from './components/employees-leaves/employee
 import { EmployeeLeavesComponent } from './components/employees-leaves/employee-leaves/employee-leaves.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { MatCardModule } from '@angular/material/card';
-import { AdminChangePasswordComponent } from './components/admin-change-password/admin-change-password.component';
-import { NgProgressModule } from 'ngx-progressbar';
-import { NgProgressHttpModule } from "ngx-progressbar/http";
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -33,7 +41,8 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
     EmployeesLeavesComponent,
     EmployeeLeavesComponent,
     NotificationsComponent,
-    AdminChangePasswordComponent
+    AdminChangePasswordComponent,
+    AddEmployeeComponent
   ],
   imports: [
     CommonModule,
@@ -49,6 +58,12 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
     SharedModule,
     MatInputModule,
     MatCardModule,
+    MatGridListModule,
+    MatRadioModule,
+    MatDatepickerModule,       
+    MatNativeDateModule,
+    MatDialogModule,
+    MatFormFieldModule,
     NgProgressModule.withConfig({
       color: "green"
     }),

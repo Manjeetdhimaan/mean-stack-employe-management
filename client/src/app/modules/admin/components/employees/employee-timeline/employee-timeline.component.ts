@@ -3,19 +3,35 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
+const MONTHS = {
+  0: "Jan",
+  1: "Feb",
+  2: "Mar",
+  3: "Apr",
+  4: "May",
+  5: "Jun",
+  6: "Jul",
+  7: "Aug",
+  8: "Sep",
+  9: "Oct",
+  10: "Nov",
+  11: "Dec",
+}
 
 @Component({
   selector: 'app-employee-timeline',
   templateUrl: './employee-timeline.component.html',
   styleUrls: ['./employee-timeline.component.scss']
 })
+
+
 export class EmployeeTimelineComponent implements OnInit {
 
   constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private router: Router, @Inject(Injector) private readonly injector: Injector) { }
 
   private get toastMessageService() {
     return this.injector.get(ToasTMessageService);
-}
+  }
   userDetails: any = {};
   firstName: string = '';
   lastName: string = '';
@@ -33,6 +49,7 @@ export class EmployeeTimelineComponent implements OnInit {
     payForm: [],
   });;
 
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.id = params['id'];
@@ -41,74 +58,88 @@ export class EmployeeTimelineComponent implements OnInit {
     this.adminService.getUser(this.id).subscribe(
       (res: any) => {
         this.userDetails = res['user'];
-        this.payroll = this.userDetails.payroll.sort((a: any, b: any) => a.month?.slice(0, 4) - b.month?.slice(0, 4)).reverse();
+        this.payroll = this.userDetails.payroll.slice().sort((a: any, b: any) => a.month?.slice(0, 4) - b.month?.slice(0, 4)).reverse();
         this.profileImageUrl = this.userDetails['imgUrl']
         this.attendance = this.userDetails.attendance.reverse();
-        this.firstName = this.userDetails['fullName'].toString().split(" ")[0].trim();
-        const lastNameArray = this.userDetails['fullName'].toString().split(" ").slice(1);
+        this.firstName = this.userDetails['fullName'].slice().toString().split(" ")[0].trim();
+        const lastNameArray = this.userDetails['fullName'].slice().toString().split(" ").slice(1);
         this.lastName = '';
         lastNameArray.map((n: string, i: number) => {
           this.lastName += (n) + ' '
         });
 
+        const d = new Date(this.userDetails?.joindate);
+        console.log(d)
+        Object.entries(MONTHS).forEach(
+          ([key, value]) => {
+            if (+key == +d.getMonth()) {
+              const date = d.getDate();
+              const month = value;
+              const year = d.getFullYear();
+              this.userDetails.joindate = `${month} ${date} ${year}`
+            }
+          }
+        );
+
+
         // create payroll logic 
 
-        const lastpay = this.userDetails.payroll.reverse();
+        const reversedPay = this.userDetails.payroll.reverse();
 
-        if (lastpay.length > 0) {
-          lastpay.map((pay: any) => {
+        if (reversedPay.length > 0) {
+          reversedPay.map((pay: any) => {
             if (!pay) {
               pay = 0;
             }
           });
 
           this.totalEarning =
-            lastpay[0].basic +
-            lastpay[0].da +
-            lastpay[0].hra +
-            lastpay[0].wa +
-            lastpay[0].ca +
-            lastpay[0].cca +
-            lastpay[0].ma +
-            lastpay[0].SalesIncentive +
-            lastpay[0].LeaveEncashment +
-            lastpay[0].HolidayWages +
-            lastpay[0].SpecialAllowance +
-            lastpay[0].Bonus +
-            lastpay[0].IndividualIncentive;
+            reversedPay[0].basic +
+            reversedPay[0].da +
+            reversedPay[0].hra +
+            reversedPay[0].wa +
+            reversedPay[0].ca +
+            reversedPay[0].cca +
+            reversedPay[0].ma +
+            reversedPay[0].SalesIncentive +
+            reversedPay[0].LeaveEncashment +
+            reversedPay[0].HolidayWages +
+            reversedPay[0].SpecialAllowance +
+            reversedPay[0].Bonus +
+            reversedPay[0].IndividualIncentive;
 
-          this.totalDeductions = lastpay[0].pf +
-            lastpay[0].esi +
-            lastpay[0].tds +
-            lastpay[0].lop +
-            lastpay[0].pt +
-            lastpay[0].SPL_Deduction +
-            lastpay[0].ewf +
-            lastpay[0].cd
+          this.totalDeductions = reversedPay[0].pf +
+            reversedPay[0].esi +
+            reversedPay[0].tds +
+            reversedPay[0].lop +
+            reversedPay[0].pt +
+            reversedPay[0].SPL_Deduction +
+            reversedPay[0].ewf +
+            reversedPay[0].cd
 
           this.payRollForm.controls['payForm'].setValue({
             month: null,
-            basic: lastpay[0].basic,
-            da: lastpay[0].da,
-            hra: lastpay[0].hra,
-            wa: lastpay[0].wa,
-            ca: lastpay[0].ca,
-            cca: lastpay[0].cca,
-            ma: lastpay[0].ma,
-            SalesIncentive: lastpay[0].SalesIncentive,
-            LeaveEncashment: lastpay[0].LeaveEncashment,
-            HolidayWages: lastpay[0].HolidayWages,
-            SpecialAllowance: lastpay[0].SpecialAllowance,
-            Bonus: lastpay[0].Bonus,
-            IndividualIncentive: lastpay[0].IndividualIncentive,
-            pf: lastpay[0].pf,
-            esi: lastpay[0].esi,
-            tds: lastpay[0].tds,
-            lop: lastpay[0].lop,
-            pt: lastpay[0].pt,
-            SPL_Deduction: lastpay[0].SPL_Deduction,
-            ewf: lastpay[0].ewf,
-            cd: lastpay[0].cd,
+            basic: reversedPay[0].basic,
+            da: reversedPay[0].da,
+            hra: reversedPay[0].hra,
+            wa: reversedPay[0].wa,
+            ca: reversedPay[0].ca,
+            cca: reversedPay[0].cca,
+            ma: reversedPay[0].ma,
+            SalesIncentive: reversedPay[0].SalesIncentive,
+            LeaveEncashment: reversedPay[0].LeaveEncashment,
+            HolidayWages: reversedPay[0].HolidayWages,
+            SpecialAllowance: reversedPay[0].SpecialAllowance,
+            Bonus: reversedPay[0].Bonus,
+            IndividualIncentive: reversedPay[0].IndividualIncentive,
+            pf: reversedPay[0].pf,
+            esi: reversedPay[0].esi,
+            tds: reversedPay[0].tds,
+            lop: reversedPay[0].lop,
+            pt: reversedPay[0].pt,
+            SPL_Deduction: reversedPay[0].SPL_Deduction,
+            ewf: reversedPay[0].ewf,
+            cd: reversedPay[0].cd,
           })
         }
       },
@@ -148,7 +179,7 @@ export class EmployeeTimelineComponent implements OnInit {
   onSubmitPayRollForm(event: any) {
     this.submitted = true;
     console.log(this.payRollForm.valid);
-    if(!this.payRollForm.valid) {
+    if (!this.payRollForm.valid) {
       this.toastMessageService.error(`Please fill all the required fields`);
       return;
     }

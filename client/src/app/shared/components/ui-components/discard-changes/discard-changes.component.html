@@ -1,0 +1,16 @@
+<div>
+  <h3>{{ data.confirmationText }}</h3>
+  <div >
+    <div class="col-lg-10 col-md-12 col-sm-12 buttons">
+      <div class="button-flex">
+        <button class="btn btn-save btn-regular" (click)="cancelN(data.logoutParameter)" [mat-dialog-close]="{logout: true}" >
+          <span class="btn-text" >{{ data.confirmBtnText }}</span>
+        </button>
+        <button type="button" class="btn btn-cancel btn-regular" (click)="cancel()">
+          <span class="btn-text">{{ data.cancelBtnText }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

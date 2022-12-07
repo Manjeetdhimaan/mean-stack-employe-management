@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { slideUp } from 'src/app/shared/common/animations/animations';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-change-password',
   templateUrl: './admin-change-password.component.html',
-  styleUrls: ['./admin-change-password.component.scss']
+  styleUrls: ['./admin-change-password.component.scss'],
+  animations: [slideUp]
 })
 export class AdminChangePasswordComponent implements OnInit {
 

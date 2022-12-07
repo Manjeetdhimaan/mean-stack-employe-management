@@ -1,7 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { DiscardChangesComponent } from 'src/app/shared/components/ui-components/discard-changes/discard-changes.component';
 import { AdminService } from '../../../services/admin.service';
+import { AddEmployeeComponent } from '../../add-employee/add-employee.component';
 
 @Component({
   selector: 'app-admin-header',
@@ -14,7 +17,7 @@ export class AdminHeaderComponent implements OnInit {
   opened: boolean;
   displayNavbar: boolean;
 
-  constructor(private router: Router, private adminService: AdminService) { }
+  constructor(private router: Router, private adminService: AdminService, public dialog: MatDialog) { }
 
   @ViewChild('sidenavContent') sidenavContent: ElementRef;
 
@@ -37,7 +40,7 @@ export class AdminHeaderComponent implements OnInit {
   toggleBodyScroll() {
     document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
     this.sidenavContent.nativeElement.style.filter = this.sidenav.opened ? 'blur(8px)' : 'blur(0)'
-    
+
   }
 
   navigate(route: string) {
@@ -48,11 +51,32 @@ export class AdminHeaderComponent implements OnInit {
     this.router.navigateByUrl(route);
   }
 
-  onLogOut() {
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddEmployeeComponent, {
+      width: '1040px'
+    });
     this.sidenav.close();
-    this.adminService.deleteToken();
-    document.body.style.overflow = 'auto';
-    this.router.navigate(['/admin/login']);
+  }
+
+  onLogOut() {
+    const dialogRef = this.dialog.open(DiscardChangesComponent, {
+      width: '300px',
+      panelClass: ['animate__animated','animate__slideInUp'],
+      data: { confirmBtnText: 'Logout', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to logout?', logoutParameter: 'logout' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      document.body.style.overflow = 'auto';
+      if (!result) {
+        return;
+      }
+      this.sidenav.close();
+      this.adminService.deleteToken();
+      document.body.style.overflow = 'auto';
+      this.router.navigate(['/admin/login']);
+    });
+
   }
 
 }

@@ -3,7 +3,7 @@
         <h3>Pay Slip</h3>
     </div>
 </div>
-<div class="container mt-5 mb-5" *ngFor="let pay of payroll ">
+<div class="container mt-5 mb-5" *ngFor="let pay of [payroll?.[indexOfRenderedItem]]">
     <!-- | paginate: { itemsPerPage: 1, currentPage: p } -->
     <div class="row">
  
@@ -11,7 +11,7 @@
             
             <div class="lh-1 mb-2">
                
-                <span class="fw-normal">Payment slip for the month of {{pay.month}}</span>
+                <span class="fw-normal">Payment slip for the month of {{pay?.month}}</span>
             </div>
             <div class="d-flex justify-content-end"> <span>Working Branch : XXX</span> </div>
             <div class="row">
@@ -61,88 +61,88 @@
                     <tbody>
                         <tr>
                             <th scope="row">Basic</th>
-                            <td>₹{{pay.basic}}</td>
+                            <td>₹{{pay?.basic}}</td>
                             <td>PF</td>
-                            <td>₹{{pay.pf}}</td>
+                            <td>₹{{pay?.pf}}</td>
                         </tr>
                         <tr>
                             <th scope="row">DA</th>
-                            <td>₹{{pay.da}}</td>
+                            <td>₹{{pay?.da}}</td>
                             <td>ESI</td>
-                            <td>₹{{pay.esi}}</td>
+                            <td>₹{{pay?.esi}}</td>
                         </tr>
                         <tr>
                             <th scope="row">HRA</th>
-                            <td>₹{{pay.hra}}</td>
+                            <td>₹{{pay?.hra}}</td>
                             <td>TDS</td>
-                            <td>₹{{ pay.tds }}</td>
+                            <td>₹{{ pay?.tds }}</td>
                         </tr>
                         <tr>
                             <th scope="row">WA</th>
-                            <td>₹{{pay.wa}}</td>
+                            <td>₹{{pay?.wa}}</td>
                             <td>LOP</td>
-                            <td>₹{{pay.lop}}</td>
+                            <td>₹{{pay?.lop}}</td>
                         </tr>
                         <tr>
                             <th scope="row">CA</th>
-                            <td>₹{{pay.ca}}</td>
+                            <td>₹{{pay?.ca}}</td>
                             <td>PT</td>
-                            <td>₹{{ pay.pt }}</td>
+                            <td>₹{{ pay?.pt }}</td>
                         </tr>
                         <tr>
                             <th scope="row">CCA</th>
-                            <td>₹{{pay.cca}}</td>
+                            <td>₹{{pay?.cca}}</td>
                             <td>SPL. Deduction</td>
-                            <td>₹{{ pay.SPL_Deduction }}</td>
+                            <td>₹{{ pay?.SPL_Deduction }}</td>
                         </tr>
                         <tr>
                             <th scope="row">MA</th>
-                            <td>₹{{pay.ma}}</td>
+                            <td>₹{{pay?.ma}}</td>
                             <td>EWF</td>
-                            <td>₹{{pay.ewf}}</td>
+                            <td>₹{{pay?.ewf}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Sales Incentive</th>
-                            <td>₹{{pay.SalesIncentive}}</td>
+                            <td>₹{{pay?.SalesIncentive}}</td>
                             <td>CD</td>
-                            <td>₹{{pay.cd}}</td>
+                            <td>₹{{pay?.cd}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Leave Encashment</th>
-                            <td>₹{{pay.LeaveEncashment}}</td>
+                            <td>₹{{pay?.LeaveEncashment}}</td>
                             <td colspan="2"></td>
                         </tr>
                         <tr>
                             <th scope="row">Holiday Wages</th>
-                            <td>₹{{pay.HolidayWages}}</td>
+                            <td>₹{{pay?.HolidayWages}}</td>
                             <td colspan="2"></td>
                         </tr>
                         <tr>
                             <th scope="row">Special Allowance</th>
-                            <td>₹{{pay.SpecialAllowance}}</td>
+                            <td>₹{{pay?.SpecialAllowance}}</td>
                             <td colspan="2"></td>
                         </tr>
                         <tr>
                             <th scope="row">Bonus</th>
-                            <td>₹{{pay.Bonus}}</td>
+                            <td>₹{{pay?.Bonus}}</td>
                             <td colspan="2"></td>
                         </tr>
                         <tr>
                             <th scope="row">Individual Incentive</th>
-                            <td>₹{{pay.IndividualIncentive}}</td>
+                            <td>₹{{pay?.IndividualIncentive}}</td>
                             <td colspan="2"></td>
                         </tr>
                         <tr class="border-top">
                             <th scope="row">Total Earning</th>
-                            <td>₹{{pay.totalEarning}}</td>
+                            <td>₹{{pay?.totalEarning}}</td>
                             <td>Total Deductions</td>
-                            <td>₹{{ pay.totalDeductions}}</td>
+                            <td>₹{{ pay?.totalDeductions}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="row">
-                <div class="col-md-4"> <br> <span class="fw-bold">Net Pay : {{ pay.netPay }}</span> </div>
+                <div class="col-md-4"> <br> <span class="fw-bold">Net Pay : {{ pay?.netPay }}</span> </div>
                 <div class="border col-md-8">
                     <div class="d-flex flex-column"> <span>In Words</span> <span>Twenty Five thousand nine hundred seventy only</span> </div>
                 </div>
@@ -154,6 +154,8 @@
         </div>
     </div>
 </div>
+
+<p-paginator [rows]="10" [totalRecords]="payroll?.length" [rowsPerPageOptions]="[1]" (onPageChange)="paginate($event)"></p-paginator>
 <!-- <div style="text-align: center;">
     <pagination-controls *ngIf="payroll?.length>1" (pageChange)="p = $event"></pagination-controls>
 </div> -->

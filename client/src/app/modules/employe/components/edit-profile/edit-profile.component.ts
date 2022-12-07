@@ -1,9 +1,12 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, Inject, Injector } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
+import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserService } from '../../services/user.service';
+
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -51,8 +54,12 @@ export class EditProfileComponent implements OnInit {
     // private localStorgaeService: LocalStorageService,
     // private authService: AuthService,
     // private convertImageService: ConvertImageService,
-    private router: Router
-  ) { }
+    private router: Router, @Inject(Injector) private readonly injector: Injector) { }
+
+
+    private get toastMessageService() {
+      return this.injector.get(ToasTMessageService);
+  }
   ngOnInit(): void {
     this.userForm = new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
@@ -61,12 +68,11 @@ export class EditProfileComponent implements OnInit {
       phone: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.mobile)]),
       // roleId: new FormControl(''),
       // designation: new FormControl(''),
-      // description: new FormControl(''),
+      bio: new FormControl(''),
       // clinicIds: new FormControl(''),
       // serviceCategoryIds: new FormControl(''),
       // serviceIds: new FormControl(''),
       // isProvider: new FormControl(false),
-
       
     })
     this.onResize();
@@ -85,6 +91,7 @@ export class EditProfileComponent implements OnInit {
           lastName: lastName.trim(),
           email: this.userDetails['email'],
           phone: this.userDetails['phone'],
+          bio: this.userDetails['bio'],
         })
       },
       err => {
@@ -97,8 +104,10 @@ export class EditProfileComponent implements OnInit {
   submitForm() {
     let formData = this.userForm.value;
     try {
-      this.userService.updateUserProfile(formData).subscribe((res) => {
+      this.userService.updateUserProfile(formData).subscribe((res: any) => {
         // this.showSucessMessage = true;
+        console.log(res)
+        this.toastMessageService.success(res['msg']);
         this.router.navigate([`/employee/profile`]);
       },
         err => {
@@ -106,7 +115,7 @@ export class EditProfileComponent implements OnInit {
         })
     }
     catch {
-      console.log('some error occured')
+      console.log('An error occured');
     }
   }
 

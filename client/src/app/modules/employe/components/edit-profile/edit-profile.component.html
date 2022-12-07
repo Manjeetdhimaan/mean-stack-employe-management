@@ -116,21 +116,21 @@
                 </div> -->
 
               <!-- ----------------------- User Description field ------------------------ -->
-              <!-- <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!isProvider || isMobileDevice">
+              <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!isProvider || isMobileDevice">
                   <div class="form-group"
-                    [ngClass]="f['description'].invalid && ((f['description'].dirty || f['description'].touched))?'has-error':''">
+                    [ngClass]="f['bio'].invalid && ((f['bio'].dirty || f['bio'].touched))?'has-error':''">
                     <label>Description</label>
                     <textarea rows="5" cols="80" class="form-control textarea" 
-                      appErrorStylingDirective></textarea>
+                      appErrorStylingDirective formControlName="bio"></textarea>
   
                     <div class="error error-msg">
-                      <div *ngIf="f['description'].errors?.['maxlength']">
+                      <div *ngIf="f['bio'].errors?.['maxlength']">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                         Description should not exceed 200 characters
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
               <!-- -------------------------- user is provider --------------------------- -->
               <!-- <div class="col-lg-6">
                   <div class="form-group">
@@ -268,13 +268,13 @@
             <!-- ----------------------- User Description field ------------------------ -->
             <!-- <div class="col-lg-12 col-md-12 col-sm-12" *ngIf=" !isMobileDevice && isProvider">
                 <div class="form-group"
-                  [ngClass]="f['description'].invalid && ((f['description'].dirty || f['description'].touched))?'has-error':''">
+                  [ngClass]="f['bio'].invalid && ((f['bio'].dirty || f['bio'].touched))?'has-error':''">
                   <label>Description</label>
-                  <textarea rows="3" cols="80" class="form-control textarea" formControlName="description"
+                  <textarea rows="3" cols="80" class="form-control textarea" formControlName="bio"
                     appErrorStylingDirective></textarea>
   
                   <div class="error error-msg">
-                    <div *ngIf="f['description'].errors?.['maxlength']">
+                    <div *ngIf="f['bio'].errors?.['maxlength']">
                       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                       Description should not exceed 200 characters
                     </div>
@@ -333,4 +333,4 @@
 
   
 
- 
+  <ng-progress [thick]="true"></ng-progress>

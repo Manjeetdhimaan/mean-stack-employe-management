@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
         required: [false, 'Please enter a service'],
         trim: true
     },
+    bio: {
+        type: String,
+        required: [false, 'Please enter a service'],
+        trim: true
+    },
     joindate: {
         type: Date,
         required: [false, 'Please provide joining date'],

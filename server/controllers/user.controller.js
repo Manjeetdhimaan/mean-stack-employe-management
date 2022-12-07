@@ -76,7 +76,7 @@ module.exports.userProfile = (req, res, next) => {
             }
         );
     } catch (err) {
-        return next(err)
+        return next(err);
     }
 
 }
@@ -126,12 +126,14 @@ module.exports.updateUserProfile = (req, res, next) => {
                     if (req.body.bio) {
                         foundedObject.bio = req.body.bio;
                     }
+                    if (req.body.phone) {
+                        foundedObject.phone = req.body.phone;
+                    }
                     foundedObject.save((err, updatedObject) => {
                         if (err) {
-                            console.log(err)
-                            res.status(500).send();
+                            res.status(500).send({msg: err});
                         } else {
-                            res.send(updatedObject)
+                            res.send({msg: 'Profile Updated Successfully!'})
                         }
                     })
                 }

@@ -15,6 +15,8 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
+import {PaginatorModule} from 'primeng/paginator';
+
 
 import { DarkModeComponent } from './components/ui-components/dark-mode/dark-mode.component';
 import { PayrollReusalbleComponent } from './components/resUsuableComponents/employee-profile/payroll/payroll.component';
@@ -32,6 +34,7 @@ import { CreatePayrollComponent } from './components/resUsuableComponents/employ
 import { MatFormFieldModule } from '@angular/material/form-field';
 import{ MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DiscardChangesComponent } from './components/ui-components/discard-changes/discard-changes.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     CheckLeavesComponent,
     ChangePasswordFormComponent,
     CreatePayrollComponent,
+    DiscardChangesComponent,
   ],
   imports: [
     CommonModule,
@@ -68,6 +72,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule,
+    PaginatorModule,
     NgProgressModule.withConfig({
       color: "green"
     }),

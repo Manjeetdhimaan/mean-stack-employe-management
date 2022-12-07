@@ -21,7 +21,7 @@ export class AdminService {
   //HttpMethods
   isAdmin: boolean = false;
 
-  postUser(user: Admin){
+  postAdmin(user: Admin){
     this.isAdmin = true;
     return this.http.post(environment.apiBaseUrl+'/admin/register',user,this.noAuthHeader);
   }
@@ -75,6 +75,11 @@ export class AdminService {
   changePassword(passwordBody:any) {
     this.isAdmin = true;
     return this.http.put(environment.apiBaseUrl + `/admin/change-password`, passwordBody);
+  }
+
+  postEmp(emp: any){
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl+'/admin/registerEmp',emp);
   }
 
 

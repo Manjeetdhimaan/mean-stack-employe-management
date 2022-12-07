@@ -114,6 +114,7 @@ export class EmployeesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        console.log(result)
         document.body.style.overflow = 'auto';
         this.modalBackground.nativeElement.style.filter = 'blur(0)';
         if (!result) {

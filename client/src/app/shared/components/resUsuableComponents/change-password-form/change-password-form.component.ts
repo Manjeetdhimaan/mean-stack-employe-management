@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, forwardRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { matchingInputsValidator } from './validators';
 
 export interface PasswordFormValues {
@@ -13,6 +14,10 @@ export interface PasswordFormValues {
   selector: 'app-change-password-form',
   templateUrl: './change-password-form.component.html',
   styleUrls: ['./change-password-form.component.scss'],
+  animations: [
+    fade,
+    slideUp
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -1,0 +1,124 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary">Add Employee</h2>
+  </div>
+  <div>
+    <mat-dialog-content>
+      <form [formGroup]="addCusForm" (change)="formChanged()" (submit)="onAddEmployee()">
+        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input matInput placeholder="First Name" value={{fname}} formControlName="firstname" required>
+                <mat-error *ngIf="addCusForm.controls['firstname'].hasError('required')">
+                  Please enter first name
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls['firstname'].hasError('pattern')">
+                  Please enter valid first name
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Last Name" value={{lname}} formControlName="lastname" required>
+                <mat-error *ngIf="addCusForm.controls['lastname'].hasError('required')">
+                  Please enter last name
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls['lastname'].hasError('pattern')">
+                  Please enter valid last name
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input type="password" matInput placeholder="Password" formControlName="password" required>
+                <mat-error *ngIf="addCusForm.controls['password'].hasError('required')">
+                  Please enter password
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls['password'].hasError('minLength')">
+                  Password must be 6 characters long
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Phone number" formControlName="pNumber" required
+                  (keypress)="numberOnly($event)" type="text">
+                <mat-error *ngIf="addCusForm.controls['pNumber'].hasError('required')">
+                  Please enter Phone Number
+                </mat-error>
+                <mat-error
+                  *ngIf="addCusForm.controls['pNumber'].hasError('pattern') || addCusForm.controls['pNumber'].hasError('minLength') || addCusForm.controls['pNumber'].hasError('maxLength')">
+                  Please enter valid phone number
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email address" formControlName="email" required>
+                <mat-error *ngIf="addCusForm.controls['email'].hasError('required')">
+                  Please enter email id
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls['email'].hasError('email')">
+                  Please enter valid email id
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker1" placeholder="Joining Date" formControlName="joiningDate">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Service; ex: web developer" formControlName="service" required>
+                <mat-error *ngIf="addCusForm.controls['service'].hasError('required')">
+                  Please provide the service of Employee
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-radio-group matInput class="gender" formControlName="gender">
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="Male">Male</mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="Female">Female
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-error *ngIf="addCusForm.controls['gender'].hasError('required') && addCusForm.controls['gender'].touched">
+                Please provide gender
+              </mat-error>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <div class="col-lg-3 col-md-4 col-sm-12 buttons">
+          <div class="button-flex">
+            <button class="btn btn-save btn-regular" [disabled]="!addCusForm.valid" type="submit">
+              <span class="btn-text">Add</span>
+            </button>
+            <button type="button" class="btn btn-cancel btn-regular" (click)="cancelN()">
+              <span class="btn-text">Cancel</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+  </div>
+</div>
+
+<ng-progress [thick]="true"></ng-progress>

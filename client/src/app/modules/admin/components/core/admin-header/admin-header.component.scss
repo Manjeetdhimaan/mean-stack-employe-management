@@ -71,10 +71,15 @@ section {
   background: #3a4ec0;
 }
 
+.nav-brand{
+  float:left;
+}
 
-.topnav-right {
+
+.topnav-right  {
   float: right;
-  margin-left: 18rem;
+  text-align: right;
+  // margin-left: 18rem;
 }
 
 .sidenav {
@@ -93,6 +98,16 @@ section {
 .material-icon {
   margin-right: 6px;
 }
+@media screen and (min-width: 840px) {
+  .mat-toolbar-row {
+    display: block;
+    margin-top: 13px;
+    position: fixed;
+    top: 0;
+  }
+}
+
+
 
 @media screen and (max-width: 940px) {
   .topnav a {

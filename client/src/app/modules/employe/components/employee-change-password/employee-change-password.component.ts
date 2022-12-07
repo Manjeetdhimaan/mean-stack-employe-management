@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-employee-change-password',
   templateUrl: './employee-change-password.component.html',
   styleUrls: ['./employee-change-password.component.scss'],
+  animations: [fade, slideUp],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeeChangePasswordComponent implements OnInit {

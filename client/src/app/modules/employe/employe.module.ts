@@ -28,6 +28,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeChangePasswordComponent } from './components/employee-change-password/employee-change-password.component';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
 
 ;
 @NgModule({
@@ -59,7 +61,11 @@ import { EmployeeChangePasswordComponent } from './components/employee-change-pa
     MatListModule,
     MatButtonModule,
     MatSidenavModule,
-    MatMenuModule
+    MatMenuModule,
+    NgProgressModule.withConfig({
+      color: "yellow"
+    }),
+    NgProgressHttpModule
   ],
   exports: [
   ]

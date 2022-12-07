@@ -33,6 +33,39 @@ module.exports.register = (req, res, next) => {
     }
 }
 
+module.exports.registerEmp = (req, res, next) => {
+    try {
+        let user = new User();
+        user.fullName = req.body.fullName;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        // user.password = User.hashPassword(req.body.password);
+        user.phone = req.body.phone;
+        user.service = req.body.service;
+        user.joindate = req.body.joindate;
+        user.save((err, doc) => {
+            if (!err)
+                res.status(200).send({
+                    success: true,
+                    message: 'Registration succussful!'
+                });
+            else {
+                if (err.code == 11000)
+                    res.status(422).send({
+                        success: false,
+                        message: 'Duplicate email adrress found.'
+                    });
+                else
+                    return next(err);
+            }
+
+        });
+    } catch (err) {
+        return next(err);
+    }
+
+}
+
 module.exports.authenticate = (req, res, next) => {
     try {
         passport.authenticate('admin', (err, adminUser, info) => {
@@ -87,7 +120,7 @@ module.exports.getUsers = (req, res, next) => {
             if (!users)
                 return res.status(404).json({
                     status: false,
-                    message: 'User record not found.'
+                    message: 'Users not found.'
                 });
             else
                 return res.status(200).json({

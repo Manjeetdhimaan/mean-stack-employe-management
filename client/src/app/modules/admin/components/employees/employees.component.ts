@@ -2,7 +2,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { Component, Inject, Injector, OnInit, HostBinding, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { PopupModelComponent } from 'src/app/shared/components/ui-components/popup-model/popup-model.component';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
@@ -16,7 +16,7 @@ import { AdminService } from '../../services/admin.service';
     trigger('pageAnimations', [
       transition(':enter', [
         query('.hero, form', [
-          style({opacity: 0, transform: 'translateY(-100px)'}),
+          style({ opacity: 0, transform: 'translateY(-100px)' }),
           stagger(-15, [
             animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
           ])
@@ -50,51 +50,96 @@ import { AdminService } from '../../services/admin.service';
               </div>
             </div>
         </div>
-<ng-progress [thick]="true"></ng-progress>
+        <p-paginator *ngIf="totalUsers>perPage" [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
+        
+        <ng-progress [thick]="true"></ng-progress>
 `
 })
 export class EmployeesComponent implements OnInit {
 
-  constructor(private adminService: AdminService, public dialog: MatDialog, private router: Router, 
-    @Inject(Injector) private readonly injector: Injector) { }
+  constructor(private adminService: AdminService, public dialog: MatDialog, private router: Router,
+    @Inject(Injector) private readonly injector: Injector, private activatedRoute: ActivatedRoute) { }
 
-    @ViewChild('modalBackground') modalBackground: ElementRef;
+  @ViewChild('modalBackground') modalBackground: ElementRef;
 
-    private get toastMessageService() {
-      return this.injector.get(ToasTMessageService);
+  private get toastMessageService() {
+    return this.injector.get(ToasTMessageService);
   }
 
   @HostBinding('@pageAnimations')
   imgUrl: string = ''
 
   users: any;
-
+  totalUsers: number;
+  perPage: number = 4;
+  currentPage: number
   ngOnInit(): void {
+    this.activatedRoute.queryParams
+      .subscribe((params) => {
+        if (params['page'] && params['page'] >= 1) {
+          this.adminService.getUsers(+params['page'], this.perPage).subscribe(
+            (res: any) => {
+              this.totalUsers = res['counts'];
+              this.users = res['users'];
+            },
+            err => {
+              console.log(err);
+              if (err.error.message === 'Admin not found') {
+                this.router.navigate(['admin/login']);
+              }
+            }
+          );
+        }
+        else {
+          this.adminService.getUsers(1, this.perPage).subscribe(
+            (res: any) => {
+              this.totalUsers = res['counts'];
+              this.users = res['users'];
+            },
+            err => {
+              console.log(err);
+              if (err.error.message === 'Admin not found') {
+                this.router.navigate(['admin/login']);
+              }
+            }
+          );
+        }
+      });
 
-    this.adminService.getUsers().subscribe(
+  }
+
+  paginate(event: any) {
+    event.first = 2
+    // event.rows = Number of rows to display in new page
+    // event.page = Index of the new page
+    // event.pageCount = Total number of pages
+    // this.indexOfRenderedItem = event.page;
+    window.scroll({
+      top: 0,
+      behavior: 'smooth'
+    })
+    console.log(event.rows)
+    this.perPage = event.rows
+    this.adminService.getUsers(event.page + 1, event.rows).subscribe(
       (res: any) => {
+        this.totalUsers = res['counts'];
         this.users = res['users'];
-        // this.attendance = this.userDetails.attendance.reverse();
-        // this.firstName = this.userDetails['fullName'].toString().split(" ")[0].trim();
-        // const lastNameArray = this.userDetails['fullName'].toString().split(" ").slice(1);
-        // this.lastName = '';
-        // lastNameArray.map((n:string, i:number) => {
-        //   this.lastName += (n)+' '
-        // })
+        console.log(this.users);
+        this.router.navigateByUrl(`admin/employees?page=${event.page + 1}`)
       },
       err => {
-        console.log(err);
-        if(err.error.message === 'Admin not found'){
+        if (err.error.message === 'Admin not found') {
           this.router.navigate(['admin/login']);
         }
       }
     );
+
   }
 
   onCheck(event: string, id: string) {
     // checkIn
     if (event.toLowerCase() == 'checkin') {
-      this.adminService.checkIn(id).subscribe((res:any) => {
+      this.adminService.checkIn(id).subscribe((res: any) => {
         console.log(res);
         this.toastMessageService.success(res['message']);
       }, error => {
@@ -114,13 +159,12 @@ export class EmployeesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result)
         document.body.style.overflow = 'auto';
         this.modalBackground.nativeElement.style.filter = 'blur(0)';
         if (!result) {
           return;
         }
-        this.adminService.checkOut(id, result).subscribe((res:any) => {
+        this.adminService.checkOut(id, result).subscribe((res: any) => {
           console.log(res);
           this.toastMessageService.success(res['message']);
         }, error => {

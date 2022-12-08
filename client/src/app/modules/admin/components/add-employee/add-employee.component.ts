@@ -103,7 +103,6 @@ export class AddEmployeeComponent implements OnInit {
       }
 
       this.adminService.postEmp(formBody).subscribe((res:any) => {
-        console.log(res);
         // this.toastMessageService.success(res['message']);
         this.router.navigate(['admin/employees']);
         this.dialog.closeAll();

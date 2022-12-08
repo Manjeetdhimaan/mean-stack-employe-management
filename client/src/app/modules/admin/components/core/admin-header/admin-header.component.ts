@@ -16,6 +16,7 @@ export class AdminHeaderComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   opened: boolean;
   displayNavbar: boolean;
+  @ViewChild('modalBackground') modalBackground: ElementRef;
 
   constructor(private router: Router, private adminService: AdminService, public dialog: MatDialog) { }
 
@@ -52,21 +53,29 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   openDialog(): void {
+    this.modalBackground.nativeElement.style.filter = 'blur(8px)';
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '1040px'
     });
     this.sidenav.close();
+
+    dialogRef.afterClosed().subscribe(result => {
+      document.body.style.overflow = 'auto';
+      this.modalBackground.nativeElement.style.filter = 'blur(0)';
+    
+    });
   }
 
   onLogOut() {
+    this.modalBackground.nativeElement.style.filter = 'blur(8px)';
     const dialogRef = this.dialog.open(DiscardChangesComponent, {
       width: '300px',
-      panelClass: ['animate__animated','animate__slideInUp'],
+      // panelClass: ['animate__animated','animate__slideInUp'],
       data: { confirmBtnText: 'Logout', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to logout?', logoutParameter: 'logout' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+      this.modalBackground.nativeElement.style.filter = 'blur(0)';
       document.body.style.overflow = 'auto';
       if (!result) {
         return;

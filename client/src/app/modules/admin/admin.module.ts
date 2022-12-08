@@ -31,6 +31,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatNativeDateModule,
     MatDialogModule,
     MatFormFieldModule,
+    PaginatorModule,
     NgProgressModule.withConfig({
       color: "green"
     }),

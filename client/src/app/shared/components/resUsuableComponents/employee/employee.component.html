@@ -11,18 +11,17 @@
     </div>
   </div>
   <div class="action" *ngIf="showActions">
-    <div class="card-bg" [ngStyle]="cardBgTransform()">
+    <div class="card-bg" >
       <div class="image-placeholder">
         <div style="width: 200px;">
           <button class="btn btn-success" (click)="onCheck('checkIn')">
             <span class="btn-text">Check In</span>
           </button>
-          <button class="btn btn-warning" style="float: right;" (click)="onCheck('checkOut'); $event.stopImmediatePropagation()">
+          <button class="btn btn-warning checkOutBTN" style="float: right;" (click)="onCheck('checkOut'); $event.stopImmediatePropagation()">
             <span class="btn-text">Check Out</span>
           </button>
         </div>
       </div>
     </div>
-    
   </div>
 </div>

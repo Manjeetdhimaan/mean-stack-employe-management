@@ -35,7 +35,7 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
       positionClass :'toast-top-right'
     }),
     NgProgressModule.withConfig({
-      color: "yellow"
+      color: "violet"
     }),
     NgProgressHttpModule
   ],

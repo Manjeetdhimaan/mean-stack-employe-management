@@ -36,11 +36,12 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   cardStyling = this.cardStyle();
 
   onCheck(event: string) {
-    this.checkEmitter.emit(event)
+    console.log('clicked')
+    this.checkEmitter.emit(event);
   }
 
   onSelectUser() {
-    this.selectUserEmitter.emit(null)
+    this.selectUserEmitter.emit(null);
   }
 
   cardStyle() {

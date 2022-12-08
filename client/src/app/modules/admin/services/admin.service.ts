@@ -41,9 +41,9 @@ export class AdminService {
     return this.http.get(environment.apiBaseUrl + '/admin/adminProfile');
   }
 
-  getUsers() {
+  getUsers(page: number, perPage: number) {
     this.isAdmin = true;
-    return this.http.get(environment.apiBaseUrl + '/admin/getUsers');
+    return this.http.get(environment.apiBaseUrl + `/admin/getUsers/${page}/${perPage}`);
   }
 
 

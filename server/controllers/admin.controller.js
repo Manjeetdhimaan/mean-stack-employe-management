@@ -114,20 +114,37 @@ module.exports.adminProfile = (req, res, next) => {
     }
 }
 
-module.exports.getUsers = (req, res, next) => {
+module.exports.getUsers = async (req, res, next) => {
+
+    let counts = 0;
+    try {
+        await User.count({}, (err, countDOC) => {
+            counts = countDOC
+
+        }).clone()
+    } catch (err) {
+        return next(err);
+    }
+
+
     try {
         User.find((err, users) => {
-            if (!users)
-                return res.status(404).json({
-                    status: false,
-                    message: 'Users not found.'
-                });
-            else
-                return res.status(200).json({
-                    status: true,
-                    users: users
-                });
-        });
+                if (!users) {
+                    return res.status(404).json({
+                        status: false,
+                        message: 'No data found.'
+                    });
+                } else {
+                    return res.status(200).json({
+                        status: true,
+                        users: users,
+                        counts: counts
+                    });
+                }
+
+            }).limit(req.params.perPage)
+            .skip(+req.params.perPage * +(req.params.page - 1))
+
     } catch (err) {
         return next(err);
     }
@@ -456,7 +473,7 @@ module.exports.createPayroll = (req, res) => {
         Admin.findOne({
             _id: req._id
         }).then(admin => {
-            if(!admin) {
+            if (!admin) {
                 return res.status(401).send({
                     success: false,
                     message: 'Not Authorized'

@@ -1,3 +1,4 @@
+<ng-progress [thick]="true"></ng-progress>
 <div class="container">
     <div class="row">
       <div #card class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let user of users">
@@ -5,4 +6,5 @@
       </div>
     </div>
 </div>
-<ng-progress [thick]="true"></ng-progress>
+<p-paginator [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
+

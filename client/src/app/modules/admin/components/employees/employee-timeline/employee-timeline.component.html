@@ -1,4 +1,5 @@
-<app-reusable-employee-profile
+<div #modalBackground>
+    <app-reusable-employee-profile
     [userDetails]="userDetails" 
     [firstName]="firstName" 
     [lastName]="lastName" 
@@ -10,8 +11,10 @@
     [totalEarning]="totalEarning"
     (submitEvent)="onSubmitPayRollForm($event)"
     (cancelSubmitEvent)="onCancelSubmitPayRollForm()"
+    (deleteEmitter)="onDeleteEmp($event)"
     [isAdmin]="isAdmin"
-    [submitted]="submitted"
- >
+    [submitted]="submitted" 
+    >
 </app-reusable-employee-profile>
 <ng-progress [thick]="true"></ng-progress>
+</div>

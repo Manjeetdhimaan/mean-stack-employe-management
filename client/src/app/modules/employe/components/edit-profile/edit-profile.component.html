@@ -254,7 +254,7 @@
               </label>
 
             </div>
-            <img [src]="profileImageUrl || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
+            <img [src]="userDetails?.['imgUrl'] || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
             <div class="about-section">
               <h4 class="title text-white">{{userForm.value.firstName}} {{userForm.value.lastName}}</h4>
               <p class="text-white badge">

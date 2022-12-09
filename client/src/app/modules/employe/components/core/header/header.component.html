@@ -13,7 +13,8 @@
     <mat-toolbar-row>
 
       <span style="cursor: pointer" class="nav-brand">
-        Employee Management
+        <img [src]="currentUserImgUrl || 'assets/img/profileDefault.png'" class="userImg" width="40" [alt]="currentUserName">
+        {{ currentUserName }}
       </span>
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md class="topnav-right">
@@ -83,10 +84,6 @@
             <button mat-menu-item routerLink="/employee/leaves/apply" (click)="navigate('/employee/leaves/apply')">Apply
               Leaves</button>
           </mat-menu>
-        </a>
-
-        <a mat-list-item matBadge="2">
-          <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications
         </a>
 
         <a mat-list-item routerLinkActive="active" routerLink="/employee/settings/change-password" (click)="navigate('/employee/settings/change-password')">

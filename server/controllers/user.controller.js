@@ -45,6 +45,7 @@ module.exports.authenticate = (req, res, next) => {
             else if (user) return res.status(200).json({
                 "token": user.generateJwt(),
                 "_id": user['_id'],
+                "name": user['fullName']
             });
             // unknown user or wrong password
             else {

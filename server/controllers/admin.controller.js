@@ -47,13 +47,13 @@ module.exports.registerEmp = (req, res, next) => {
             if (!err)
                 res.status(200).send({
                     success: true,
-                    message: 'Registration succussful!'
+                    message: 'User added succussfully!'
                 });
             else {
                 if (err.code == 11000)
                     res.status(422).send({
                         success: false,
-                        message: 'Duplicate email adrress found.'
+                        message: 'Account with this email address exits already!'
                     });
                 else
                     return next(err);
@@ -202,6 +202,33 @@ module.exports.updateUserProfile = (req, res, next) => {
         //         res.send(docs);
         //     }
         // });
+
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.deleteUser = (req, res, next) => {
+    try {
+
+        User.deleteOne({
+            _id: req.params.id
+        }, (err, foundedObject) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send();
+            } else {
+                if (!foundedObject) {
+                    res.status(404).send();
+                } else {
+                    return res.status(200).send({
+                        success: true,
+                        message: 'User deleted successfully'
+                    })
+                }
+            }
+        })
+
 
     } catch (err) {
         return next(err);

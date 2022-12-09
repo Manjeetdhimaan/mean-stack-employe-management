@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AdminService } from 'src/app/modules/admin/services/admin.service';
 
 @Component({
   selector: 'app-reusable-timeline',
@@ -7,14 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TimelineReusalbleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adminService: AdminService) { }
 
-  @Input () firstName:string;
-  @Input () lastName:string;
-  @Input () profileImageUrl:any;
-  @Input () userDetails:any;
+  @Input() firstName:string;
+  @Input() lastName:string;
+  @Input() profileImageUrl:any;
+  @Input() userDetails:any;
+  @Input() isAdmin:boolean = false;
+  @Output() deleteEmitter : EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
+  }
+
+  onDeleteEmp(id: number) {
+    this.deleteEmitter.emit(null);
   }
 
 }

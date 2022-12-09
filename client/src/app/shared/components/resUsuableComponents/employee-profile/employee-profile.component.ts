@@ -32,6 +32,7 @@ export class EmployeeReusalbleProfileComponent implements OnInit {
   @Input() payRollForm:FormGroup;
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
   @Output() cancelSubmitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() deleteEmitter : EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {
   }
@@ -41,5 +42,9 @@ export class EmployeeReusalbleProfileComponent implements OnInit {
   }
   onCancelSubmit() {
     this.cancelSubmitEvent.emit(null);
+  }
+
+  onDeleteEmp(id: number) {
+    this.deleteEmitter.emit(id);
   }
 }

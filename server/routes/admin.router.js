@@ -18,5 +18,6 @@ router.patch('/respondToLeaves/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin
 router.post('/createPayroll/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.createPayroll);
 router.put('/change-password',jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.changePassword);
 router.post('/registerEmp', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.registerEmp);
+router.delete('/deleteUser/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.deleteUser);
 
 module.exports = router;

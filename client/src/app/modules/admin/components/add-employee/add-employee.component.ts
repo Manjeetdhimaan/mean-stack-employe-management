@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DiscardChangesComponent } from 'src/app/shared/components/ui-components/discard-changes/discard-changes.component';
+import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -22,8 +23,12 @@ export class AddEmployeeComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     private adminService: AdminService,
-    private router: Router
+    private router: Router, @Inject(Injector) private readonly injector: Injector
   ) { }
+
+  private get toastMessageService() {
+    return this.injector.get(ToasTMessageService);
+  }
 
   ngOnInit(): void {
     this.addCusForm = this.fb.group({
@@ -70,7 +75,6 @@ export class AddEmployeeComponent implements OnInit {
     // }
 
     cancelN(): void {
-      console.log(this.wasFormChanged);
       if(this.addCusForm.dirty) {
         const dialogRef = this.dialog.open(DiscardChangesComponent, {
           width: '300px',
@@ -103,12 +107,17 @@ export class AddEmployeeComponent implements OnInit {
       }
 
       this.adminService.postEmp(formBody).subscribe((res:any) => {
-        // this.toastMessageService.success(res['message']);
-        this.router.navigate(['admin/employees']);
+        this.toastMessageService.success(res['message']);
+        if (this.router.url.split('?')[0] === '/admin/employees') {
+          this.router.navigate(['admin/employees/leaves/check']);
+        }
+        else {
+          this.router.navigate(['admin/employees']);
+        }
         this.dialog.closeAll();
       }, error => {
         console.log("error", error);
-        // this.toastMessageService.info(error.error.message);
+        this.toastMessageService.info(error.error.message);
       })
     }
 

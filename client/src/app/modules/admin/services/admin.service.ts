@@ -82,6 +82,11 @@ export class AdminService {
     return this.http.post(environment.apiBaseUrl+'/admin/registerEmp',emp);
   }
 
+  deleteEmp(empId: any){
+    this.isAdmin = true;
+    return this.http.delete(environment.apiBaseUrl+`/admin/deleteUser/${empId}`);
+  }
+
 
 
   //Helper Methods

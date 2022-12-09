@@ -126,11 +126,11 @@
                     </label>
       
                   </div>
-                  <img [src]="profileImageUrl || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
+                  <img [src]="profileImageUrl || 'assets/img/profileDefault.png'">
                   <div class="about-section">
-                    <h4 class="title text-white">Test Name</h4>
+                    <h4 class="title text-white">{{ firstName }} {{ lastName  }}</h4>
                     <p class="text-white badge">
-                      Role
+                      {{ userDetails['service'] }}
                     </p>
                   </div>
                 </div>
@@ -148,6 +148,14 @@
             </div>
           </div>
         </form>
+    
+        <div class="col-lg-11 col-md-11 col-sm-12" *ngIf="isAdmin">
+          <div class="button-flex">
+            <button class="btn btn-danger btn-regular" type="button" (click)="onDeleteEmp(userDetails['_id'])">
+              <span class="btn-text" >Delete</span>
+            </button>
+          </div>
+        </div>
       </div>
       
       

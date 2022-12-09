@@ -43,7 +43,8 @@ import { AdminService } from '../../services/admin.service';
     ]),
   ],
   template: `
-        <div class="container" #modalBackground>
+      <div  *ngIf="users?.length>=1">
+      <div class="container" #modalBackground>
             <div class="row">
               <div #card class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let user of users">
                 <app-employee [cardBgImage]="user['imgUrl']" [name]="user['fullName']" [designation]="user['service']" (checkEmitter)="onCheck($event, user['_id'])" (selectUserEmitter)="onNavigateToUserProfile(user)"></app-employee>
@@ -51,8 +52,9 @@ import { AdminService } from '../../services/admin.service';
             </div>
         </div>
         <p-paginator *ngIf="totalUsers>perPage" [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
-        
-        <ng-progress [thick]="true"></ng-progress>
+      </div>
+      <div  *ngIf="users?.length<=0 && !isLoading">No Users Found </div>
+    <ng-progress [thick]="true">Searching</ng-progress>
 `
 })
 export class EmployeesComponent implements OnInit {
@@ -72,18 +74,21 @@ export class EmployeesComponent implements OnInit {
   users: any;
   totalUsers: number;
   perPage: number = 4;
-  currentPage: number
+  currentPage: number;
+  isLoading: boolean = false;
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.queryParams
       .subscribe((params) => {
         if (params['page'] && params['page'] >= 1) {
           this.adminService.getUsers(+params['page'], this.perPage).subscribe(
             (res: any) => {
+              this.isLoading = false;
               this.totalUsers = res['counts'];
               this.users = res['users'];
             },
             err => {
-              console.log(err);
+              this.isLoading = false;
               if (err.error.message === 'Admin not found') {
                 this.router.navigate(['admin/login']);
               }
@@ -93,11 +98,12 @@ export class EmployeesComponent implements OnInit {
         else {
           this.adminService.getUsers(1, this.perPage).subscribe(
             (res: any) => {
+              this.isLoading = false;
               this.totalUsers = res['counts'];
               this.users = res['users'];
             },
             err => {
-              console.log(err);
+              this.isLoading = false;
               if (err.error.message === 'Admin not found') {
                 this.router.navigate(['admin/login']);
               }
@@ -109,6 +115,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   paginate(event: any) {
+    this.isLoading = true;
     event.first = 2
     // event.rows = Number of rows to display in new page
     // event.page = Index of the new page
@@ -118,16 +125,17 @@ export class EmployeesComponent implements OnInit {
       top: 0,
       behavior: 'smooth'
     })
-    console.log(event.rows)
     this.perPage = event.rows
     this.adminService.getUsers(event.page + 1, event.rows).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.totalUsers = res['counts'];
         this.users = res['users'];
         console.log(this.users);
         this.router.navigateByUrl(`admin/employees?page=${event.page + 1}`)
       },
       err => {
+        this.isLoading = false;
         if (err.error.message === 'Admin not found') {
           this.router.navigate(['admin/login']);
         }

@@ -54,6 +54,7 @@ export class EmployeLoginComponent implements OnInit {
 
     this.userService.login(this.loginForm.value).subscribe(
       (res: any) => {
+        localStorage.setItem('name', res['name']);
         this.userService.setToken(res['token']);
         this.router.navigate([`/employee/profile`]);
       },

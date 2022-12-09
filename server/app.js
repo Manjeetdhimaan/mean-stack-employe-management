@@ -7,11 +7,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const path = require('path');
+const compression = require('compression')
+
+const PORT = process.env.PORT || 3200;
 
 const rtsIndex = require('./routes/index.router');
 const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
+app.use(compression())
 
 // middleware
 app.use(bodyParser.json());
@@ -34,11 +38,11 @@ app.use((err, req, res, next) => {
     }
 });
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'www')));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, 'www/index.html'));
 });
 
 // start server
-app.listen(process.env.PORT || 3000, () => console.log(`Server started at port : 3000`));
+app.listen(PORT, () => console.log(`Server started at port : ${PORT}`));

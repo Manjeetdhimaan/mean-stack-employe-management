@@ -23,8 +23,10 @@ export class DiscardChangesComponent {
   }
 
   public cancelN(event: any): void {
-
-    event !== 'logout' ? this.dialog.closeAll() : false;
+    if (event === 'logout' || event === 'deleteEmp') {
+      return;      
+    }
+    this.dialog.closeAll();
 
   }
 

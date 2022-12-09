@@ -58,7 +58,6 @@ export class AdminHeaderComponent implements OnInit {
       width: '1040px'
     });
     this.sidenav.close();
-
     dialogRef.afterClosed().subscribe(result => {
       document.body.style.overflow = 'auto';
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
@@ -71,18 +70,18 @@ export class AdminHeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(DiscardChangesComponent, {
       width: '300px',
       // panelClass: ['animate__animated','animate__slideInUp'],
-      data: { confirmBtnText: 'Logout', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to logout?', logoutParameter: 'logout' }
+      data: { confirmBtnText: 'Logout', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to logout?', confirmParameter: 'logout' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
-      document.body.style.overflow = 'auto';
+     
       if (!result) {
         return;
       }
       this.sidenav.close();
       this.adminService.deleteToken();
-      document.body.style.overflow = 'auto';
       this.router.navigate(['/admin/login']);
     });
 

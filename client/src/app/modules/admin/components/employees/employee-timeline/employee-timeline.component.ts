@@ -1,8 +1,11 @@
-import { Component, OnInit, Inject, Injector, } from '@angular/core';
+import { Component, OnInit, Inject, Injector, ViewChild, ElementRef} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DiscardChangesComponent } from 'src/app/shared/components/ui-components/discard-changes/discard-changes.component';
+import { NoopScrollStrategy } from '@angular/cdk/overlay';
 const MONTHS = {
   0: "Jan",
   1: "Feb",
@@ -27,7 +30,7 @@ const MONTHS = {
 
 export class EmployeeTimelineComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private router: Router, @Inject(Injector) private readonly injector: Injector) { }
+  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private router: Router, @Inject(Injector) private readonly injector: Injector, public dialog: MatDialog) { }
 
   private get toastMessageService() {
     return this.injector.get(ToasTMessageService);
@@ -47,7 +50,9 @@ export class EmployeeTimelineComponent implements OnInit {
   submitted: boolean = false;
   payRollForm: FormGroup = this.formBuilder.group({
     payForm: [],
-  });;
+  });
+
+  @ViewChild('modalBackground') modalBackground: ElementRef;
 
 
   ngOnInit(): void {
@@ -187,13 +192,38 @@ export class EmployeeTimelineComponent implements OnInit {
     event.totalEarnings = this.onGetTotalEarning();
     event.netPay = this.onGetTotalEarning() - this.onGetTotalDeductions();
     this.adminService.createPayroll(this.id, event).subscribe((res: any) => {
-      console.log(res);
       this.toastMessageService.success(res['message']);
       this.router.navigate([`/admin/employees`]);
     }, err => {
       console.log(err);
       this.toastMessageService.error(err.error['message']);
     })
+  }
+
+  onDeleteEmp(id: Event) {
+    document.body.style.setProperty('overflow', 'hidden', 'important');
+    this.modalBackground.nativeElement.style.filter = 'blur(8px)';
+    const dialogRef = this.dialog.open(DiscardChangesComponent, {
+      width: '300px',
+      scrollStrategy: new NoopScrollStrategy(),
+      data: {confirmBtnText: 'Delete', cancelBtnText: 'Cancel', class:"danger", confirmationText: ' <b>You cannot undo this action!</b> <br> Are you sure you want to delete employee?', confirmParameter: 'deleteEmp' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      document.body.style.overflow = 'auto';
+      this.modalBackground.nativeElement.style.filter = 'blur(0)';
+      if (!result) {
+        console.log('hey')
+        return;
+      }
+      this.adminService.deleteEmp(id).subscribe((res:any) => {
+        this.router.navigate(['admin/employees'])
+      }, err => {
+        console.log(err)
+      })
+    });
+
+  
   }
 
   onCancelSubmitPayRollForm() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { slideUp } from 'src/app/shared/common/animations/animations';
@@ -7,7 +7,8 @@ import { slideUp } from 'src/app/shared/common/animations/animations';
   selector: 'app-discard-changes',
   templateUrl: './discard-changes.component.html',
   styleUrls: ['./discard-changes.component.scss'],
-  animations: [slideUp]
+  animations: [slideUp],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DiscardChangesComponent {
 

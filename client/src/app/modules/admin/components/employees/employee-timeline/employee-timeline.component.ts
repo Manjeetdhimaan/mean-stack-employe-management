@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Injector, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Inject, Injector, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
@@ -195,7 +195,6 @@ export class EmployeeTimelineComponent implements OnInit {
       this.toastMessageService.success(res['message']);
       this.router.navigate([`/admin/employees`]);
     }, err => {
-      console.log(err);
       this.toastMessageService.error(err.error['message']);
     })
   }
@@ -206,7 +205,7 @@ export class EmployeeTimelineComponent implements OnInit {
     const dialogRef = this.dialog.open(DiscardChangesComponent, {
       width: '300px',
       scrollStrategy: new NoopScrollStrategy(),
-      data: {confirmBtnText: 'Delete', cancelBtnText: 'Cancel', class:"danger", confirmationText: ' <b>You cannot undo this action!</b> <br> Are you sure you want to delete employee?', confirmParameter: 'deleteEmp' }
+      data: { confirmBtnText: 'Delete', cancelBtnText: 'Cancel', class: "danger", confirmationText: `<div class="red-text" style="color: red;"><b>This action can't be undone!</b></div>  Are you sure you want to delete account of <b>${this.userDetails['fullName']}</b>`, confirmParameter: 'deleteEmp' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -216,14 +215,15 @@ export class EmployeeTimelineComponent implements OnInit {
         console.log('hey')
         return;
       }
-      this.adminService.deleteEmp(id).subscribe((res:any) => {
+      this.adminService.deleteEmp(id).subscribe((res: any) => {
+        this.toastMessageService.success(res['message']);
         this.router.navigate(['admin/employees'])
       }, err => {
-        console.log(err)
+        this.toastMessageService.error(err.error['message']);
       })
     });
 
-  
+
   }
 
   onCancelSubmitPayRollForm() {

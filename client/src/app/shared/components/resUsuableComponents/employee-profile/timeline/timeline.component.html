@@ -151,9 +151,12 @@
     
         <div class="col-lg-11 col-md-11 col-sm-12" *ngIf="isAdmin">
           <div class="button-flex">
-            <button class="btn btn-danger btn-regular" type="button" (click)="onDeleteEmp(userDetails['_id'])">
+            <!-- <button class="btn btn-danger btn-regular" type="button" (click)="onDeleteEmp(userDetails['_id'])">
               <span class="btn-text" >Delete</span>
-            </button>
+            </button> -->
+            <div mat-dialog-actions align="end" style="margin-top: 1rem">
+              <button mat-raised-button color="accent" (click)="onDeleteEmp(userDetails['_id'])">Delete</button>
+            </div>
           </div>
         </div>
       </div>

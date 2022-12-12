@@ -9,29 +9,17 @@
           <mat-grid-tile>
             <div class="text-inside">
               <mat-form-field>
-                <input matInput placeholder="First Name" value={{fname}} formControlName="firstname" required>
-                <mat-error *ngIf="addCusForm.controls['firstname'].hasError('required')">
-                  Please enter first name
+                <input matInput placeholder="Full Name" formControlName="fullName" required>
+                <mat-error *ngIf="addCusForm.controls['fullName'].hasError('required')">
+                  Please enter full name
                 </mat-error>
-                <mat-error *ngIf="addCusForm.controls['firstname'].hasError('pattern')">
-                  Please enter valid first name
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <div class="text-inside">
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Last Name" value={{lname}} formControlName="lastname" required>
-                <mat-error *ngIf="addCusForm.controls['lastname'].hasError('required')">
-                  Please enter last name
-                </mat-error>
-                <mat-error *ngIf="addCusForm.controls['lastname'].hasError('pattern')">
-                  Please enter valid last name
+                <mat-error *ngIf="addCusForm.controls['fullName'].hasError('pattern')">
+                  Please enter valid full name
                 </mat-error>
               </mat-form-field>
             </div>
           </mat-grid-tile>
+      
           <mat-grid-tile>
             <div class="text-inside">
               <mat-form-field class="example-full-width">
@@ -39,8 +27,21 @@
                 <mat-error *ngIf="addCusForm.controls['password'].hasError('required')">
                   Please enter password
                 </mat-error>
-                <mat-error *ngIf="addCusForm.controls['password'].hasError('minLength')">
+                <mat-error *ngIf="addCusForm.controls['password'].hasError('minlength')">
                   Password must be 6 characters long
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="text-inside">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Confirm Password" value={{lname}} formControlName="confirmPassword" required>
+                <mat-error *ngIf="addCusForm.controls['confirmPassword'].hasError('required')">
+                  Please confirm your password
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls['confirmPassword'].errors?.['confirmedValidator'] || addCusForm.controls['confirmPassword'].hasError('minlength')">
+                  Passwords do not match
                 </mat-error>
               </mat-form-field>
             </div>
@@ -106,7 +107,7 @@
           </mat-grid-tile>
         </mat-grid-list>
 
-        <div class="col-lg-3 col-md-4 col-sm-12 buttons">
+        <!-- <div class="col-lg-3 col-md-4 col-sm-12 buttons">
           <div class="button-flex">
             <button class="btn btn-save btn-regular" [disabled]="!addCusForm.valid" type="submit">
               <span class="btn-text">Add</span>
@@ -115,6 +116,10 @@
               <span class="btn-text">Cancel</span>
             </button>
           </div>
+        </div> -->
+        <div mat-dialog-actions align="end">
+          <button mat-raised-button color="primary" [disabled]="!addCusForm.valid" type="submit">Add</button>
+          <button mat-raised-button color="accent" (click)="cancelN()">Cancel</button>
         </div>
       </form>
     </mat-dialog-content>

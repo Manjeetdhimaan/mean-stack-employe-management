@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema({
         required: 'Email can\'t be empty',
         unique: true
     },
+    gender: {
+        type: String,
+        required: 'Gender can\'t be empty',
+        trim: true
+    },
     imgUrl: {
         type: String,
         trim: true
@@ -23,7 +28,7 @@ const userSchema = new mongoose.Schema({
     },
     service: {
         type: String,
-        required: [false, 'Please enter a service'],
+        required: [true, 'Please enter a service'],
         trim: true
     },
     bio: {
@@ -33,12 +38,12 @@ const userSchema = new mongoose.Schema({
     },
     joindate: {
         type: Date,
-        required: [false, 'Please provide joining date'],
+        required: [true, 'Please provide joining date'],
         trim: true
     },
     phone: {
         type: String,
-        required: [false, 'Provide your mobile number'],
+        required: [true, 'Please provide mobile number'],
         trim: true
     },
     remainingLeaves: {
@@ -259,7 +264,7 @@ userSchema.statics.hashPassword = function hashPassword(password) {
 
 // Methods
 userSchema.methods.verifyPassword = function (password) {
-    return bcrypt.compare(password, this.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 

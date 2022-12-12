@@ -32,14 +32,17 @@ export class AddEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.addCusForm = this.fb.group({
-      firstname: [null, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
-      lastname: [null, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
+      fullName: [null, [Validators.required, Validators.pattern('[a-zA-Z]+([a-zA-Z ]+)*')]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
       service: [null, [Validators.required]],
       joiningDate: [null, [Validators.required]],
       gender: [null, [Validators.required]],
       pNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[- +()0-9]+')]],
+    },
+    {
+      validator: this.ConfirmedValidator('password', 'confirmPassword'),
     });
     this.breakpoint = window.innerWidth <= 600 ? 1 : 3; // Breakpoint observer code
   }
@@ -93,16 +96,37 @@ export class AddEmployeeComponent implements OnInit {
       return true;
     }
 
+    ConfirmedValidator(controlName: string, matchingControlName: string) {
+      
+      return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        const matchingControl = formGroup.controls[matchingControlName];
+        if (
+          matchingControl.errors &&
+          !matchingControl.errors['confirmedValidator']
+        ) {
+          return;
+        }
+        if (control.value !== matchingControl.value) {
+          matchingControl.setErrors({ confirmedValidator: true });
+        } else {
+          matchingControl.setErrors(null);
+        }
+      };
+    }
+
     onAddEmployee() {
       if (!this.addCusForm.valid) {
         return;
       }
       const formBody = {
-        fullName: String(this.addCusForm.value.firstname) + " " + String(this.addCusForm.value.lastname),
+        fullName: this.addCusForm.value.fullName,
         email: this.addCusForm.value.email,
         password: this.addCusForm.value.password,
+        confirmPassword: this.addCusForm.value.confirmPassword,
         service: this.addCusForm.value.service,
         phone: this.addCusForm.value.pNumber,
+        gender: this.addCusForm.value.gender,
         joindate: this.addCusForm.value.joiningDate
       }
 
@@ -117,7 +141,24 @@ export class AddEmployeeComponent implements OnInit {
         this.dialog.closeAll();
       }, error => {
         console.log("error", error);
-        this.toastMessageService.info(error.error.message);
+        if (Array.isArray(error.error)) {
+          this.toastMessageService.info(error.error[0]);
+          if (this.router.url.split('?')[0] === '/admin/employees') {
+            this.router.navigate(['admin/employees/leaves/check']);
+          }
+          else {
+            this.router.navigate(['admin/employees']);
+          }
+        }
+        else {
+          this.toastMessageService.info(error.error.message);
+          if (this.router.url.split('?')[0] === '/admin/employees') {
+            this.router.navigate(['admin/employees/leaves/check']);
+          }
+          else {
+            this.router.navigate(['admin/employees']);
+          }
+        }
       })
     }
 

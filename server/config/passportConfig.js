@@ -10,17 +10,21 @@ passport.use('user',
         (username, password, done) => {
             User.findOne({ email: username },
                 (err, user) => {
-                    if (err)
+                    if (err){
                         return done(err);
+                    }
                     // unknown user
-                    else if (!user)
-                        return done(null, false, { message: 'Email is not registered' });
+                    else if (!user) {
+                        return done(null, false, { message: 'Incorrect email or password' });
+                    }
                     // wrong password
-                    else if (!user.verifyPassword(password))
-                        return done(null, false, { message: 'Wrong password.' });
+                    else if (!user.verifyPassword(password)) {
+                        return done(null, false, { message: 'Incorrect email or password.' });
+                    }
                     // authentication succeeded
-                    else
+                    else {
                         return done(null, user);
+                    }
                 });
         })
 );
@@ -34,10 +38,11 @@ passport.use('admin',
                         return done(err);
                     // unknown user
                     else if (!adminUser)
-                        return done(null, false, { message: 'You are not admin!' });
+                        return done(null, false, { message: 'Incorrect email or password!' });
                     // wrong password
-                    else if (!adminUser.verifyPassword(password))
-                        return done(null, false, { message: 'Incorrect email or password.' });
+                    else if (!adminUser.verifyPassword(password)) {
+                            return done(null, false, { message: 'Incorrect email or password.' });
+                    }
                     // authentication succeeded
                     else
                         return done(null, adminUser);

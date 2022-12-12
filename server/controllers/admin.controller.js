@@ -39,27 +39,35 @@ module.exports.registerEmp = (req, res, next) => {
         user.fullName = req.body.fullName;
         user.email = req.body.email;
         user.password = req.body.password;
+        user.confirmPassword = req.body.confirmPassword;
         // user.password = User.hashPassword(req.body.password);
         user.phone = req.body.phone;
         user.service = req.body.service;
+        user.gender = req.body.gender;
         user.joindate = req.body.joindate;
-        user.save((err, doc) => {
-            if (!err)
-                res.status(200).send({
-                    success: true,
-                    message: 'User added succussfully!'
-                });
-            else {
-                if (err.code == 11000)
-                    res.status(422).send({
-                        success: false,
-                        message: 'Account with this email address exits already!'
-                    });
-                else
-                    return next(err);
-            }
 
-        });
+
+        if (user.password !== user.confirmPassword) {
+            return res.status(422).send({
+                success: false,
+                message: 'Passwords do not match'
+            });
+        }
+        user.save().then(doc => {
+            return res.status(200).send({
+                success: true,
+                message: 'User added succussfully!'
+            });
+        }).catch(err => {
+            if (err.code == 11000)
+                return res.status(422).send({
+                    success: false,
+                    message: 'Account with this email address exits already!'
+                });
+            else
+                return next(err);
+        })
+
     } catch (err) {
         return next(err);
     }
@@ -287,13 +295,13 @@ module.exports.checkIn = async (req, res, next) => {
                 await user.save();
                 res.status(200).json({
                     success: true,
-                    message: `${user.fullName} signed in successfully`
+                    message: `${user.fullName} checked in successfully`
                 });
 
             } else {
                 return res.status(406).send({
                     success: false,
-                    message: `${user.fullName} have signed in today already`
+                    message: `${user.fullName} has checked in today already`
                 })
             }
         } else {

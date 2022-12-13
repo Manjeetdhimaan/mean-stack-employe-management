@@ -43,7 +43,7 @@ import { AdminService } from '../../services/admin.service';
     ]),
   ],
   template: `
-      <div  *ngIf="users?.length>=1">
+      <div *ngIf="users?.length>=1">
       <div class="container" #modalBackground>
             <div class="row">
               <div #card class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let user of users">
@@ -54,6 +54,7 @@ import { AdminService } from '../../services/admin.service';
         <p-paginator *ngIf="totalUsers>perPage" [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
       </div>
       <div  *ngIf="users?.length<=0 && !isLoading">No Users Found </div>
+      <!-- <button type="button" (click)="checkAllUsers()"> Check in All</button> -->
     <ng-progress [thick]="true">Searching</ng-progress>
 `
 })
@@ -151,8 +152,7 @@ export class EmployeesComponent implements OnInit {
         console.log(res);
         this.toastMessageService.success(res['message']);
       }, error => {
-        console.log("error", error);
-        this.toastMessageService.info(error.error.message);
+        this.toastMessageService.error(error.error.message);
       })
     }
 
@@ -176,8 +176,13 @@ export class EmployeesComponent implements OnInit {
           console.log(res);
           this.toastMessageService.success(res['message']);
         }, error => {
-          console.log("error", error);
-          this.toastMessageService.error(error.error.message);
+         if (error.error.message) {
+
+           this.toastMessageService.error(error.error.message);
+         }
+         else {
+          this.toastMessageService.error(error.error);
+         }
         })
       });
 
@@ -186,6 +191,24 @@ export class EmployeesComponent implements OnInit {
 
   onNavigateToUserProfile(user: any) {
     this.router.navigate([`/admin/employees/employee/${user['_id']}`]);
+  }
+
+  checkAllUsers() {
+    const data = {
+      entry: Date.now()
+    }
+    this.adminService.checkAllUsers(data).subscribe((res: any) => {
+      console.log(res);
+      this.toastMessageService.success(res['message']);
+    }, error => {
+     if (error.error.message) {
+
+       this.toastMessageService.error(error.error.message);
+     }
+     else {
+      this.toastMessageService.error(error.error);
+     }
+    })
   }
 
   onRespondToLeaves() {

@@ -115,8 +115,11 @@ module.exports.updateUserProfile = (req, res, next) => {
                 if (!foundedObject) {
                     res.status(404).send();
                 } else {
-                    if (req.body.firstName && req.body.lastName) {
-                        foundedObject.fullName = req.body.firstName + ' ' + req.body.lastName;
+                    if (req.body.fullName) {
+                        foundedObject.fullName = req.body.fullName;
+                    }
+                    if (req.body.service) {
+                        foundedObject.service = req.body.service;
                     }
                     if (req.body.email) {
                         foundedObject.email = req.body.email;

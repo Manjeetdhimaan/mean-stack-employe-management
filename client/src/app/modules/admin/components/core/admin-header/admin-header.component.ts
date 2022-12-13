@@ -74,7 +74,6 @@ export class AdminHeaderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
      
       if (!result) {

@@ -21,20 +21,20 @@
                     <!-- -------------------------- First Name feild --------------------------- -->
                     <div class="col-lg-6 col-md-12 col-sm-12">
                       <div class="form-group">
-                        <label>First Name</label>
+                        <label>Full Name</label>
                         <p class="form-control" 
-                          appErrorStylingDirective>{{ firstName }}</p>
+                          appErrorStylingDirective>{{ userDetails?.fullName }}</p>
                       </div>
                     </div>
       
                     <!-- --------------------------- Last Name feild --------------------------- -->
-                    <div class="col-lg-6 col-md-12 col-sm-12">
+                    <!-- <div class="col-lg-6 col-md-12 col-sm-12">
                       <div class="form-group">
                         <label>Last Name</label>
                         <p class="form-control" 
                           appErrorStylingDirective>{{ lastName.trim() }}</p>
                       </div>
-                    </div>
+                    </div> -->
       
                     <!-- ----------------------------- Email Feild ----------------------------- -->
                     <div class="col-lg-6 col-md-12 col-sm-12">
@@ -128,7 +128,7 @@
                   </div>
                   <img [src]="profileImageUrl || 'assets/img/profileDefault.png'">
                   <div class="about-section">
-                    <h4 class="title text-white">{{ firstName }} {{ lastName  }}</h4>
+                    <h4 class="title text-white">{{ userDetails?.fullName }}</h4>
                     <p class="text-white badge">
                       {{ userDetails['service'] }}
                     </p>

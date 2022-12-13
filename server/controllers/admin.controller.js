@@ -33,7 +33,8 @@ module.exports.register = (req, res, next) => {
     }
 }
 
-module.exports.registerEmp = (req, res, next) => {
+module.exports.registerEmp = async (req, res, next) => {
+
     try {
         let user = new User();
         user.fullName = req.body.fullName;
@@ -42,8 +43,8 @@ module.exports.registerEmp = (req, res, next) => {
         user.confirmPassword = req.body.confirmPassword;
         // user.password = User.hashPassword(req.body.password);
         user.phone = req.body.phone;
-        user.service = req.body.service;
         user.gender = req.body.gender;
+        user.service = req.body.service;
         user.joindate = req.body.joindate;
 
 
@@ -53,14 +54,24 @@ module.exports.registerEmp = (req, res, next) => {
                 message: 'Passwords do not match'
             });
         }
-        user.save().then(doc => {
+
+
+
+        if (await userExists(req.body.email)) {
+            return res.status(409).json({
+                success: false,
+                message: 'Account with this email address exits already!'
+            })
+        }
+        user.save().then(() => {
             return res.status(200).send({
                 success: true,
                 message: 'User added succussfully!'
             });
         }).catch(err => {
+            console.log(err);
             if (err.code == 11000)
-                return res.status(422).send({
+                return res.status(409).send({
                     success: false,
                     message: 'Account with this email address exits already!'
                 });
@@ -72,6 +83,17 @@ module.exports.registerEmp = (req, res, next) => {
         return next(err);
     }
 
+}
+
+const userExists = async (email) => {
+    const user = await User.findOne({
+        email: email.toLowerCase().trim()
+    })
+    if (user) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 module.exports.authenticate = (req, res, next) => {
@@ -264,7 +286,7 @@ module.exports.checkIn = async (req, res, next) => {
             // if(ts<tsYesterday){
 
             // }
-            var lastCheckIn = user.attendance[user.attendance.length - 1];
+            let lastCheckIn = user.attendance[user.attendance.length - 1];
             if (!lastCheckIn) {
                 lastCheckIn = {
                     exit: {
@@ -293,7 +315,7 @@ module.exports.checkIn = async (req, res, next) => {
             if (pastMidNight > lastCheckIn.entry) {
                 user.attendance.push(data)
                 await user.save();
-                res.status(200).json({
+                return res.status(200).json({
                     success: true,
                     message: `${user.fullName} checked in successfully`
                 });
@@ -310,9 +332,40 @@ module.exports.checkIn = async (req, res, next) => {
         }
 
     } catch (error) {
-        console.log(error);
         return next(error);
     }
+};
+
+module.exports.checkAllUsers = async (req, res, next) => {
+    try {
+        const data = {
+            entry: Date.now()
+        };
+
+        const allUsers = User.find(async (err, users) => {
+                if (!users) {
+                    return res.status(404).json({
+                        status: false,
+                        message: 'No data found.'
+                    });
+                } else {
+                    users.forEach((e, i) => {
+                       users[i].attendance.push(data)
+                        console.log("hy", users[i].attendance.push(data))
+                        // e[i].attendance.push(data);
+                    });
+                    console.log("hy", users)
+                    await allUsers.save();
+                }
+
+            })
+
+    } catch (err) {
+        return next(err);
+    }
+
+
+
 };
 
 //check out

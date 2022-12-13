@@ -38,7 +38,7 @@ export class EditProfileComponent implements OnInit {
   // businessId: any;
   isProvider: boolean = false;
   profileImageUrl: any =
-    'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png';
+    'assets/img/profileDefault.png';
   showModalForImage: boolean = false;
   isMobileDevice: boolean = false;
 
@@ -62,9 +62,9 @@ export class EditProfileComponent implements OnInit {
   }
   ngOnInit(): void {
     this.userForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
+      fullName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
+      service: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
-      lastName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
       phone: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.mobile)]),
       // roleId: new FormControl(''),
       // designation: new FormControl(''),
@@ -80,18 +80,12 @@ export class EditProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
-        const firstname = this.userDetails['fullName'].toString().split(" ")[0].trim();
-        const lastNameArray = this.userDetails['fullName'].toString().split(" ").slice(1);
-        let lastName = '';
-        lastNameArray.map((n: string, i: number) => {
-          lastName += (n) + ' '
-        })
         this.userForm.patchValue({
-          firstName: firstname,
-          lastName: lastName.trim(),
+          fullName: this.userDetails['fullName'],
+          service: this.userDetails['service'],
           email: this.userDetails['email'],
           phone: this.userDetails['phone'],
-          bio: this.userDetails['bio'],
+          bio: this.userDetails['bio']
         })
       },
       err => {
@@ -106,7 +100,6 @@ export class EditProfileComponent implements OnInit {
     try {
       this.userService.updateUserProfile(formData).subscribe((res: any) => {
         // this.showSucessMessage = true;
-        console.log(res)
         this.toastMessageService.success(res['msg']);
         this.router.navigate([`/employee/profile`]);
       },

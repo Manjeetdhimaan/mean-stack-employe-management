@@ -16,15 +16,15 @@
               <!-- -------------------------- First Name feild --------------------------- -->
               <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group"
-                  [ngClass]="f['firstName'].invalid && ((f['firstName'].dirty || f['firstName'].touched))?'has-error':''">
+                  [ngClass]="f['fullName'].invalid && ((f['fullName'].dirty || f['fullName'].touched))?'has-error':''">
                   <label>First Name<span class="error-red">*</span></label>
-                  <input type="text" class="form-control input-type2" formControlName="firstName"
+                  <input type="text" class="form-control input-type2" formControlName="fullName"
                     appErrorStylingDirective>
                   <div class="error error-msg">
-                    <div *ngIf="f['firstName'].errors?.['required']">
+                    <div *ngIf="f['fullName'].errors?.['required']">
                       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is required.
                     </div>
-                    <div *ngIf="f['firstName'].errors?.['pattern']">
+                    <div *ngIf="f['fullName'].errors?.['pattern']">
                       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> First Name is invalid.
                     </div>
                   </div>
@@ -34,15 +34,15 @@
               <!-- --------------------------- Last Name feild --------------------------- -->
               <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="form-group"
-                  [ngClass]="f['lastName'].invalid && ((f['lastName'].dirty || f['lastName'].touched))?'has-error':''">
-                  <label>Last Name<span class="error-red">*</span></label>
-                  <input type="text" class="form-control input-type2" formControlName="lastName"
+                  [ngClass]="f['service'].invalid && ((f['service'].dirty || f['service'].touched))?'has-error':''">
+                  <label>Service<span class="error-red">*</span></label>
+                  <input type="text" class="form-control input-type2" formControlName="service"
                     appErrorStylingDirective>
                   <div class="error error-msg">
-                    <div *ngIf="f['lastName'].errors?.['required']">
+                    <div *ngIf="f['service'].errors?.['required']">
                       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is required.
                     </div>
-                    <div *ngIf="f['lastName'].errors?.['pattern']">
+                    <div *ngIf="f['service'].errors?.['pattern']">
                       <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Last Name is invalid.
                     </div>
                   </div>
@@ -256,7 +256,7 @@
             </div>
             <img [src]="userDetails?.['imgUrl'] || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
             <div class="about-section">
-              <h4 class="title text-white">{{userForm.value.firstName}} {{userForm.value.lastName}}</h4>
+              <h4 class="title text-white">{{userForm.value.fullName}}</h4>
               <p class="text-white badge">
                 <!-- {{userData?.roles?.name}} -->
                 Employee

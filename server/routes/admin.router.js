@@ -12,7 +12,8 @@ router.get('Profile', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.adm
 router.get('/getUsers/:page/:perPage', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUsers);
 router.get('/getUser/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUser);
 
-router.post('/checkIn/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, jwtHelper.isAdmin,  ctrlAdmin.checkIn);
+router.post('/checkIn/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.checkIn);
+router.post('/checkAllUsers', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.checkAllUsers);
 router.post('/checkOut/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.checkOut);
 router.patch('/respondToLeaves/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.respondToLeaves);
 router.post('/createPayroll/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.createPayroll);

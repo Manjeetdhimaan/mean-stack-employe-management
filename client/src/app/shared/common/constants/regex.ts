@@ -1,5 +1,5 @@
 export const RegexEnum = {
-    textFeild: '^[a-zA-Z]*$',
+    textFeild: '^[a-z A-Z]*$',
     phone: '^[0-9]{10}$',
     userNameWithSpecial: '^[a-zA-Z0-9]*$',
     amount: '^([0-9]+(.[0-9]+)?)',

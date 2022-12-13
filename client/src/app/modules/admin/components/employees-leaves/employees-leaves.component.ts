@@ -19,17 +19,23 @@ export class EmployeesLeavesComponent implements OnInit {
 
   totalUsers: number;
   perPage: number = 4;
-  currentPage: number
+  currentPage: number;
+
+  isLoading: boolean = false;
+
   ngOnInit(): void {
+    this.isLoading = true;
     this.activatedRoute.queryParams
       .subscribe((params) => {
         if (params['page'] && params['page'] >= 1) {
           this.adminService.getUsers(+params['page'], this.perPage).subscribe(
             (res: any) => {
+              this.isLoading = false;
               this.totalUsers = res['counts'];
               this.users = res['users'];
             },
             err => {
+              this.isLoading = false;
               if (err.error.message === 'Admin not found') {
                 this.router.navigate(['admin/login']);
               }
@@ -39,11 +45,12 @@ export class EmployeesLeavesComponent implements OnInit {
         else {
           this.adminService.getUsers(1, this.perPage).subscribe(
             (res: any) => {
+              this.isLoading = false;
               this.totalUsers = res['counts'];
               this.users = res['users'];
             },
             err => {
-              console.log(err);
+              this.isLoading = false;
               if (err.error.message === 'Admin not found') {
                 this.router.navigate(['admin/login']);
               }
@@ -64,16 +71,16 @@ export class EmployeesLeavesComponent implements OnInit {
       top: 0,
       behavior: 'smooth'
     })
-    console.log(event.rows)
     this.perPage = event.rows
     this.adminService.getUsers(event.page + 1, event.rows).subscribe(
       (res: any) => {
+        this.isLoading = false;
         this.totalUsers = res['counts'];
         this.users = res['users'];
-        console.log(this.users);
         this.router.navigateByUrl(`admin/employees/leaves/check?page=${event.page + 1}`)
       },
       err => {
+        this.isLoading = false;
         if (err.error.message === 'Admin not found') {
           this.router.navigate(['admin/login']);
         }

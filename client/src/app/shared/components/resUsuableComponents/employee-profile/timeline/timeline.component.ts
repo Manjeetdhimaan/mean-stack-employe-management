@@ -10,8 +10,7 @@ export class TimelineReusalbleComponent implements OnInit {
 
   constructor(private adminService: AdminService) { }
 
-  @Input() firstName:string;
-  @Input() lastName:string;
+
   @Input() profileImageUrl:any;
   @Input() userDetails:any;
   @Input() isAdmin:boolean = false;

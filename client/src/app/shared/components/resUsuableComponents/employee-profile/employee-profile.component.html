@@ -6,7 +6,7 @@
   
           <!-------------- Timeline tab -------------->
           <mat-tab label="Timeline">
-            <app-reusable-timeline [firstName]="firstName" [lastName]="lastName" [userDetails]="userDetails"
+            <app-reusable-timeline [userDetails]="userDetails"
               [isAdmin]="isAdmin" [profileImageUrl]="profileImageUrl" (deleteEmitter)="onDeleteEmp(userDetails['_id'])"></app-reusable-timeline>
           </mat-tab>
           <!-------------- Timeline tab ends-------------->

@@ -52,6 +52,11 @@ export class AdminService {
     return this.http.post(environment.apiBaseUrl + `/admin/checkIn/${id}`, id);
   }
 
+  checkAllUsers(data: any) {
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl + `/admin/checkAllUsers`, data);
+  }
+
   checkOut(id: string, exitType:string) {
     this.isAdmin = true;
     return this.http.post(environment.apiBaseUrl + `/admin/checkOut/${id}`, exitType);

@@ -107,19 +107,9 @@
           </mat-grid-tile>
         </mat-grid-list>
 
-        <!-- <div class="col-lg-3 col-md-4 col-sm-12 buttons">
-          <div class="button-flex">
-            <button class="btn btn-save btn-regular" [disabled]="!addCusForm.valid" type="submit">
-              <span class="btn-text">Add</span>
-            </button>
-            <button type="button" class="btn btn-cancel btn-regular" (click)="cancelN()">
-              <span class="btn-text">Cancel</span>
-            </button>
-          </div>
-        </div> -->
         <div mat-dialog-actions align="end">
           <button mat-raised-button color="primary" [disabled]="!addCusForm.valid" type="submit">Add</button>
-          <button mat-raised-button color="accent" (click)="cancelN()">Cancel</button>
+          <button mat-raised-button color="accent" type="button" (click)="cancelN()">Cancel</button>
         </div>
       </form>
     </mat-dialog-content>

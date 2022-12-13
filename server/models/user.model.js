@@ -12,11 +12,6 @@ const userSchema = new mongoose.Schema({
         required: 'Email can\'t be empty',
         unique: true
     },
-    gender: {
-        type: String,
-        required: 'Gender can\'t be empty',
-        trim: true
-    },
     imgUrl: {
         type: String,
         trim: true
@@ -30,6 +25,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter a service'],
         trim: true
+    },
+    gender: {
+        type: String,
+        required: [true, 'Please provide gender'],
+        trim: true,
+        default: 'Not Defined'
     },
     bio: {
         type: String,

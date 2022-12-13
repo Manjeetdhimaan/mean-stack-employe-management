@@ -22,8 +22,6 @@ const MONTHS = {
   template: `
       <app-reusable-employee-profile
             [userDetails]="userDetails"
-            [firstName]="firstName" 
-            [lastName]="lastName" 
             [profileImageUrl]="profileImageUrl" 
             [attendance]="attendance" 
             [payroll]="payroll"
@@ -37,8 +35,6 @@ export class EmployeProfileComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   userDetails: any = {};
-  firstName: string = '';
-  lastName: string = '';
   profileImageUrl: string =
     'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png';
 
@@ -52,12 +48,7 @@ export class EmployeProfileComponent implements OnInit {
         this.payroll = this.userDetails.payroll.slice().sort((a: any, b: any) => a.month?.slice(0, 4) - b.month?.slice(0, 4)).reverse();
         this.profileImageUrl = this.userDetails['imgUrl']
         this.attendance = this.userDetails.attendance.slice().reverse();
-        this.firstName = this.userDetails['fullName'].slice().toString().split(" ")[0].trim();
-        const lastNameArray = this.userDetails['fullName'].slice().toString().split(" ").slice(1);
-        this.lastName = '';
-        lastNameArray.map((n: string, i: number) => {
-          this.lastName += (n) + ' '
-        });
+       
 
         const d = new Date(this.userDetails?.joindate);
         Object.entries(MONTHS).forEach(

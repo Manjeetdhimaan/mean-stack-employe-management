@@ -104,6 +104,7 @@ module.exports.getUsers = (req, res, next) => {
 
 module.exports.updateUserProfile = (req, res, next) => {
     try {
+       
         const id = req._id;
         User.findOne({
             _id: id
@@ -115,11 +116,19 @@ module.exports.updateUserProfile = (req, res, next) => {
                 if (!foundedObject) {
                     res.status(404).send();
                 } else {
+                    let imagePath = req.body.image;
+                    if (req.file) {
+                      const url = req.protocol + "://" + req.get("host");
+                      imagePath = url + "/images/" + req.file.filename;
+                    }
                     if (req.body.fullName) {
                         foundedObject.fullName = req.body.fullName;
                     }
                     if (req.body.service) {
                         foundedObject.service = req.body.service;
+                    }
+                    if (imagePath || imagePath=="") {
+                        foundedObject.imagePath = imagePath;
                     }
                     if (req.body.email) {
                         foundedObject.email = req.body.email;

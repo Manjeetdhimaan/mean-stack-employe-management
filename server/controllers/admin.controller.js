@@ -39,7 +39,7 @@ module.exports.registerEmp = async (req, res, next) => {
         let user = new User();
         user.fullName = req.body.fullName;
         user.email = req.body.email;
-        user.password = req.body.password;
+        user.password = User.hashPassword(req.body.password);;
         user.confirmPassword = req.body.confirmPassword;
         // user.password = User.hashPassword(req.body.password);
         user.phone = req.body.phone;
@@ -48,14 +48,12 @@ module.exports.registerEmp = async (req, res, next) => {
         user.joindate = req.body.joindate;
 
 
-        if (user.password !== user.confirmPassword) {
+        if (req.body.password !== req.body.confirmPassword) {
             return res.status(422).send({
                 success: false,
                 message: 'Passwords do not match'
             });
         }
-
-
 
         if (await userExists(req.body.email)) {
             return res.status(409).json({

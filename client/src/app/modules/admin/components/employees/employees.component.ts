@@ -47,7 +47,7 @@ import { AdminService } from '../../services/admin.service';
       <div class="container" #modalBackground>
             <div class="row">
               <div #card class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let user of users">
-                <app-employee [cardBgImage]="user['imgUrl']" [name]="user['fullName']" [designation]="user['service']" (checkEmitter)="onCheck($event, user['_id'])" (selectUserEmitter)="onNavigateToUserProfile(user)"></app-employee>
+                <app-employee [cardBgImage]="user['imagePath']" [name]="user['fullName']" [designation]="user['service']" (checkEmitter)="onCheck($event, user['_id'])" (selectUserEmitter)="onNavigateToUserProfile(user)"></app-employee>
               </div>
             </div>
         </div>

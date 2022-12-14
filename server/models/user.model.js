@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         required: 'Email can\'t be empty',
         unique: true
     },
-    imgUrl: {
+    imagePath: {
         type: String,
         trim: true
     },
@@ -242,15 +242,15 @@ userSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-userSchema.pre('save', function (next) {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(this.password, salt, (err, hash) => {
-            this.password = hash;
-            this.saltSecret = salt;
-            next();
-        });
-    });
-});
+// userSchema.pre('save', function (next) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(this.password, salt, (err, hash) => {
+//             this.password = hash;
+//             this.saltSecret = salt;
+//             next();
+//         });
+//     });
+// });
 
 userSchema.statics.hashPassword = function hashPassword(password) {
     bcrypt.genSalt(10, (err, salt) => {

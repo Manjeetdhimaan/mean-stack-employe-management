@@ -31,7 +31,14 @@ export class UserService {
   }
 
   updateUserProfile(userBody:any) {
-    return this.http.patch(environment.apiBaseUrl + '/updateUserProfile', userBody);
+    let postData: any;
+    if (typeof userBody.image === "object") {
+      postData = new FormData();
+      postData.append("image", userBody.image);
+    } else {
+      postData = userBody;
+    }
+    return this.http.patch(environment.apiBaseUrl + '/updateUserProfile', postData);
   }
 
   applyLeave(leaveBody:any) {

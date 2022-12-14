@@ -114,19 +114,8 @@
                   <h3>Users Profile</h3>
                 </div> -->
                 <div class="profile-img-section">
-                  <div class="edit-icon">
-                    <input type="file" #myFileInput class="form-control d-none" id="file-input"
-                       accept="image/*" />
-                    <label for="file-input">
-                      <div class="icon-round">
-                        <span>
-                          <i class="fa fa-pencil"></i>
-                        </span>
-                      </div>
-                    </label>
-      
-                  </div>
-                  <img [src]="profileImageUrl || 'assets/img/profileDefault.png'">
+                 
+                  <img [src]="userDetails?.imagePath || 'assets/img/profileDefault.png'">
                   <div class="about-section">
                     <h4 class="title text-white">{{ userDetails?.fullName }}</h4>
                     <p class="text-white badge">

@@ -15,11 +15,12 @@ const rtsIndex = require('./routes/index.router');
 const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
+app.use(cors());
 app.use(compression())
 
 // middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use('/api', rtsIndex);
 app.use('/api/admin', rtsAdmin);
@@ -37,6 +38,7 @@ app.use((err, req, res, next) => {
         console.log(err);
     }
 });
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.static(path.join(__dirname, 'www')));
 

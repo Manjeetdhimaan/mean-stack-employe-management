@@ -5,6 +5,7 @@ import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserService } from '../../services/user.service';
+import { mimeType } from './mime-type.validator';
 
 
 
@@ -44,6 +45,7 @@ export class EditProfileComponent implements OnInit {
 
   // 
   userDetails: any;
+  imagePreview: string;
 
 
   constructor(
@@ -69,10 +71,7 @@ export class EditProfileComponent implements OnInit {
       // roleId: new FormControl(''),
       // designation: new FormControl(''),
       bio: new FormControl(''),
-      // clinicIds: new FormControl(''),
-      // serviceCategoryIds: new FormControl(''),
-      // serviceIds: new FormControl(''),
-      // isProvider: new FormControl(false),
+      image: new FormControl(null)
       
     })
     this.onResize();
@@ -85,8 +84,10 @@ export class EditProfileComponent implements OnInit {
           service: this.userDetails['service'],
           email: this.userDetails['email'],
           phone: this.userDetails['phone'],
-          bio: this.userDetails['bio']
+          bio: this.userDetails['bio'],
+          image: this.userDetails['imagePath']
         })
+        this.imagePreview = this.userDetails['imagePath'];
       },
       err => {
         console.log(err);
@@ -96,7 +97,33 @@ export class EditProfileComponent implements OnInit {
 
 
   submitForm() {
+    if (!this.userForm.valid) {
+      return
+    }
+    const formData = this.userForm.value;
+    try {
+      this.userService.updateUserProfile(formData).subscribe((res: any) => {
+        // this.showSucessMessage = true;
+        this.toastMessageService.success(res['msg']);
+        this.router.navigate([`/employee/profile`]);
+      },
+        err => {
+          console.log(err);
+        })
+    }
+    catch {
+      console.log('An error occured');
+    }
+  }
+
+  removeImagePath() {
+    console.log(this.imagePreview)
+    if (!this.userForm.valid) {
+      return
+    }
     let formData = this.userForm.value;
+    formData.image = ""
+    console.log(formData)
     try {
       this.userService.updateUserProfile(formData).subscribe((res: any) => {
         // this.showSucessMessage = true;
@@ -143,6 +170,17 @@ export class EditProfileComponent implements OnInit {
     //       this.toastService.error('Error while uploading image');
     //     });
     // }
+  }
+
+  onImagePicked(event: Event) {
+    const file:any = (event.target as HTMLInputElement).files?.[0];
+    this.userForm.patchValue({ image: file });
+    this.userForm.get("image")?.updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   @HostListener('window:resize', ['$event'])

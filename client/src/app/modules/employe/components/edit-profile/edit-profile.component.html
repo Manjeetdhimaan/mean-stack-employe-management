@@ -244,7 +244,7 @@
           <div class="profile-img-section">
             <div class="edit-icon">
               <input type="file" #myFileInput class="form-control d-none" id="file-input"
-                (change)="fileChangeEvent($event)" accept="image/*" />
+                (change)="onImagePicked($event)" accept="image/*" />
               <label for="file-input">
                 <div class="icon-round">
                   <span>
@@ -254,7 +254,14 @@
               </label>
 
             </div>
-            <img [src]="userDetails?.['imgUrl'] || 'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png'">
+            <!-- <div>
+              <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+              <input type="file" #filePicker (change)="onImagePicked($event)">
+            </div>
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+              <img [src]="imagePreview" [alt]="form.value.title">
+            </div> -->
+            <img [src]="imagePreview || 'assets/img/profileDefault.png'">
             <div class="about-section">
               <h4 class="title text-white">{{userForm.value.fullName}}</h4>
               <p class="text-white badge">
@@ -331,6 +338,5 @@
     </p-dialog>
   </div> -->
 
-  
-
+  <button mat-button (click)="removeImagePath()" *ngIf="imagePreview">Remove Image</button>
   <ng-progress [thick]="true"></ng-progress>

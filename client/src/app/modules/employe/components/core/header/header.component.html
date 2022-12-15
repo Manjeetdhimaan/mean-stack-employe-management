@@ -12,10 +12,10 @@
   <mat-toolbar color="primary" class="desktop topnav">
     <mat-toolbar-row>
 
-      <span style="cursor: pointer" class="nav-brand">
-        <img [src]="currentUserImgUrl || 'assets/img/profileDefault.png'" class="userImg" width="40" [alt]="currentUserName">
+      <div  class="nav-brand userImg">
+        <img [src]="currentUserImgUrl || 'assets/img/profileDefault.png'" class="imgPath"  [alt]="currentUserName">
         {{ currentUserName }}
-      </span>
+      </div>
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md class="topnav-right">
         <a mat-button routerLinkActive="active" routerLink="/employee/profile/edit"

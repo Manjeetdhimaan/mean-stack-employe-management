@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from '../../../services/user.service';
 
 
@@ -9,7 +10,7 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss', '../../../../admin/components/core/admin-header/admin-header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -20,15 +21,23 @@ export class HeaderComponent implements OnInit {
   isLeavesActive: boolean = false;
   currentUserImgUrl: string;
   currentUserName: any = '';
+  subscription: Subscription;
   
   ngOnInit(): void {
     this.isLeavesActive = this.router.url === '/employee/leaves/check' || this.router.url === '/employee/leaves/apply' ? true : false;
     this.displayNavbar = true;
 
-    this.userService.getUserProfile().subscribe((res: any) => {
-      this.currentUserName = res['user']['fullName'];
-      this.currentUserImgUrl = res['user']['imgUrl'];
-    }) 
+    this.subscription = this.userService.currentUserImgUrl.subscribe((res: any) => {
+      this.currentUserName = res.name;
+      this.currentUserImgUrl = res.imagePath;
+    })
+
+    if (!this.currentUserName || !this.currentUserImgUrl) {
+      this.userService.getUserProfile().subscribe((res: any) => {
+        this.currentUserImgUrl = res['user']['imagePath'];
+        this.currentUserName = res['user']['fullName'];
+      })
+    }
   }
 
   // disable body scrolling while sidenav is opened 
@@ -64,5 +73,9 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('name');
     document.body.style.overflow = 'auto';
     this.router.navigate(['/employee/login']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

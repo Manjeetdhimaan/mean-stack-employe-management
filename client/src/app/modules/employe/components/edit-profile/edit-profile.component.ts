@@ -79,6 +79,7 @@ export class EditProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
+        this.userService.currentUserImgUrl.next({name: this.userDetails['fullName'], imagePath: this.userDetails['imagePath']});
         this.userForm.patchValue({
           fullName: this.userDetails['fullName'],
           service: this.userDetails['service'],

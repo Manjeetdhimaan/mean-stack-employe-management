@@ -45,8 +45,9 @@ export class EmployeProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
+        this.userService.currentUserImgUrl.next({name: this.userDetails['fullName'], imagePath: this.userDetails['imagePath']});
         this.payroll = this.userDetails.payroll.slice().sort((a: any, b: any) => a.month?.slice(0, 4) - b.month?.slice(0, 4)).reverse();
-        this.profileImageUrl = this.userDetails['imgUrl']
+        this.profileImageUrl = this.userDetails['imagePath']
         this.attendance = this.userDetails.attendance.slice().reverse();
        
 

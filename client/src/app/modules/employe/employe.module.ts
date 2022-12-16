@@ -30,7 +30,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeChangePasswordComponent } from './components/employee-change-password/employee-change-password.component';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
+import {DialogModule} from 'primeng/dialog';
 ;
 @NgModule({
   declarations: [
@@ -62,6 +63,8 @@ import { NgProgressHttpModule } from 'ngx-progressbar/http';
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
+    ImageCropperModule,
+    DialogModule,
     NgProgressModule.withConfig({
       color: "yellow"
     }),

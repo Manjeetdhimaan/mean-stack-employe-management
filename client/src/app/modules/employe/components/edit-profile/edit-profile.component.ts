@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit, ViewChild, Inject, Injector } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
+import { ConvertImageService } from 'src/app/shared/services/image-utils/convertImage.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserService } from '../../services/user.service';
 import { mimeType } from './mime-type.validator';
@@ -47,6 +49,13 @@ export class EditProfileComponent implements OnInit {
   userDetails: any;
   imagePreview: string;
 
+  canvasRotation = 0;
+    rotation = 0;
+    scale = 1;
+    showCropper = false;
+    containWithinAspectRatio = false;
+    transform: any = {};
+
 
   constructor(
     // private roleService: RolesService,
@@ -55,7 +64,7 @@ export class EditProfileComponent implements OnInit {
     private userService: UserService,
     // private localStorgaeService: LocalStorageService,
     // private authService: AuthService,
-    // private convertImageService: ConvertImageService,
+    private convertImageService: ConvertImageService,
     private router: Router, @Inject(Injector) private readonly injector: Injector) { }
 
 
@@ -68,12 +77,9 @@ export class EditProfileComponent implements OnInit {
       service: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
       phone: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.mobile)]),
-      // roleId: new FormControl(''),
-      // designation: new FormControl(''),
       bio: new FormControl(''),
-      image: new FormControl(null)
-      
-    })
+      image: new FormControl('', {asyncValidators: mimeType})
+    });
     this.onResize();
 
     this.userService.getUserProfile().subscribe(
@@ -118,13 +124,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   removeImagePath() {
-    console.log(this.imagePreview)
     if (!this.userForm.valid) {
       return
     }
     let formData = this.userForm.value;
-    formData.image = ""
-    console.log(formData)
+    formData.imagePath = ""
+    
     try {
       this.userService.updateUserProfile(formData).subscribe((res: any) => {
         // this.showSucessMessage = true;
@@ -140,37 +145,19 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  fileChangeEvent(e: any) {
-    console.log(e);
-    this.showModalForImage = true;
-    this.imageChangedEvent = e;
-  }
-
-  cancelImageUpload() {
-    this.showModalForImage = false;
-    this.myFileInput.nativeElement.value = '';
-  }
-
   saveImage() {
-    // if (this.userId && this.userId !== 0) {
-    //   console.log('here');
-    //   const formData = new FormData();
-    //   formData.append(
-    //     'file',
-    //     this.convertImageService.base64ToFile(this.croppedImage)
-    //   );
-    //   this.userService
-    //     .uploadImage(this.userId, formData)
-    //     .then((response: any) => {
-    //       this.profileImageUrl = response.profileImageUrl + '?t=' + new Date();
-    //       this.showModalForImage = false;
-    //       this.toastService.success('Image updated successfully!!');
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //       this.toastService.error('Error while uploading image');
-    //     });
-    // }
+    const file:Blob = this.convertImageService.base64ToFile(this.croppedImage);
+    console.log(file)
+    this.userForm.patchValue({ image: file });
+    this.userForm.get("image")?.updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      this.userForm.controls["image"].markAsDirty();
+    };
+
+    reader.readAsDataURL(file);
+    this.showModalForImage = false;
   }
 
   onImagePicked(event: Event) {
@@ -180,6 +167,7 @@ export class EditProfileComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
+      this.userForm.controls["image"].markAsDirty();
     };
     reader.readAsDataURL(file);
   }
@@ -199,5 +187,29 @@ export class EditProfileComponent implements OnInit {
 
   onCancelSubmit() {
     this.router.navigate(['/employee/profile']);
+  }
+
+  fileChangeEvent(e: any) {
+    this.showModalForImage = true;
+    this.imageChangedEvent = e
+  }
+
+  cancelImageUpload() {
+    this.showModalForImage = false;
+    this.myFileInput.nativeElement.value = '';
+  }
+  
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
 }

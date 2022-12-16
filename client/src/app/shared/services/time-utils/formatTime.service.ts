@@ -39,8 +39,8 @@ export class FormatTimeService {
     var input: any = new Date(time);
     var format = 'MMM D YYYY h:mm A'; // must match the input
     var zone = timezone ? timezone : this.zone;
-    var m = moment.tz(input, format, zone);
-    time = m.format(format);
+    // var m = moment.tz(input, format, zone);
+    // time = m.format(format);
     return time;
   }
 
@@ -49,9 +49,9 @@ export class FormatTimeService {
 
     var format = 'MMM D YYYY h:mm A'; // must match the input
     var zone = timezone ? timezone : this.zone;
-    var m = moment.tz(input, format, zone);
-    m.utc();
-    time = m.format(format);
+    // var m = moment.tz(input, format, zone);
+    // m.utc();
+    // time = m.format(format);
     return time;
   }
 
@@ -63,8 +63,8 @@ export class FormatTimeService {
     input.setMinutes(input.getMinutes() + 30);
     var format = 'hh:mm A'; // must match the input
     var zone = timezone ? timezone : this.zone;
-    var m = moment.tz(input, format, zone);
-    time = m.format(format);
+    // var m = moment.tz(input, format, zone);
+    // time = m.format(format);
     return time;
   }
 
@@ -74,8 +74,8 @@ export class FormatTimeService {
     input.setMinutes(input.getMinutes() + 30);
     var format = 'hh:mm A'; // must match the input
     var zone = timezone ? timezone : this.zone;
-    var m = moment.tz(input, format, zone);
-    time = m.format(format);
+    // var m = moment.tz(input, format, zone);
+    // time = m.format(format);
     return time;
   }
 
@@ -99,11 +99,11 @@ export class FormatTimeService {
     var input: any = new Date(date);
     var fmt = 'hh:mm A'; // must match the input
     var zone = timezone;
-    var m = moment.tz(input, fmt, zone);
-    // convert it to utc
-    m.utc();
-    // format it for output
-    date = m.format(fmt);
+    // var m = moment.tz(input, fmt, zone);
+    // // convert it to utc
+    // m.utc();
+    // // format it for output
+    // date = m.format(fmt);
     return date;
   }
 }

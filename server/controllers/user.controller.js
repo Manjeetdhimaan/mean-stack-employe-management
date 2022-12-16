@@ -3,6 +3,7 @@ const passport = require('passport');
 const _ = require('lodash');
 
 const User = mongoose.model('User');
+const fileHelper = require('../util/file');
 
 module.exports.register = (req, res, next) => {
     try {
@@ -120,14 +121,26 @@ module.exports.updateUserProfile = (req, res, next) => {
                     if (req.file) {
                       const url = req.protocol + "://" + req.get("host");
                       imagePath = url + "/images/" + req.file.filename;
-                    }
+                    } 
+                    
                     if (req.body.fullName) {
                         foundedObject.fullName = req.body.fullName;
                     }
                     if (req.body.service) {
                         foundedObject.service = req.body.service;
                     }
-                    if (imagePath || imagePath=="") {
+                    if (!imagePath) {
+                        if (foundedObject.imagePath) {
+                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
+                        }
+                        foundedObject.imagePath = "";
+                    }
+                    if (imagePath) {
+                        // console.log("imagePath", imagePath.split('images/')[1])
+                        // console.log("foundedObject imagePath", foundedObject.imagePath.split('images/')[1])
+                        if (foundedObject.imagePath && imagePath.split('images/')[1]!==foundedObject.imagePath.split('images/')[1]) {
+                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
+                        }
                         foundedObject.imagePath = imagePath;
                     }
                     if (req.body.email) {
@@ -136,7 +149,7 @@ module.exports.updateUserProfile = (req, res, next) => {
                     if (req.body.password) {
                         foundedObject.password = User.hashPassword(req.body.password);
                     }
-                    if (req.body.bio) {
+                    if (req.body.bio || req.body.bio === "") {
                         foundedObject.bio = req.body.bio;
                     }
                     if (req.body.phone) {

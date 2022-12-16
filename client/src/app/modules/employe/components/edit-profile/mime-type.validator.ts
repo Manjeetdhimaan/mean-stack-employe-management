@@ -3,14 +3,14 @@ import { Observable, Observer, of } from "rxjs";
 
 export const mimeType = (
   control: AbstractControl
-): Promise<{ [key: string]: any }> | Observable<any> => {
+): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any } | any> => {
   if (typeof(control.value) === 'string') {
     return of(null);
   }
   const file = control.value as File;
   const fileReader = new FileReader();
   const frObs = Observable.create(
-    (observer: Observer<any>) => {
+    (observer: Observer<{ [key: string]: any } | any>) => {
       fileReader.addEventListener("loadend", () => {
         const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
         let header = "";

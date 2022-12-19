@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { UserService } from '../../../services/user.service';
 
@@ -19,8 +20,12 @@ export class ApplyLeavesComponent implements OnInit {
   userForm!: FormGroup;
   isMobileDevice: boolean = false;
   isProvider: boolean = false;
-  profileImageUrl: any =
-    'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png';
+  profileImageUrl: string = '';
+  fullName: string = '';
+  service: string = '';
+
+    subscription: Subscription;
+    minDate:Date;
 
   leavesReasons: any = [
     {
@@ -40,6 +45,7 @@ export class ApplyLeavesComponent implements OnInit {
   status: string = 'Pending';
   appliedLeaves: number;
   errorMessages: string;
+  date1: Date;
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -48,27 +54,13 @@ export class ApplyLeavesComponent implements OnInit {
       to: new FormControl('', [Validators.required])
     })
     this.onResize();
-    // this.userService.getUserProfile().subscribe(
-    //   (res: any) => {
-    //     // this.userDetails = res['user'];
-    //     // const firstname = this.userDetails['fullName'].toString().split(" ")[0].trim();
-    //     // const lastNameArray = this.userDetails['fullName'].toString().split(" ").slice(1);
-    //     // let lastName = '';
-    //     // lastNameArray.map((n: string, i: number) => {
-    //     //   lastName += (n) + ' '
-    //     // })
-    //     // this.userForm.patchValue({
-    //     //   firstName: firstname,
-    //     //   lastName: lastName.trim(),
-    //     //   email: this.userDetails['email'],
-    //     //   phone: this.userDetails['phone'],
-    //     //   password: ''
-    //     // })
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
+      this.userService.getUserProfile().subscribe((res: any) => {
+        this.profileImageUrl = res['user']['imagePath'];
+        this.fullName = res['user']['fullName']
+        this.service = res['user']['service']
+      })
+
+      this.minDate = new Date();
   }
 
   isDateValid() {
@@ -84,31 +76,37 @@ export class ApplyLeavesComponent implements OnInit {
 
   }
 
-
+  form (event: any) {
+    console.log(event);
+  }
 
   submitForm() {
-    this.errorMessages
-    let formData = this.userForm.value;
-
-    if ((formData.to && formData.from) && (formData.to < formData.from)) {
-      this.userForm.controls['to'].setErrors({ 'incorrect': true });
-      this.userForm.controls['from'].setErrors({ 'incorrect': true });
+    if (!this.userForm.valid) {
       return;
     }
-    formData.status = this.status;
-    try {
-      this.userService.applyLeave(formData).subscribe((res) => {
-        // this.showSucessMessage = true;
-        this.router.navigate([`/employee/leaves/check`])
-      },
-        err => {
-          console.log(err);
-        })
+    else {
+      this.errorMessages
+      let formData = this.userForm.value;
+  
+      if ((formData.to && formData.from) && (formData.to < formData.from)) {
+        this.userForm.controls['to'].setErrors({ 'incorrect': true });
+        this.userForm.controls['from'].setErrors({ 'incorrect': true });
+        return;
+      }
+      formData.status = this.status;
+      try {
+        this.userService.applyLeave(formData).subscribe((res) => {
+          // this.showSucessMessage = true;
+          this.router.navigate([`/employee/leaves/check`])
+        },
+          err => {
+            console.log(err);
+          })
+      }
+      catch {
+        console.log('some error occured')
+      }
     }
-    catch {
-      console.log('some error occured')
-    }
-
   }
 
 

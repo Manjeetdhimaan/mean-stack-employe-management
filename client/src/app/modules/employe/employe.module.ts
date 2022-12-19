@@ -27,11 +27,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { EmployeeChangePasswordComponent } from './components/employee-change-password/employee-change-password.component';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import {DialogModule} from 'primeng/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CalendarModule } from 'primeng/calendar';
 ;
 @NgModule({
   declarations: [
@@ -65,6 +68,9 @@ import {DialogModule} from 'primeng/dialog';
     MatMenuModule,
     ImageCropperModule,
     DialogModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    CalendarModule,
     NgProgressModule.withConfig({
       color: "yellow"
     }),

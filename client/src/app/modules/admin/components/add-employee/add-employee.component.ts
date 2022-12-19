@@ -41,9 +41,9 @@ export class AddEmployeeComponent implements OnInit {
       gender: [null, [Validators.required]],
       pNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[- +()0-9]+')]],
     },
-    {
-      validator: this.ConfirmedValidator('password', 'confirmPassword'),
-    });
+      {
+        validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      });
     this.breakpoint = window.innerWidth <= 600 ? 1 : 3; // Breakpoint observer code
   }
 
@@ -68,98 +68,89 @@ export class AddEmployeeComponent implements OnInit {
     this.wasFormChanged = true;
   }
 
-
-  // public cancel(): void { // To cancel the dialog window
-  //   this.dialogRef.close();
-  //   }
-    
-    // public cancelN(): void { 
-    //     this.dialog.closeAll();
-    // }
-
-    cancelN(): void {
-      if(this.addCusForm.dirty) {
-        const dialogRef = this.dialog.open(DiscardChangesComponent, {
-          width: '300px',
-          data: {confirmBtnText: 'Discard', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to discard the changes?'}
-        });
-      } else {
-        this.dialog.closeAll();
-      }
+  cancelN(): void {
+    if (this.addCusForm.dirty) {
+      const dialogRef = this.dialog.open(DiscardChangesComponent, {
+        width: '300px',
+        data: { confirmBtnText: 'Discard', cancelBtnText: 'Cancel', confirmationText: 'Are you sure you want to discard the changes?' }
+      });
+    } else {
+      this.dialog.closeAll();
     }
+  }
 
-    numberOnly(event: any): boolean {
-      const charCode = (event.which) ? event.which : event.keyCode;
-      if (charCode > 31 && (charCode < 48 || charCode > 57) || event.target.value.length >=10) {
-        return false;
-      }
-      return true;
+  numberOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) || event.target.value.length >= 10) {
+      return false;
     }
+    return true;
+  }
 
-    ConfirmedValidator(controlName: string, matchingControlName: string) {
-      
-      return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
-        if (
-          matchingControl.errors &&
-          !matchingControl.errors['confirmedValidator']
-        ) {
-          return;
-        }
-        if (control.value !== matchingControl.value) {
-          matchingControl.setErrors({ confirmedValidator: true });
-        } else {
-          matchingControl.setErrors(null);
-        }
-      };
-    }
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
 
-    onAddEmployee() {
-      if (!this.addCusForm.valid) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (
+        matchingControl.errors &&
+        !matchingControl.errors['confirmedValidator']
+      ) {
         return;
       }
-      const formBody = {
-        fullName: this.addCusForm.value.fullName,
-        email: this.addCusForm.value.email,
-        password: this.addCusForm.value.password,
-        confirmPassword: this.addCusForm.value.confirmPassword,
-        service: this.addCusForm.value.service,
-        phone: this.addCusForm.value.pNumber,
-        gender: this.addCusForm.value.gender,
-        joindate: this.addCusForm.value.joiningDate
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
       }
+    };
+  }
 
-      this.adminService.postEmp(formBody).subscribe((res:any) => {
-        this.toastMessageService.success(res['message']);
+  onAddEmployee() {
+    if (!this.addCusForm.valid) {
+      return;
+    }
+    const formBody = {
+      fullName: this.addCusForm.value.fullName,
+      email: this.addCusForm.value.email,
+      password: this.addCusForm.value.password,
+      confirmPassword: this.addCusForm.value.confirmPassword,
+      service: this.addCusForm.value.service,
+      phone: this.addCusForm.value.pNumber,
+      gender: this.addCusForm.value.gender,
+      joindate: this.addCusForm.value.joiningDate
+    }
+
+    this.adminService.postEmp(formBody).subscribe((res: any) => {
+      this.toastMessageService.success(res['message']);
+      if (this.router.url.split('?')[0] === '/admin/employees') {
+        this.router.navigate(['admin/employees/leaves/check']);
+      }
+      else {
+        this.router.navigate(['admin/employees']);
+      }
+      this.dialog.closeAll();
+    }, error => {
+      console.log("error", error);
+      if (Array.isArray(error.error)) {
+        this.toastMessageService.info(error.error[0]);
         if (this.router.url.split('?')[0] === '/admin/employees') {
           this.router.navigate(['admin/employees/leaves/check']);
         }
         else {
           this.router.navigate(['admin/employees']);
         }
-        this.dialog.closeAll();
-      }, error => {
-        console.log("error", error);
-        if (Array.isArray(error.error)) {
-          this.toastMessageService.info(error.error[0]);
-          if (this.router.url.split('?')[0] === '/admin/employees') {
-            this.router.navigate(['admin/employees/leaves/check']);
-          }
-          else {
-            this.router.navigate(['admin/employees']);
-          }
+      }
+      else {
+        this.toastMessageService.info(error.error.message);
+        if (this.router.url.split('?')[0] === '/admin/employees') {
+          this.router.navigate(['admin/employees/leaves/check']);
         }
         else {
-          this.toastMessageService.info(error.error.message);
-          if (this.router.url.split('?')[0] === '/admin/employees') {
-            this.router.navigate(['admin/employees/leaves/check']);
-          }
-          else {
-            this.router.navigate(['admin/employees']);
-          }
+          this.router.navigate(['admin/employees']);
         }
-      })
-    }
+      }
+    })
+  }
 
 }

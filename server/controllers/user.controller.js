@@ -105,7 +105,6 @@ module.exports.getUsers = (req, res, next) => {
 
 module.exports.updateUserProfile = (req, res, next) => {
     try {
-       
         const id = req._id;
         User.findOne({
             _id: id
@@ -117,31 +116,11 @@ module.exports.updateUserProfile = (req, res, next) => {
                 if (!foundedObject) {
                     res.status(404).send();
                 } else {
-                    let imagePath = req.body.image;
-                    if (req.file) {
-                      const url = req.protocol + "://" + req.get("host");
-                      imagePath = url + "/images/" + req.file.filename;
-                    } 
-                    
                     if (req.body.fullName) {
                         foundedObject.fullName = req.body.fullName;
                     }
                     if (req.body.service) {
                         foundedObject.service = req.body.service;
-                    }
-                    if (!imagePath) {
-                        if (foundedObject.imagePath) {
-                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
-                        }
-                        foundedObject.imagePath = "";
-                    }
-                    if (imagePath) {
-                        // console.log("imagePath", imagePath.split('images/')[1])
-                        // console.log("foundedObject imagePath", foundedObject.imagePath.split('images/')[1])
-                        if (foundedObject.imagePath && imagePath.split('images/')[1]!==foundedObject.imagePath.split('images/')[1]) {
-                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
-                        }
-                        foundedObject.imagePath = imagePath;
                     }
                     if (req.body.email) {
                         foundedObject.email = req.body.email;
@@ -160,6 +139,97 @@ module.exports.updateUserProfile = (req, res, next) => {
                             res.status(500).send({msg: err});
                         } else {
                             res.send({msg: 'Profile Updated Successfully!'})
+                        }
+                    })
+                }
+            }
+        })
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.updateProfileImage = (req, res, next) => {
+    try {
+       
+        const id = req._id;
+        User.findOne({
+            _id: id
+        }, (err, foundedObject) => {
+            if (err) {
+                res.status(500).send();
+            } else {
+                if (!foundedObject) {
+                    res.status(404).send();
+                } else {
+                    let imagePath = req.body.image;
+                    if (req.file) {
+                      const url = req.protocol + "://" + req.get("host");
+                      imagePath = url + "/images/" + req.file.filename;
+                    } 
+                    
+                    if (!imagePath) {
+                        if (foundedObject.imagePath) {
+                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
+                            foundedObject.imagePath = "";
+                        }
+                        foundedObject.imagePath = "";
+                    }
+                    if (imagePath) {
+                        console.log("imagePath", imagePath.split('images/')[1])
+                        console.log("foundedObject imagePath", foundedObject.imagePath.split('images/')[1])
+                        if (foundedObject.imagePath && imagePath.split('images/')[1]!==foundedObject.imagePath.split('images/')[1]) {
+                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
+                            foundedObject.imagePath = imagePath;
+                        }
+                        foundedObject.imagePath = imagePath;
+                    }
+                    foundedObject.save((err, updatedObject) => {
+                        if (err) {
+                            res.status(500).send({msg: err});
+                        } else {
+                            res.send({msg: 'Image uploaded successfully!', imagePath: updatedObject['imagePath']})
+                        }
+                    })
+                }
+            }
+        })
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.removeProfileImage = (req, res, next) => {
+    try {
+        const id = req._id;
+        User.findOne({
+            _id: id
+        }, (err, foundedObject) => {
+            if (err) {
+                res.status(500).send();
+            } else {
+                if (!foundedObject) {
+                    res.status(404).send();
+                } else {
+                    let imagePath = req.body.image;
+                    if (req.file) {
+                      const url = req.protocol + "://" + req.get("host");
+                      imagePath = url + "/images/" + req.file.filename;
+                    } 
+                    
+                    if (!imagePath) {
+                        if (foundedObject.imagePath) {
+                            fileHelper.deleteFile('images/'+foundedObject.imagePath.split('images/')[1]);
+                            foundedObject.imagePath = "";
+                        }
+                        foundedObject.imagePath = "";
+                    }
+                
+                    foundedObject.save((err, updatedObject) => {
+                        if (err) {
+                            res.status(500).send({msg: err});
+                        } else {
+                            res.send({msg: 'Image removed successfully!', imagePath: updatedObject['imagePath']})
                         }
                     })
                 }

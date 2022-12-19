@@ -41,7 +41,7 @@
     left: 0;
     top: 30px;
     transform: translate(-50%, 0);
-    background: #009EDE80;
+    background: #3f51b580;
     border-radius: 50%;
     z-index: -9;
   }
@@ -97,7 +97,7 @@
   
   .add-edit-form .p-multiselect.p-multiselect-chip .p-multiselect-token,
   .add-edit-form .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-      background-color: #009EDE;
+      background-color: #3f51b5;
       color: #fff;
   }
   p-dropdown.ng-invalid.ng-touched .p-dropdown,
@@ -108,8 +108,8 @@
   }
   
   .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
-    background: #009EDE !important;
-    border-color: #009EDE;
+    background: #3f51b5 !important;
+    border-color: #3f51b5;
     color: #fff !important;
     border-radius: 0;
   }
@@ -136,7 +136,7 @@
     background: #f5f7fb;
   }
   .panel-header {
-    background: #009ede;
+    background: #3f51b5;
   
     min-height: 46px;
     color: #fff;

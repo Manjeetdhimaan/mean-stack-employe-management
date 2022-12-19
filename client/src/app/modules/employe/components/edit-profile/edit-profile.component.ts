@@ -50,26 +50,31 @@ export class EditProfileComponent implements OnInit {
   imagePreview: string;
 
   canvasRotation = 0;
-    rotation = 0;
-    scale = 1;
-    showCropper = false;
-    containWithinAspectRatio = false;
-    transform: any = {};
+  rotation = 0;
+  scale = 1;
+  showCropper = false;
+  containWithinAspectRatio = false;
+  transform: any = {};
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth <= 768) {
+      this.isMobileDevice = true;
+    } else {
+      this.isMobileDevice = false;
+    }
+  }
 
 
   constructor(
-    // private roleService: RolesService,
     private activatedRoute: ActivatedRoute,
-    // private toastService: ToasTMessageService,
     private userService: UserService,
-    // private localStorgaeService: LocalStorageService,
-    // private authService: AuthService,
     private convertImageService: ConvertImageService,
     private router: Router, @Inject(Injector) private readonly injector: Injector) { }
 
 
-    private get toastMessageService() {
-      return this.injector.get(ToasTMessageService);
+  private get toastMessageService() {
+    return this.injector.get(ToasTMessageService);
   }
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -78,14 +83,13 @@ export class EditProfileComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
       phone: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.mobile)]),
       bio: new FormControl(''),
-      image: new FormControl('', {asyncValidators: mimeType})
+      // image: new FormControl('', {asyncValidators: mimeType})
     });
     this.onResize();
-
     this.userService.getUserProfile().subscribe(
       (res: any) => {
         this.userDetails = res['user'];
-        this.userService.currentUserImgUrl.next({name: this.userDetails['fullName'], imagePath: this.userDetails['imagePath']});
+        this.userService.currentUserImgUrl.next({ name: this.userDetails['fullName'], imagePath: this.userDetails['imagePath'] });
         this.userForm.patchValue({
           fullName: this.userDetails['fullName'],
           service: this.userDetails['service'],
@@ -123,45 +127,57 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  removeImagePath() {
-    if (!this.userForm.valid) {
-      return
-    }
-    let formData = this.userForm.value;
-    formData.imagePath = ""
-    
-    try {
-      this.userService.updateUserProfile(formData).subscribe((res: any) => {
-        // this.showSucessMessage = true;
-        this.toastMessageService.success(res['msg']);
-        this.router.navigate([`/employee/profile`]);
-      },
-        err => {
-          console.log(err);
-        })
-    }
-    catch {
-      console.log('An error occured');
-    }
-  }
+  uploadImage(event: string) {
+    if (event.toLowerCase() === 'upload') {
+      const file: Blob = this.convertImageService.base64ToFile(this.croppedImage);
+      // this.userForm.patchValue({ image: file });
+      // this.userForm.get("image")?.updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+        // this.userForm.controls["image"].markAsDirty();
+      };
+      reader.readAsDataURL(file);
+      const imageData = file;
+      try {
+        this.userService.updateProfileImage(imageData).subscribe((res: any) => {
+          this.toastMessageService.success(res['msg']);
+          this.showModalForImage = false;
+          this.userService.currentUserImgUrl.next({ name: this.userDetails['fullName'], imagePath: res['imagePath'] });
+        },
+          err => {
+            console.log(err);
+          })
+      }
+      catch {
+        console.log('An error occured');
+      }
 
-  saveImage() {
-    const file:Blob = this.convertImageService.base64ToFile(this.croppedImage);
-    console.log(file)
-    this.userForm.patchValue({ image: file });
-    this.userForm.get("image")?.updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-      this.userForm.controls["image"].markAsDirty();
-    };
+    }
+    else {
+      this.imagePreview = ""
+      this.showModalForImage = false;
+      const imageData = '';
+      try {
+        this.userService.removeProfileImage(imageData).subscribe((res: any) => {
+          // this.showSucessMessage = true;
+          this.toastMessageService.success(res['msg']);
+          this.userService.currentUserImgUrl.next({ name: this.userDetails['fullName'], imagePath: res['imagePath'] });
+          this.showModalForImage = false;
+        },
+          err => {
+            console.log(err);
+          })
+      }
+      catch {
+        console.log('An error occured');
+      }
 
-    reader.readAsDataURL(file);
-    this.showModalForImage = false;
+    }
   }
 
   onImagePicked(event: Event) {
-    const file:any = (event.target as HTMLInputElement).files?.[0];
+    const file: any = (event.target as HTMLInputElement).files?.[0];
     this.userForm.patchValue({ image: file });
     this.userForm.get("image")?.updateValueAndValidity();
     const reader = new FileReader();
@@ -170,15 +186,6 @@ export class EditProfileComponent implements OnInit {
       this.userForm.controls["image"].markAsDirty();
     };
     reader.readAsDataURL(file);
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    if (window.innerWidth <= 768) {
-      this.isMobileDevice = true;
-    } else {
-      this.isMobileDevice = false;
-    }
   }
 
   get f() {
@@ -198,7 +205,6 @@ export class EditProfileComponent implements OnInit {
     this.showModalForImage = false;
     this.myFileInput.nativeElement.value = '';
   }
-  
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;

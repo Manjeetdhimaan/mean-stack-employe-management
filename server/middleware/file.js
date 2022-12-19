@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
     cb(error, "images");
   },
   filename: (req, file, cb) => {
-    console.log(file)
     const name = file.originalname
       .toLowerCase()
       .split(" ")

@@ -20,7 +20,7 @@ app.use(compression())
 
 // middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use('/api', rtsIndex);
 app.use('/api/admin', rtsAdmin);

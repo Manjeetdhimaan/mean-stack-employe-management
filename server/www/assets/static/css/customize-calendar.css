@@ -9,11 +9,11 @@
   }
   .e-schedule .e-schedule-toolbar .e-tbar-btn .e-tbar-btn-text,
   .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-date-range .e-tbar-btn .e-tbar-btn-text{
-    color:#009EDE;
+    color:#3f51b5;
     font-weight: 500
   }
   .e-toolbar-item.e-today.e-overflow-show .e-tbar-btn-text{
-    color:#009EDE !important;
+    color:#3f51b5 !important;
   }
   .e-schedule .e-vertical-view .e-time-cells-wrap table td span,
   .e-schedule .e-vertical-view .e-time-cells-wrap table td{
@@ -57,7 +57,7 @@
   }
   
   .p-datepicker table td.p-datepicker-today > span{
-    background-color: #009EDE !important;
+    background-color: #3f51b5 !important;
     color: #fff !important;
     font-size: 14px !important;
   }

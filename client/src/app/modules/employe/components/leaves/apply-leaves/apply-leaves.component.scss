@@ -1,0 +1,19 @@
+
+  .badge {
+    color:#333!important;
+} 
+
+::ng-deep .p-calendar-w-btn .p-inputtext{
+    background: #F5F7FB;
+    border-radius: 8px;
+  }
+
+::ng-deep .p-button, ::ng-deep .p-button:hover {
+    background: #3f51b5!important;
+    border-color: #3f51b5!important;
+}
+
+::ng-deep .p-dropdown-item.p-highlight {
+    background-color: #3f51b5!important;
+    color: #fff;
+}

@@ -33,14 +33,29 @@ export class UserService {
   }
 
   updateUserProfile(userBody:any) {
+    return this.http.patch(environment.apiBaseUrl + '/updateUserProfile', userBody);
+  }
+
+  updateProfileImage(image:any) {
     let postData: any;
-    if (typeof userBody.image === "object") {
+    if (typeof image === "object") {
       postData = new FormData();
-      postData.append("image", userBody.image);
+      postData.append("image", image);
     } else {
-      postData = userBody;
+      postData = image;
     }
-    return this.http.patch(environment.apiBaseUrl + '/updateUserProfile', postData);
+    return this.http.patch(environment.apiBaseUrl + '/updateProfileImage', postData);
+  }
+
+  removeProfileImage(image:any) {
+    let postData: any;
+    if (typeof image === "object") {
+      postData = new FormData();
+      postData.append("image", image);
+    } else {
+      postData = image;
+    }
+    return this.http.patch(environment.apiBaseUrl + '/removeProfileImage', postData);
   }
 
   applyLeave(leaveBody:any) {

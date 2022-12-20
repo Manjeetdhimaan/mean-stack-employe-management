@@ -55,7 +55,7 @@ import { AdminService } from '../../services/admin.service';
       </div>
       <div  *ngIf="users?.length<=0 && !isLoading">No Users Found </div>
       <!-- <button type="button" (click)="checkAllUsers()"> Check in All</button> -->
-    <ng-progress [thick]="true">Searching</ng-progress>
+    <ng-progress [thick]="true"></ng-progress>
 `
 })
 export class EmployeesComponent implements OnInit {
@@ -70,13 +70,14 @@ export class EmployeesComponent implements OnInit {
   }
 
   @HostBinding('@pageAnimations')
-  imgUrl: string = ''
+  imgUrl: string = '';
 
   users: any;
   totalUsers: number;
   perPage: number = 4;
   currentPage: number;
   isLoading: boolean = false;
+
   ngOnInit(): void {
     this.isLoading = true;
     this.activatedRoute.queryParams
@@ -112,7 +113,6 @@ export class EmployeesComponent implements OnInit {
           );
         }
       });
-
   }
 
   paginate(event: any) {
@@ -132,7 +132,6 @@ export class EmployeesComponent implements OnInit {
         this.isLoading = false;
         this.totalUsers = res['counts'];
         this.users = res['users'];
-        console.log(this.users);
         this.router.navigateByUrl(`admin/employees?page=${event.page + 1}`)
       },
       err => {
@@ -158,7 +157,7 @@ export class EmployeesComponent implements OnInit {
 
     // checkOut
     if (event.toLowerCase() == 'checkout') {
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('noscroll');
       this.modalBackground.nativeElement.style.filter = 'blur(8px)';
       const dialogRef = this.dialog.open(PopupModelComponent, {
         width: '250px',
@@ -167,22 +166,21 @@ export class EmployeesComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        document.body.style.overflow = 'auto';
+        document.body.classList.remove('noscroll');
         this.modalBackground.nativeElement.style.filter = 'blur(0)';
         if (!result) {
           return;
         }
         this.adminService.checkOut(id, result).subscribe((res: any) => {
-          console.log(res);
           this.toastMessageService.success(res['message']);
         }, error => {
-         if (error.error.message) {
+          if (error.error.message) {
 
-           this.toastMessageService.error(error.error.message);
-         }
-         else {
-          this.toastMessageService.error(error.error);
-         }
+            this.toastMessageService.error(error.error.message);
+          }
+          else {
+            this.toastMessageService.error(error.error);
+          }
         })
       });
 
@@ -198,33 +196,30 @@ export class EmployeesComponent implements OnInit {
       entry: Date.now()
     }
     this.adminService.checkAllUsers(data).subscribe((res: any) => {
-      console.log(res);
       this.toastMessageService.success(res['message']);
     }, error => {
-     if (error.error.message) {
-
-       this.toastMessageService.error(error.error.message);
-     }
-     else {
-      this.toastMessageService.error(error.error);
-     }
+      if (error.error.message) {
+        this.toastMessageService.error(error.error.message);
+      }
+      else {
+        this.toastMessageService.error(error.error);
+      }
     })
   }
 
-  onRespondToLeaves() {
-    let credentials = {
-      id: "this.userDetails['_id']",
-      event: 'Approved',
-      prevStatus: 'Approved'
-    }
 
-    this.adminService.respondToLeaves("this.userDetails['_id']", credentials).subscribe(
-      (res: any) => {
-        console.log(res)
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
+  // getPostionFromTop() {
+  //   const body = document.body
+  //   const {
+  //     top: t,
+  //     left: l
+  //   } = body.getBoundingClientRect();
+  //   const {
+  //     scrollX,
+  //     scrollY
+  //   } = window
+  //   const topPos = t + scrollX
+  //   const leftPos = l + scrollY
+  //   return topPos;
+  // }
 }

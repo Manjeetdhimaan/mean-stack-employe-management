@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please provide mobile number'],
         trim: true
     },
+    resettoken: {
+        type: String
+    },
     remainingLeaves: {
         type: String,
         required: false,

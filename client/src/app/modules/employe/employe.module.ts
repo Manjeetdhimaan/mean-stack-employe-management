@@ -35,6 +35,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import {DialogModule} from 'primeng/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CalendarModule } from 'primeng/calendar';
+import { RequestResetComponent } from './components/request-reset/request-reset.component';
 ;
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CalendarModule } from 'primeng/calendar';
     HeaderComponent,
     LeavesComponent,
     ApplyLeavesComponent,
-    EmployeeChangePasswordComponent
+    EmployeeChangePasswordComponent,
+    RequestResetComponent
   ],
   imports: [
     CommonModule,

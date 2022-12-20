@@ -39,7 +39,10 @@ export class AdminHeaderComponent implements OnInit {
 
   // disable body scrolling while sidenav is opened and enabling it while sidenav is closed
   toggleBodyScroll() {
-    document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
+    // document.body.style.overflow = this.sidenav.opened ? 'hidden' : 'auto';
+    this.sidenav.opened ? document.body.classList.add('noscroll') : document.body.classList.remove('noscroll');
+    // document.body.classList.add('noscroll');
+
     this.sidenavContent.nativeElement.style.filter = this.sidenav.opened ? 'blur(8px)' : 'blur(0)'
 
   }
@@ -48,7 +51,8 @@ export class AdminHeaderComponent implements OnInit {
     // close sidenav while navigating to another component or route
     this.sidenav.close();
     // enable body scrolling while sidenav is closed
-    document.body.style.overflow = 'auto';
+    // document.body.style.overflow = 'auto';
+    document.body.classList.remove('noscroll');
     this.router.navigateByUrl(route);
   }
 
@@ -59,7 +63,8 @@ export class AdminHeaderComponent implements OnInit {
     });
     this.sidenav.close();
     dialogRef.afterClosed().subscribe(result => {
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
+      document.body.classList.remove('noscroll');
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
     
     });

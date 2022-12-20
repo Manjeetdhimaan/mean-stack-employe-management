@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './modules/admin/components/admin-login/admin-login.component';
 import { EmployeLoginComponent } from './modules/employe/components/employe-login/employe-login.component';
+import { RequestResetComponent } from './modules/employe/components/request-reset/request-reset.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'employee/login', pathMatch: 'full' },
@@ -9,6 +10,11 @@ const routes: Routes = [
   { path: 'admin/login', component: AdminLoginComponent },
 
   { path: 'employee/login', component: EmployeLoginComponent },
+
+  {
+    path: 'employee/request-reset-password',
+    component: RequestResetComponent, data: { title: 'Reset Employee Password - Younedia' }
+  },
 
   { path: 'employee', loadChildren: () => import('./modules/employe/employe.module').then(m => m.EmployeModule),
   data: { title: 'Employee Management - Younedia' }},

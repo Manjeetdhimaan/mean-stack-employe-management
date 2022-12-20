@@ -14,4 +14,8 @@ router.patch('/removeProfileImage', jwtHelper.verifyJwtToken, ctrlUser.removePro
 router.post('/applyLeave', jwtHelper.verifyJwtToken, ctrlUser.applyLeave);
 router.put('/change-password', jwtHelper.verifyJwtToken, ctrlUser.changePassword);
 
+router.post('/req-reset-password', ctrlUser.ResetPassword);
+router.post('/new-password', ctrlUser.NewPassword);
+router.post('/valid-password-token', ctrlUser.ValidPasswordToken);
+
 module.exports = router;

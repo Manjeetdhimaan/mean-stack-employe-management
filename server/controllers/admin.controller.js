@@ -39,7 +39,7 @@ module.exports.registerEmp = async (req, res, next) => {
         let user = new User();
         user.fullName = req.body.fullName;
         user.email = req.body.email;
-        user.password = User.hashPassword(req.body.password);;
+        user.password = User.hashPassword(req.body.password);
         user.confirmPassword = req.body.confirmPassword;
         // user.password = User.hashPassword(req.body.password);
         user.phone = req.body.phone;
@@ -417,7 +417,6 @@ module.exports.respondToLeaves = (req, res, next) => {
             _id: id
         }, (err, foundedObject) => {
             if (err) {
-                console.log(err);
                 return res.status(500).send({
                     success: false,
                     message: 'Something went wrong! Please try again later.'

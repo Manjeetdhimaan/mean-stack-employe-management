@@ -74,6 +74,18 @@ export class UserService {
     this.router.navigate([`/employee/login`]);
   }
 
+  requestReset(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/req-reset-password`, body);
+  }
+
+  newPassword(body:any){
+    return this.http.post(`${environment.apiBaseUrl}/new-password`, body);
+  }
+
+  ValidPasswordToken(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/valid-password-token`, body);
+  }
+
   //Helper Methods
 
   setToken(token: string) {

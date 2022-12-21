@@ -41,6 +41,7 @@ export class UserService {
     if (typeof image === "object") {
       postData = new FormData();
       postData.append("image", image);
+      postData.append("domain", environment.domain);
     } else {
       postData = image;
     }

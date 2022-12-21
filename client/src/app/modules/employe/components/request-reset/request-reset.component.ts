@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -31,9 +32,9 @@ export class RequestResetComponent implements OnInit {
   }
 
 
-  RequestResetUser(form:FormGroup) {
-    console.log(form)
-    if (form.valid) {
+  RequestResetUser() {
+    this.RequestResetForm.value.domain = environment.domain;
+    if (this.RequestResetForm.valid) {
       this.IsvalidForm = true;
       this.userService.requestReset(this.RequestResetForm.value).subscribe(
         data => {

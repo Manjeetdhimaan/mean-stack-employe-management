@@ -13,7 +13,7 @@
     <mat-toolbar-row>
 
       <div  class="nav-brand userImg">
-        <img [src]="currentUserImgUrl || 'assets/img/profileDefault.png'" class="imgPath"  [alt]="currentUserName">
+        <img [src]="currentUserImgUrl || 'assets/img/profileDefault.png'" class="imgPath" onerror="this.src='assets/img/profileDefault.png'" [alt]="currentUserName">
         {{ currentUserName }}
       </div>
       <span class="menu-spacer"></span>

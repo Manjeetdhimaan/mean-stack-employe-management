@@ -157,8 +157,8 @@ module.exports.updateUserProfile = (req, res, next) => {
 }
 
 module.exports.updateProfileImage = (req, res, next) => {
-    try {
 
+    try {
         const id = req._id;
         User.findOne({
             _id: id
@@ -171,13 +171,14 @@ module.exports.updateProfileImage = (req, res, next) => {
                 } else {
                     let imagePath = req.body.image;
                     if (req.file) {
-                        const url = req.protocol + "://" + req.get("host");
-                        imagePath = url + "/images/" + req.file.filename;
+                        // const url = req.protocol + "://" + req.get("host");
+                        const url = req.body.domain;
+                        imagePath = url + "images/" + req.file.filename;
                     }
 
                     if (!imagePath) {
                         if (foundedObject.imagePath) {
-                            fileHelper.deleteFile('images/' + foundedObject.imagePath.split('images/')[1]);
+                            fileHelper.deleteFile('/images/' + foundedObject.imagePath.split('images/')[1]);
                             foundedObject.imagePath = "";
                         }
                         foundedObject.imagePath = "";
@@ -378,7 +379,7 @@ module.exports.ResetPassword = async (req, res) => {
             subject: 'Employee Management Password Reset',
             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                 'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                'http://localhost:4500/response-reset-password/' + user.resettoken + '\n\n' +
+                req.body.domain + '/employee/response-reset-password/' + user.resettoken + '\n\n' +
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         }
         transporter.sendMail(mailOptions, (err, info) => {})
@@ -394,7 +395,7 @@ module.exports.ValidPasswordToken = async (req, res) => {
                 message: 'Token is required'
             });
     }
-    const user = await passwordResetToken.findOne({
+    const user = await User.findOne({
         resettoken: req.body.resettoken
     });
     if (!user) {
@@ -405,7 +406,7 @@ module.exports.ValidPasswordToken = async (req, res) => {
             });
     }
     User.findOneAndUpdate({
-        _id: user._userId
+        _id: user._id
     }).then(() => {
         res.status(200).json({
             message: 'Token verified successfully.'
@@ -418,10 +419,17 @@ module.exports.ValidPasswordToken = async (req, res) => {
 }
 
 module.exports.NewPassword = async (req, res) => {
-    passwordResetToken.findOne({
+    User.findOne({
         resettoken: req.body.resettoken
-    }, function (err, userToken, next) {
-        if (!userToken) {
+    }, function (err, user, next) {
+        if (!user) {
+            return res
+                .status(409)
+                .json({
+                    message: 'User does not exist'
+                });
+        }
+        else if (!user.resettoken) {
             return res
                 .status(409)
                 .json({
@@ -429,44 +437,23 @@ module.exports.NewPassword = async (req, res) => {
                 });
         }
 
-        User.findOne({
-            _id: userToken._userId
-        }, function (err, userEmail, next) {
-            if (!userEmail) {
+        user.password = User.hashPassword(req.body.newPassword);
+        user.resettoken = null;
+        user.save(function (err) {
+            if (err) {
                 return res
-                    .status(409)
+                    .status(400)
                     .json({
-                        message: 'User does not exist'
+                        message: 'Password can not reset.'
+                    });
+            } else {
+                user.resettoken = null;
+                return res
+                    .status(201)
+                    .json({
+                        message: 'Password reset successfully'
                     });
             }
-            return bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
-                if (err) {
-                    return res
-                        .status(400)
-                        .json({
-                            message: 'Error hashing password'
-                        });
-                }
-                userEmail.password = hash;
-                userEmail.save(function (err) {
-                    if (err) {
-                        return res
-                            .status(400)
-                            .json({
-                                message: 'Password can not reset.'
-                            });
-                    } else {
-                        userToken.remove();
-                        return res
-                            .status(201)
-                            .json({
-                                message: 'Password reset successfully'
-                            });
-                    }
-
-                });
-            });
         });
-
     })
 }

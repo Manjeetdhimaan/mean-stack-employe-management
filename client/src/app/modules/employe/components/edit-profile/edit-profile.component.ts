@@ -6,6 +6,7 @@ import { fade, slideUp } from 'src/app/shared/common/animations/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { ConvertImageService } from 'src/app/shared/services/image-utils/convertImage.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../../services/user.service';
 import { mimeType } from './mime-type.validator';
 
@@ -77,6 +78,12 @@ export class EditProfileComponent implements OnInit {
     return this.injector.get(ToasTMessageService);
   }
   ngOnInit(): void {
+
+    // console.log(window.location.hostname)
+    // console.log(window.location.protocol)
+    // console.log(window.location.host)
+    console.log(environment.domain)
+    
     this.userForm = new FormGroup({
       fullName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),
       service: new FormControl('', [Validators.required]),
@@ -129,7 +136,11 @@ export class EditProfileComponent implements OnInit {
 
   uploadImage(event: string) {
     if (event.toLowerCase() === 'upload') {
-      const file: Blob = this.convertImageService.base64ToFile(this.croppedImage);
+      let file: Blob = this.convertImageService.base64ToFile(this.croppedImage);
+      Object.defineProperty(file, 'domain', {
+        value: environment.domain,
+        writable: false
+      });
       // this.userForm.patchValue({ image: file });
       // this.userForm.get("image")?.updateValueAndValidity();
       const reader = new FileReader();
@@ -139,6 +150,7 @@ export class EditProfileComponent implements OnInit {
       };
       reader.readAsDataURL(file);
       const imageData = file;
+    
       try {
         this.userService.updateProfileImage(imageData).subscribe((res: any) => {
           this.toastMessageService.success(res['msg']);

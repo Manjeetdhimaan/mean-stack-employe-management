@@ -11,7 +11,7 @@
                         <div id="successMsg" *ngIf="successMessage">
                             <span>{{successMessage}}</span>
                         </div>
-                        <form action="" [formGroup]="RequestResetForm" (ngSubmit)="RequestResetUser(RequestResetForm)">
+                        <form action="" [formGroup]="RequestResetForm" (ngSubmit)="RequestResetUser()">
                             <div class="form-group">
                                 <input _ngcontent-c0="" class="form-control form-control-lg" placeholder="email"
                                     type="text" id="email" formControlName="email" />

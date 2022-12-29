@@ -1,4 +1,6 @@
 require('./config/config');
+require('dotenv').config()
+
 require('./models/db');
 require('./config/passportConfig');
 

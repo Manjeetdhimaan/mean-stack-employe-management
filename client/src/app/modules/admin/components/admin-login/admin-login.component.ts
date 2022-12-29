@@ -35,7 +35,7 @@ export class AdminLoginComponent implements OnInit {
     // const data  = this.loginForm.value
     // data.fullName = "Admin"
     // data.phone = "1111222233"
-    // this.adminService.postUser(data).subscribe(
+    // this.adminService.postAdmin(data).subscribe(
     //   res => {
     //     console.log(res)
     //     // this.router.navigate(['/'])

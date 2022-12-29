@@ -11,6 +11,7 @@ module.exports.register = (req, res, next) => {
         admin.fullName = req.body.fullName;
         admin.email = req.body.email;
         admin.password = req.body.password;
+        admin.role = "Admin";
         admin.save((err, doc) => {
             if (!err)
                 res.status(200).send({

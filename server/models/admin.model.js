@@ -19,7 +19,7 @@ const adminSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true,
+        required: true
     },
     saltSecret: String
 });

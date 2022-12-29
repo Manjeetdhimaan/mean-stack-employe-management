@@ -78,11 +78,6 @@ export class EditProfileComponent implements OnInit {
     return this.injector.get(ToasTMessageService);
   }
   ngOnInit(): void {
-
-    // console.log(window.location.hostname)
-    // console.log(window.location.protocol)
-    // console.log(window.location.host)
-    console.log(environment.domain)
     
     this.userForm = new FormGroup({
       fullName: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.textFeild)]),

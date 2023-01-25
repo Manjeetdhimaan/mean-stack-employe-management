@@ -4,21 +4,43 @@ const _ = require('lodash');
 
 const Admin = mongoose.model('Admin');
 const User = mongoose.model('User');
+const {
+    generateOTP,
+    sendOtpToMail
+} = require("../util/otp.util");
 
-module.exports.register = (req, res, next) => {
+module.exports.register = async (req, res, next) => {
     try {
         const admin = new Admin();
         admin.fullName = req.body.fullName;
         admin.email = req.body.email;
-        admin.password = req.body.password;
-        admin.role = "Admin";
+        admin.password = Admin.hashPassword(req.body.password);
+        // admin.role = "Admin";
+        // generate otp
+        if (await adminExists(req.body.email)) {
+            return res.status(409).json({
+                success: false,
+                message: 'Account with this email address exists already!'
+            })
+        }
+        const otp = generateOTP(6);
+        // save otp to user collection
+        admin.phoneOtp = otp;
         admin.save((err, doc) => {
-            if (!err)
-                res.status(200).send({
+            if (!err) {
+                sendOtpToMail(admin, otp)
+                
+                // setTimeout(() => {
+                //     admin.phoneOtp = null;
+                //     admin.save();
+                // }, 20000);
+                return res.status(200).send({
                     success: true,
-                    message: 'Registration Successfull!'
+                    message: 'Otp sent to your email!',
+                    _id: admin._id
                 });
-            else {
+
+            } else {
                 if (err.code == 11000)
                     res.status(422).send({
                         success: false,
@@ -29,10 +51,49 @@ module.exports.register = (req, res, next) => {
             }
 
         });
+        // send otp to phone number
+
+
+
     } catch (err) {
         return next(err);
     }
 }
+
+
+module.exports.verifyOtp = async (req, res, next) => {
+    try {
+      const { otp, adminId } = req.body;
+      const admin = await Admin.findById(adminId);
+      if (!admin) {
+        return res.status(404).send({
+            success: false,
+            message: 'No account found with this email!'
+        });
+      }
+  
+      if (admin.phoneOtp !== otp) {
+        return res.status(401).send({
+            success: false,
+            message: 'Incorrect Otp'
+        });
+      }
+  
+      admin.phoneOtp = "";
+      admin.role = "Admin";
+      await admin.save();
+  
+      return res.status(201).json({
+        success: true,
+        message: "OTP verified successfully",
+        data: {
+          adminId: admin._id,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 
 module.exports.registerEmp = async (req, res, next) => {
 
@@ -59,7 +120,7 @@ module.exports.registerEmp = async (req, res, next) => {
         if (await userExists(req.body.email)) {
             return res.status(409).json({
                 success: false,
-                message: 'Account with this email address exits already!'
+                message: 'Account with this email address exists already!'
             })
         }
         user.save().then(() => {
@@ -86,6 +147,17 @@ module.exports.registerEmp = async (req, res, next) => {
 
 const userExists = async (email) => {
     const user = await User.findOne({
+        email: email.toLowerCase().trim()
+    })
+    if (user) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const adminExists = async (email) => {
+    const user = await Admin.findOne({
         email: email.toLowerCase().trim()
     })
     if (user) {
@@ -342,22 +414,22 @@ module.exports.checkAllUsers = async (req, res, next) => {
         };
 
         const allUsers = User.find(async (err, users) => {
-                if (!users) {
-                    return res.status(404).json({
-                        status: false,
-                        message: 'No data found.'
-                    });
-                } else {
-                    users.forEach((e, i) => {
-                       users[i].attendance.push(data)
-                        console.log("hy", users[i].attendance.push(data))
-                        // e[i].attendance.push(data);
-                    });
-                    console.log("hy", users)
-                    await allUsers.save();
-                }
+            if (!users) {
+                return res.status(404).json({
+                    status: false,
+                    message: 'No data found.'
+                });
+            } else {
+                users.forEach((e, i) => {
+                    users[i].attendance.push(data)
+                    console.log("hy", users[i].attendance.push(data))
+                    // e[i].attendance.push(data);
+                });
+                console.log("hy", users)
+                await allUsers.save();
+            }
 
-            })
+        })
 
     } catch (err) {
         return next(err);

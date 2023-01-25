@@ -12,15 +12,18 @@ const adminSchema = new mongoose.Schema({
         required: 'Email can\'t be empty',
         unique: true
     },
+    phone: {
+        type: String,
+    },
     password: {
         type: String,
         required: 'Password can\'t be empty',
         minlength: [4, 'Password must be atleast 4 character long']
     },
     role: {
-        type: String,
-        required: true
+        type: String
     },
+    phoneOtp:String,
     saltSecret: String
 });
 
@@ -31,15 +34,15 @@ adminSchema.path('email').validate((val) => {
 }, 'Invalid e-mail.');
 
 // Events
-adminSchema.pre('save', function (next) {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(this.password, salt, (err, hash) => {
-            this.password = hash;
-            this.saltSecret = salt;
-            next();
-        });
-    });
-});
+// adminSchema.pre('save', function (next) {
+//     bcrypt.genSalt(10, (err, salt) => {
+//         bcrypt.hash(this.password, salt, (err, hash) => {
+//             this.password = hash;
+//             this.saltSecret = salt;
+//             next();
+//         });
+//     });
+// });
 
 adminSchema.statics.hashPassword = function hashPassword(password) {
     bcrypt.genSalt(10, (err, salt) => {

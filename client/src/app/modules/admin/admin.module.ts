@@ -32,6 +32,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { PaginatorModule } from 'primeng/paginator';
+import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PaginatorModule } from 'primeng/paginator';
     EmployeeLeavesComponent,
     NotificationsComponent,
     AdminChangePasswordComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    AdminRegisterComponent
   ],
   imports: [
     CommonModule,

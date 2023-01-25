@@ -43,6 +43,9 @@ passport.use('admin',
                     else if (!adminUser.verifyPassword(password)) {
                             return done(null, false, { message: 'Incorrect email or password.' });
                     }
+                    else if ( adminUser['role'] !== 'Admin'){
+                        return done(null, false, { message: 'Not Authenticated!' });
+                    }
                     // authentication succeeded
                     else
                         return done(null, adminUser);

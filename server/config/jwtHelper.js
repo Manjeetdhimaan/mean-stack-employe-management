@@ -49,7 +49,6 @@ module.exports.isAdmin =  (req, res, next) => {
                 });
            }
             // authentication succeeded
-           
             
             else if ( user['role'] !== 'Admin'){
                 return res.status(401).send({

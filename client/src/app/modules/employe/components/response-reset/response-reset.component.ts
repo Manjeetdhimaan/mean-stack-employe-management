@@ -37,6 +37,7 @@ export class ResponseResetComponent implements OnInit {
   }
 
   VerifyToken() {
+    console.log(this.resetToken)
     this.userService.ValidPasswordToken({ resettoken: this.resetToken }).subscribe(
       data => {
         this.CurrentState = 'Verified';
@@ -76,7 +77,6 @@ export class ResponseResetComponent implements OnInit {
 
 
   ResetPassword(form: FormGroup) {
-    console.log(form.get('confirmPassword'));
     if (form.valid) {
       this.IsResetFormValid = true;
       this.userService.newPassword(this.ResponseResetForm.value).subscribe(

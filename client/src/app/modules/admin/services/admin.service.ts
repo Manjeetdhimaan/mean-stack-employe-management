@@ -26,6 +26,11 @@ export class AdminService {
     return this.http.post(environment.apiBaseUrl+'/admin/register',user,this.noAuthHeader);
   }
 
+  verifyOtp(otpBody: any){
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl+'/admin/verifyOtp',otpBody,this.noAuthHeader);
+  }
+
   login(authCredentials: any) {
     this.isAdmin = true;
     return this.http.post(environment.apiBaseUrl + '/admin/authenticate', authCredentials,this.noAuthHeader);

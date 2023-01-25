@@ -37,6 +37,7 @@ export class AdminLoginComponent implements OnInit {
     // data.phone = "1111222233"
     // this.adminService.postAdmin(data).subscribe(
     //   res => {
+    //     this.serverErrorMessages = '';
     //     console.log(res)
     //     // this.router.navigate(['/'])
     //   },
@@ -46,7 +47,7 @@ export class AdminLoginComponent implements OnInit {
     //       // this.serverErrorMessages = err.error.join('<br/>');
     //     }
     //     else
-    //       this.serverErrorMessages = 'Something went wrong.Please contact admin.';
+    //       this.serverErrorMessages = err.error.message;
     //   }
     // );
 

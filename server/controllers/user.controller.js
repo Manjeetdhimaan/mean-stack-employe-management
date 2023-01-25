@@ -173,7 +173,7 @@ module.exports.updateProfileImage = (req, res, next) => {
                     if (req.file) {
                         // const url = req.protocol + "://" + req.get("host");
                         const url = req.body.domain;
-                        imagePath = url + "images/" + req.file.filename;
+                        imagePath = url + "/images/" + req.file.filename;
                     }
 
                     if (!imagePath) {
@@ -184,8 +184,6 @@ module.exports.updateProfileImage = (req, res, next) => {
                         foundedObject.imagePath = "";
                     }
                     if (imagePath) {
-                        // console.log("imagePath", imagePath.split('images/')[1])
-                        // console.log("foundedObject imagePath", foundedObject.imagePath.split('images/')[1])
                         if (foundedObject.imagePath && imagePath.split('images/')[1] !== foundedObject.imagePath.split('images/')[1]) {
                             fileHelper.deleteFile('images/' + foundedObject.imagePath.split('images/')[1]);
                             foundedObject.imagePath = imagePath;
@@ -405,13 +403,14 @@ module.exports.ValidPasswordToken = async (req, res) => {
                 message: 'Invalid URL'
             });
     }
-    User.findOneAndUpdate({
+    User.findOne({
         _id: user._id
     }).then(() => {
         res.status(200).json({
             message: 'Token verified successfully.'
         });
     }).catch((err) => {
+        console.log(err)
         return res.status(500).send({
             msg: err.message
         });

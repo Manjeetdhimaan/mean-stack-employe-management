@@ -136,12 +136,9 @@ export class EditProfileComponent implements OnInit {
         value: environment.domain,
         writable: false
       });
-      // this.userForm.patchValue({ image: file });
-      // this.userForm.get("image")?.updateValueAndValidity();
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        // this.userForm.controls["image"].markAsDirty();
       };
       reader.readAsDataURL(file);
       const imageData = file;

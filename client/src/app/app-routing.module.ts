@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLoginComponent } from './modules/admin/components/admin-login/admin-login.component';
+import { AdminRegisterComponent } from './modules/admin/components/admin-register/admin-register.component';
 import { EmployeLoginComponent } from './modules/employe/components/employe-login/employe-login.component';
 import { RequestResetComponent } from './modules/employe/components/request-reset/request-reset.component';
 import { ResponseResetComponent } from './modules/employe/components/response-reset/response-reset.component';
@@ -9,6 +10,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'employee/login', pathMatch: 'full' },
 
   { path: 'admin/login', component: AdminLoginComponent },
+
+  { path: 'admin/register', component: AdminRegisterComponent },
 
   { path: 'employee/login', component: EmployeLoginComponent },
 

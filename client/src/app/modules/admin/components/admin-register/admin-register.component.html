@@ -11,7 +11,7 @@
                 <!-- <ng-container *ngIf="errMsg">
                     <app-auth-error [error]="errMsg" [success]="accountCreationMessage"></app-auth-error>
                 </ng-container> -->
-
+                
                 <form *ngIf="!serverSuccessMessages" [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()" class="input-color">
                     <p class="label">Full Name</p>
                     <input formControlName="fullName" type="text" class="input form-control">
@@ -48,7 +48,8 @@
 
 
                 <form *ngIf="serverSuccessMessages" [formGroup]="otpForm" (ngSubmit)="submitOtpForm()" class="input-color">
-                    <!-- <p class="label">Enter OTP here</p> -->
+                    <p class="label" *ngIf="display">OTP is valid for {{display}} Minutes.</p>
+                    <p class="label" *ngIf="!display">OTP is valid for 2 minutes from the time you sent it.</p>
                     <input formControlName="otp" placeholder="Enter OTP here..." type="text" class="input form-control">
                     <div class="alert" *ngIf="serverErrorMessages">
                         {{serverErrorMessages}}
@@ -57,6 +58,10 @@
                     <button class="continue-btn">SUBMIT OTP</button>
                     <p class="normal text-center no-account">
                         <a routerLink="/admin/login" class="link">Back to Admin Login</a>
+                    </p>
+                    <p class="normal text-center no-account">Didn't recieved OTP? 
+                        <button (click)="resendOTP()" class="link send-otp-again" [disabled]="displaySendOtpTime && displaySendOtpTime.slice(-2)!=00"> Send OTP again </button>
+                        <span class="label" *ngIf="displaySendOtpTime && displaySendOtpTime.slice(-2)!=00">in {{displaySendOtpTime}} Minutes.</span>
                     </p>
                 </form>
 

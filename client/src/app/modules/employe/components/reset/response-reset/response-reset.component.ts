@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-response-reset',
   templateUrl: './response-reset.component.html',
-  styleUrls: ['./response-reset.component.scss']
+  styleUrls: ['./response-reset.component.scss', '../../employe-login/employe-login.component.scss']
 })
 export class ResponseResetComponent implements OnInit {
 
   ResponseResetForm: FormGroup;
   errorMessage: string;
   successMessage: string;
+  isShowPassword: boolean = false;
   resetToken: null;
   CurrentState: any;
   IsResetFormValid = true;
@@ -25,7 +26,6 @@ export class ResponseResetComponent implements OnInit {
     this.CurrentState = 'Wait';
     this.activatedRoute.params.subscribe(params => {
       this.resetToken = params['token'];
-      console.log(this.resetToken);
       this.VerifyToken();
     });
   }
@@ -37,7 +37,6 @@ export class ResponseResetComponent implements OnInit {
   }
 
   VerifyToken() {
-    console.log(this.resetToken)
     this.userService.ValidPasswordToken({ resettoken: this.resetToken }).subscribe(
       data => {
         this.CurrentState = 'Verified';
@@ -77,16 +76,18 @@ export class ResponseResetComponent implements OnInit {
 
 
   ResetPassword(form: FormGroup) {
-    if (form.valid) {
+    this.errorMessage = '';
+    this.successMessage = '';
+    if (!form.valid || form.value.newPassword!=form.value.confirmPassword) {
+      this.IsResetFormValid = false;
+      return;
+    }
+    else {
       this.IsResetFormValid = true;
       this.userService.newPassword(this.ResponseResetForm.value).subscribe(
         (data:any) => {
           this.ResponseResetForm.reset();
           this.successMessage = data.message;
-          setTimeout(() => {
-            this.successMessage = "";
-            // this.router.navigate(['sign-in']);
-          }, 3000);
         },
         err => {
           if (err.error.message) {
@@ -94,6 +95,15 @@ export class ResponseResetComponent implements OnInit {
           }
         }
       );
-    } else { this.IsResetFormValid = false; }
+    }
+  }
+
+  toggleShowPasswordFeild() {
+    this.isShowPassword = !this.isShowPassword;
+  }
+
+  onClearMsg() {
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 }

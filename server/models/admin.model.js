@@ -23,7 +23,11 @@ const adminSchema = new mongoose.Schema({
     role: {
         type: String
     },
-    phoneOtp:String,
+    phoneOtp: {
+        type: String,
+        expires: '2m',
+        index: true
+    },
     saltSecret: String
 });
 
@@ -60,11 +64,12 @@ adminSchema.methods.verifyPassword = function (password) {
 };
 
 adminSchema.methods.generateJwt = function () {
-    return jwt.sign({ _id: this._id},
-        process.env.JWT_SECRET,
-    {
-        expiresIn: process.env.JWT_EXP
-    });
+    return jwt.sign({
+            _id: this._id
+        },
+        process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXP
+        });
 }
 
 

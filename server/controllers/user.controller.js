@@ -359,7 +359,7 @@ module.exports.ResetPassword = async (req, res) => {
             resettoken: {
                 $ne: user.resettoken
             }
-        }).remove().exec();
+        }).deleteOne().exec();
         res.status(200).json({
             message: 'Reset Password successfully.'
         });
@@ -371,14 +371,20 @@ module.exports.ResetPassword = async (req, res) => {
                 pass: 'lpaqbtmffjmepylc'
             }
         });
+        // const resetLink = "<a href='" + req.body.domain + "/employee/response-reset-password/'><span>link</span></a>.<br>This is a <b>test</b> email."
         let mailOptions = {
             to: user.email,
             from: user.email,
             subject: 'Employee Management Password Reset',
-            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                req.body.domain + '/employee/response-reset-password/' + user.resettoken + '\n\n' +
-                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            html: `
+                <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
+                <p>Please click on the following link to complete the process.</p>
+                <div style="background-color:#3f51b5; color:white;
+                padding:24px 2px; max-width: 50%; text-align:center">
+                <a style="color:white; text-decoration:none;" href="${req.body.domain}/employee/response-reset-password/${user.resettoken}">RESET PASSWORD</a></div>
+                
+                <p>'If you did not request this, please ignore this email and your password will remain unchanged.</p>
+            `,
         }
         transporter.sendMail(mailOptions, (err, info) => {})
     })
@@ -434,6 +440,12 @@ module.exports.NewPassword = async (req, res) => {
                 .json({
                     message: 'Token has expired'
                 });
+        }
+        if (req.body.newPassword !== req.body.confirmPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Paswords do no match'
+            });
         }
 
         user.password = User.hashPassword(req.body.newPassword);

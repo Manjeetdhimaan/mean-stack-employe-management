@@ -6,94 +6,171 @@ const Admin = mongoose.model('Admin');
 const User = mongoose.model('User');
 const {
     generateOTP,
-    sendOtpToMail
+    sendOtpToMail,
+    verifyOtp
 } = require("../util/otp.util");
 
 module.exports.register = async (req, res, next) => {
     try {
-        const admin = new Admin();
-        admin.fullName = req.body.fullName;
-        admin.email = req.body.email;
-        admin.password = Admin.hashPassword(req.body.password);
-        // admin.role = "Admin";
-        // generate otp
         if (await adminExists(req.body.email)) {
-            return res.status(409).json({
-                success: false,
-                message: 'Account with this email address exists already!'
-            })
-        }
-        const otp = generateOTP(6);
-        // save otp to user collection
-        admin.phoneOtp = otp;
-        admin.save((err, doc) => {
-            if (!err) {
-                sendOtpToMail(admin, otp)
-                
-                // setTimeout(() => {
-                //     admin.phoneOtp = null;
-                //     admin.save();
-                // }, 20000);
-                return res.status(200).send({
-                    success: true,
-                    message: 'Otp sent to your email!',
-                    _id: admin._id
-                });
-
-            } else {
-                if (err.code == 11000)
-                    res.status(422).send({
+            Admin.findOne({
+                email: req.body.email
+            }).then(foundedAdmin => {
+                if (foundedAdmin['role'] === "Admin") {
+                    return res.status(409).json({
                         success: false,
-                        message: 'Duplicate email adrress found.'
+                        message: 'Account with this email address exists already!'
+                    })
+                } else if (foundedAdmin['role'] !== "Admin") {
+                    const otp = generateOTP(6);
+                    foundedAdmin.phoneOtp = otp;
+                    foundedAdmin.save((err, doc) => {
+                        if (!err) {
+                            sendOtpToMail(foundedAdmin, otp)
+                            // setTimeout(() => {
+                            //     foundedAdmin.phoneOtp = null;
+                            //     foundedAdmin.save();
+                            // }, 2*60*1000);
+                            return res.status(200).send({
+                                success: true,
+                                message: 'Otp sent to Admin email!',
+                                _id: foundedAdmin._id
+                            });
+
+                        }
+                        return next(err);
                     });
-                else
-                    return next(err);
-            }
+                }
+            }).catch(err => next(err));
 
-        });
-        // send otp to phone number
+        } else {
+            const admin = new Admin();
+            admin.fullName = req.body.fullName;
+            admin.email = req.body.email;
+            admin.password = Admin.hashPassword(req.body.password);
+            // admin.role = "Admin";
+            // generate otp
 
+            const otp = generateOTP(6);
+            // save otp to user collection
+            admin.phoneOtp = otp;
+            admin.save((err, doc) => {
+                if (!err) {
+                    sendOtpToMail(admin, otp)
 
+                    // setTimeout(() => {
+                    //     admin.phoneOtp = null;
+                    //     admin.save();
+                    // }, 2*60*1000);
+                    return res.status(200).send({
+                        success: true,
+                        message: 'Otp sent to Admin email!',
+                        _id: admin._id
+                    });
 
+                } else {
+                    if (err.code == 11000)
+                        res.status(422).send({
+                            success: false,
+                            message: 'Duplicate email adrress found.'
+                        });
+                    else
+                        return next(err);
+                }
+
+            });
+        }
     } catch (err) {
         return next(err);
     }
 }
 
+module.exports.resendOtp = async (req, res, next) => {
+    try {
+            Admin.findOne({
+                _id: req.body.adminId
+            }).then(foundedAdmin => {
+                if (!foundedAdmin) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'No account found with this email!'
+                    })
+                }
+                if (foundedAdmin['role'] === "Admin") {
+                    return res.status(409).json({
+                        success: false,
+                        message: 'Account with this email address exists already!'
+                    })
+                } else if (foundedAdmin['role'] !== "Admin") {
+                    const otp = generateOTP(6);
+                    foundedAdmin.phoneOtp = otp;
+                    foundedAdmin.save((err, doc) => {
+                        if (!err) {
+                            sendOtpToMail(foundedAdmin, otp)
+                            // setTimeout(() => {
+                            //     foundedAdmin.phoneOtp = null;
+                            //     foundedAdmin.save();
+                            // }, 2*60*1000);
+                            return res.status(200).send({
+                                success: true,
+                                message: 'Otp sent to your email!',
+                                _id: foundedAdmin._id
+                            });
+
+                        }
+                        return next(err);
+                    });
+                }
+            }).catch(err => next(err));
+
+    } catch (err) {
+        return next(err);
+    }
+};
+
 
 module.exports.verifyOtp = async (req, res, next) => {
     try {
-      const { otp, adminId } = req.body;
-      const admin = await Admin.findById(adminId);
-      if (!admin) {
-        return res.status(404).send({
-            success: false,
-            message: 'No account found with this email!'
+        if(req.body.otp.trim().length < 6) {
+            return res.status(401).send({
+                success: false,
+                message: 'OTP must be of 6 characters'
+            });
+        }
+        const {
+            otp,
+            adminId
+        } = req.body;
+        const admin = await Admin.findById(adminId);
+        if (!admin) {
+            return res.status(404).send({
+                success: false,
+                message: 'No account found with this email!'
+            });
+        }
+
+        if (!verifyOtp(otp)) {
+            return res.status(401).send({
+                success: false,
+                message: 'Incorrect or Expired OTP'
+            });
+        }
+
+        admin.phoneOtp = null;
+        admin.role = "Admin";
+        await admin.save();
+
+        return res.status(201).json({
+            success: true,
+            message: "OTP verified successfully",
+            data: {
+                adminId: admin._id,
+            },
         });
-      }
-  
-      if (admin.phoneOtp !== otp) {
-        return res.status(401).send({
-            success: false,
-            message: 'Incorrect Otp'
-        });
-      }
-  
-      admin.phoneOtp = "";
-      admin.role = "Admin";
-      await admin.save();
-  
-      return res.status(201).json({
-        success: true,
-        message: "OTP verified successfully",
-        data: {
-          adminId: admin._id,
-        },
-      });
     } catch (error) {
-      next(error);
+        next(error);
     }
-  };
+};
 
 module.exports.registerEmp = async (req, res, next) => {
 
@@ -118,6 +195,7 @@ module.exports.registerEmp = async (req, res, next) => {
         }
 
         if (await userExists(req.body.email)) {
+
             return res.status(409).json({
                 success: false,
                 message: 'Account with this email address exists already!'

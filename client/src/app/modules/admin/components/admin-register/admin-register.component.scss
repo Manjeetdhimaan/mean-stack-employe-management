@@ -1,3 +1,17 @@
 .login-toolbar span {
     margin: auto;
  }
+
+ a{
+    cursor: pointer;
+ }
+
+ .send-otp-again {
+    border: none;
+    background: transparent;
+ }
+
+ button:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+ }

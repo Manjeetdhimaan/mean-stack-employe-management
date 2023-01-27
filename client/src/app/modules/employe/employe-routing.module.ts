@@ -8,7 +8,7 @@ import { EmployeeChangePasswordComponent } from './components/employee-change-pa
 import { HeaderComponent } from './components/core/header/header.component';
 import { ApplyLeavesComponent } from './components/leaves/apply-leaves/apply-leaves.component';
 import { LeavesComponent } from './components/leaves/leaves.component';
-import { RequestResetComponent } from './components/request-reset/request-reset.component';
+import { RequestResetComponent } from './components/reset/request-reset/request-reset.component';
 
 const routes: Routes = [
   {

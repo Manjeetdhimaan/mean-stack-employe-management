@@ -9,6 +9,7 @@ router.post('/register', ctrlAdmin.register);
 
 router.post('/authenticate', ctrlAdmin.authenticate);
 router.post('/verifyOtp', ctrlAdmin.verifyOtp);
+router.post('/resendOtp', ctrlAdmin.resendOtp);
 router.get('Profile', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.adminProfile);
 router.get('/getUsers/:page/:perPage', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUsers);
 router.get('/getUser/:id', jwtHelper.verifyJwtToken, jwtHelper.isAdmin, ctrlAdmin.getUser);

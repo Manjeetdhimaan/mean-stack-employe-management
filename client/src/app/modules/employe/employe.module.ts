@@ -35,8 +35,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import {DialogModule} from 'primeng/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CalendarModule } from 'primeng/calendar';
-import { RequestResetComponent } from './components/request-reset/request-reset.component';
-import { ResponseResetComponent } from './components/response-reset/response-reset.component';
+import { RequestResetComponent } from './components/reset/request-reset/request-reset.component';
+import { ResponseResetComponent } from './components/reset/response-reset/response-reset.component';
 ;
 @NgModule({
   declarations: [

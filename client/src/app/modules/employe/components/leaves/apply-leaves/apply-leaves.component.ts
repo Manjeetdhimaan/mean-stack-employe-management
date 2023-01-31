@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fade, slideUp } from 'src/app/shared/common/animations/animations';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -95,7 +96,8 @@ export class ApplyLeavesComponent implements OnInit {
       }
       formData.status = this.status;
       try {
-        this.userService.applyLeave(formData).subscribe((res) => {
+        const leavedata = Object.assign({}, formData, {domain: environment.domain})
+        this.userService.applyLeave(leavedata).subscribe((res) => {
           // this.showSucessMessage = true;
           this.router.navigate([`/employee/leaves/check`])
         },

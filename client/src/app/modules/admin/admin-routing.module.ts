@@ -20,37 +20,37 @@ const routes: Routes = [
       { path: '', redirectTo: 'employees', pathMatch: 'full' },
       {
         path: 'profile/edit',
-        component: EditAdminProfileComponent, data: { title: 'Edit Admin Profile - Younedia' }, canActivate: [AdminAuthGuard]
+        component: EditAdminProfileComponent, data: { title: 'Edit Admin Profile - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
       },
       {
         path: 'employees', canActivate: [AdminAuthGuard], children: [
           {
-            path: '', component: EmployeesComponent, data: { title: 'All Emloyees - Younedia' }, canActivate: [AdminAuthGuard]
+            path: '', component: EmployeesComponent, data: { title: 'All Emloyees - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
           },
           {
-            path: 'leaves/check', component: EmployeesLeavesComponent, data: { title: 'Check Leaves - Younedia' }, canActivate: [AdminAuthGuard]
+            path: 'leaves/check', component: EmployeesLeavesComponent, data: { title: 'All Employees Leaves - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
           },
           {
-            path: 'employee/:id', component: EmployeeTimelineComponent, data: { title: 'Employee Profile - Younedia' }, canActivate: [AdminAuthGuard]
+            path: 'employee/:id', component: EmployeeTimelineComponent, data: { title: 'Employee Profile - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
           },
           {
-            path: 'leaves/check/:id', component: EmployeeLeavesComponent, data: { title: 'Employee Profile - Younedia' }, canActivate: [AdminAuthGuard]
+            path: 'leaves/check/:id', component: EmployeeLeavesComponent, data: { title: 'Check Employee Leaves - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
           },
         ]
       },
       {
         path: 'settings', canActivate: [AdminAuthGuard], children: [
           {
-            path: 'change-password', component: AdminChangePasswordComponent, data: { title: 'Change Admin password - Younedia' }, canActivate: [AdminAuthGuard]
+            path: 'change-password', component: AdminChangePasswordComponent, data: { title: 'Change Admin password - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
           },
           
         ]
       },
       {
         path: 'notifications',
-        component: NotificationsComponent, data: { title: 'Notifications - Younedia' }, canActivate: [AdminAuthGuard]
+        component: NotificationsComponent, data: { title: 'Notifications - ADMIN PANEL' }, canActivate: [AdminAuthGuard]
       },
-      { path: '404', component: PageNotFoundComponent, data: { title: 'Page Not Found - Younedia' }, canActivate: [AdminAuthGuard] },
+      { path: '404', component: PageNotFoundComponent, data: { title: 'Page Not Found' }, canActivate: [AdminAuthGuard] },
       { path: '**', redirectTo: '404' }
     ],
 

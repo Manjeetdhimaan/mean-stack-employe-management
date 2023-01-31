@@ -14,8 +14,8 @@
             (click)="navigate('/admin/employees/leaves/check')">
             <mat-icon matPrefix>book</mat-icon> Check Leaves
           </a>
-          <a mat-button routerLinkActive="active" routerLink="/admin/notifications" (click)="navigate('/admin/notifications')">
-            <mat-icon matPrefix>notifications</mat-icon> Notifications
+          <a mat-button routerLinkActive="active" [matBadge]="notificationsCount" matBadgeColor="warn" [matBadgeHidden]="hidden" routerLink="/admin/notifications" (click)="navigate('/admin/notifications')">
+            <mat-icon matPrefix >notifications</mat-icon> Notifications
           </a>
          
           <a mat-button routerLinkActive="active" routerLink="/admin/settings/change-password" (click)="navigate('/admin/settings/change-password')">
@@ -51,8 +51,8 @@
         (click)="navigate('/admin/employees/leaves/check')">
         <mat-icon matPrefix class="material-icon">book</mat-icon> Check Leaves
       </a>
-        <a mat-list-item routerLinkActive="active" routerLink="/admin/notifications" (click)="navigate('/admin/notifications')" matBadge="2">
-          <mat-icon matPrefix class="material-icon">notifications</mat-icon> Notifications
+        <a mat-list-item routerLinkActive="active"  routerLink="/admin/notifications" (click)="navigate('/admin/notifications')">
+          <mat-icon [matBadge]="notificationsCount" matBadgeColor="warn" [matBadgeHidden]="hidden" matPrefix class="material-icon">notifications</mat-icon> Notifications
         </a>
         <a mat-list-item routerLinkActive="active" (click)="openDialog()">
           <mat-icon matPrefix class="material-icon">person_add</mat-icon> Add New

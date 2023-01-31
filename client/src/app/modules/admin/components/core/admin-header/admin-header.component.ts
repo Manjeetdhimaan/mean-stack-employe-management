@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { DiscardChangesComponent } from 'src/app/shared/components/ui-components/discard-changes/discard-changes.component';
+import { AdminNotificationsService } from '../../../services/admin-notifications.service';
 import { AdminService } from '../../../services/admin.service';
 import { AddEmployeeComponent } from '../../add-employee/add-employee.component';
 
@@ -18,12 +19,40 @@ export class AdminHeaderComponent implements OnInit {
   displayNavbar: boolean;
   @ViewChild('modalBackground') modalBackground: ElementRef;
 
-  constructor(private router: Router, private adminService: AdminService, public dialog: MatDialog) { }
+  constructor(private router: Router, private adminService: AdminService, public dialog: MatDialog, private adminNotificationsService: AdminNotificationsService) { }
 
   @ViewChild('sidenavContent') sidenavContent: ElementRef;
+  notificationsCount: number = 0
+  perPage: number = 100;
+  unReadNotification: number = 0;
+  notifications: any;
+
+  hidden: boolean = true;
+
 
   ngOnInit(): void {
     this.displayNavbar = true;
+    this.adminNotificationsService.fetchNotifications(1, this.perPage).subscribe(
+      (res: any) => {
+        this.notifications = res['notifications'];
+        this.notifications.map((notification: any) => {
+          if (notification.isRead === false) {
+            this.unReadNotification++
+          }
+        })
+        this.adminService.notifications.next(this.unReadNotification);
+      },
+      err => {
+        if (err.error.message === 'Admin not found') {
+          this.router.navigate(['admin/login']);
+        }
+      }
+    );
+
+    this.adminService.notifications.subscribe((count: number) => {
+      this.notificationsCount = count;
+      this.hidden = this.notificationsCount > 0 ? false : true;
+    })
   }
 
   toggleNavbar() {
@@ -66,7 +95,7 @@ export class AdminHeaderComponent implements OnInit {
       // document.body.style.overflow = 'auto';
       document.body.classList.remove('noscroll');
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
-    
+
     });
   }
 
@@ -80,7 +109,7 @@ export class AdminHeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.modalBackground.nativeElement.style.filter = 'blur(0)';
-     
+
       if (!result) {
         return;
       }

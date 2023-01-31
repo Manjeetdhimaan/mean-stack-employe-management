@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { AdminService } from '../../../services/admin.service';
 
 @Component({
@@ -53,7 +54,8 @@ export class EmployeeLeavesComponent implements OnInit {
     const leaveBody = {
       leaveId: selectedLeave.selectedLeave._id,
       status: selectedLeave.leaveStatus,
-      prevStatus: prevStatus
+      prevStatus: prevStatus,
+      domain: environment.domain
     }
 
     this.adminService.respondToLeaves(this.id, leaveBody).subscribe(

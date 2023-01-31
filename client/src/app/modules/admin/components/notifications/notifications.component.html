@@ -1,7 +1,16 @@
-<div class="tab-content heroes" >
-    <mat-card  *ngFor="let item of products" class="item-card hero">
-                <b>{{ item.productType }}</b>
-    </mat-card>
+<div class="tab-content heroes">
+  <mat-card *ngFor="let notification of notifications" class="item-card hero" [routerLink]="'/admin/employees/leaves/check/' +
+  notification.user['userId']">
+    <span class="notification-content">
+      <img class="img-url"
+        [src]="notification.user['imgUrl'] || userImageUrl" width="40"
+        (error)="pictNotLoading($event)"/>
+      <strong>{{ notification.user['fullName'] }} </strong>
+      {{ notification.title + ' ' + notification.context }}
+    </span>
+    <a class="details-btn" [routerLink]="'/admin/employees/leaves/check/' +
+      notification.user['userId']"> View Details</a>
+  </mat-card>
 </div>
 <ng-progress [thick]="true" ref="router"></ng-progress>
 

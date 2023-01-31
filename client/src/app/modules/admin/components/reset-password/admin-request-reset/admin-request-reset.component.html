@@ -1,0 +1,35 @@
+<main class="login login-page">
+    <div class="top-section">
+        <div class="center-content">
+            <div class="main-box">
+                
+                <h2 class="title">Forgot Password</h2>
+                
+                <!-- <ng-container *ngIf="errMsg">
+                    <app-auth-error [error]="errMsg" [success]="accountCreationMessage"></app-auth-error>
+                </ng-container> -->
+
+                <form [formGroup]="RequestResetForm" (ngSubmit)="RequestResetUser()" class="input-color">
+                    <p class="label">Email</p>
+                    <input formControlName="email" type="text" placeholder="Enter Email Address" class="input form-control">
+                  
+                    <div class="alert" *ngIf="errorMessage">
+                        {{errorMessage}} 
+                        <i class="pi pi-fw pi-trash" (click)="onClearMsg()"></i>
+                      </div>
+                    <div class="success" *ngIf="successMessage">
+                        {{successMessage}} 
+                        <i class="pi pi-fw pi-trash" (click)="onClearMsg()"></i>
+                      </div>
+                    <button class="continue-btn">RESET PASSWORD</button>
+                    <p class="normal text-center no-account">OR Login?
+                        <a routerLink="/admin/login" class="link"> Admin Login</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<ng-progress [thick]="true"></ng-progress>

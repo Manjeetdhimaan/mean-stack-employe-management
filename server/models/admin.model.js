@@ -28,6 +28,9 @@ const adminSchema = new mongoose.Schema({
         expires: '2m',
         index: true
     },
+    resettoken: {
+        type: String
+    },
     saltSecret: String
 });
 

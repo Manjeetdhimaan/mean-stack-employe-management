@@ -1,3 +1,24 @@
 .item-card{
     margin: 10px 0
   }
+
+  .details-btn {
+    color: #3f51b5;
+    padding: 2px 6px;
+    box-sizing: border-box;
+    // border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 3px 4px 6px #ccc;
+    float:right;
+  }
+
+  .notification-content{
+    display: inline-block;
+    max-width: 70%;
+    cursor: pointer;
+  }
+
+  .img-url {
+    border-radius: 50%;
+    margin-right: 6px;
+  }

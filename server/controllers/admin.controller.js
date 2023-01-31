@@ -4,10 +4,15 @@ const _ = require('lodash');
 
 const Admin = mongoose.model('Admin');
 const User = mongoose.model('User');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const AdminNotification = mongoose.model('AdminNotification');
+
 const {
     generateOTP,
     sendOtpToMail,
-    verifyOtp
+    verifyOtp,
+    sendLeaveResponseMail
 } = require("../util/otp.util");
 
 module.exports.register = async (req, res, next) => {
@@ -564,6 +569,8 @@ module.exports.respondToLeaves = (req, res, next) => {
                 message: 'You Are not authorized'
             });
         }
+        let to;
+        let from;
         User.findOne({
             _id: id
         }, (err, foundedObject) => {
@@ -586,8 +593,8 @@ module.exports.respondToLeaves = (req, res, next) => {
                     leaveArray.map(n => {
                         if (n['_id'] == req.body.leaveId) {
                             leaveArray[leaveArray.indexOf(n)].status = req.body.status
-                            let to = leaveArray[leaveArray.indexOf(n)].to;
-                            let from = leaveArray[leaveArray.indexOf(n)].from;
+                             to = leaveArray[leaveArray.indexOf(n)].to;
+                             from = leaveArray[leaveArray.indexOf(n)].from;
                             let diff = (to.getDate() - from.getDate()) + 1;
                             if (leaveArray[leaveArray.indexOf(n)].status == "Denied" && req.body.prevStatus !== "Pending") {
                                 if (foundedObject.appliedLeaves > 0) {
@@ -615,6 +622,13 @@ module.exports.respondToLeaves = (req, res, next) => {
                                 message: 'An error occured! Please try again after sometime'
                             });
                         } else {
+                            const leaveData= {
+                                from: String(from).slice(0,15),
+                                to: String(to).slice(0,15),
+                                domain: req.body.domain,
+                                response:req.body.status
+                            }
+                            sendLeaveResponseMail(foundedObject, leaveData)
                             return res.status(200).send({
                                 success: true,
                                 message: 'Leave ' + req.body.status,
@@ -794,3 +808,197 @@ module.exports.createPayroll = (req, res) => {
 
     }
 };
+
+module.exports.ResetPassword = async (req, res) => {
+    if (!req.body.email) {
+        return res.status(500).json({
+            message: 'Email is required'
+        });
+    }
+    const admin = await Admin.findOne({
+        email: req.body.email
+    });
+    if (!admin) {
+        return res.status(409).json({
+            message: 'Email does not exist'
+        });
+    }
+    // let resettoken = new passwordResetToken({
+    //     _userId: user._id,
+    //     resettoken: crypto.randomBytes(16).toString('hex')
+    // });
+    admin.resettoken = crypto.randomBytes(16).toString('hex')
+    admin.save(function (err) {
+        if (err) {
+            return res.status(500).send({
+                msg: err.message
+            });
+        }
+
+        Admin.find({
+            _id: admin._id,
+            resettoken: {
+                $ne: admin.resettoken
+            }
+        }).deleteOne().exec();
+        res.status(200).json({
+            message: 'Reset Password successfully.'
+        });
+        let transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            port: 465,
+            auth: {
+                user: process.env.MAILER_AUTH_EMAIL,
+                pass: process.env.MAILER_AUTH_PASS
+            }
+        });
+        // const resetLink = "<a href='" + req.body.domain + "/employee/response-reset-password/'><span>link</span></a>.<br>This is a <b>test</b> email."
+        let mailOptions = {
+            to: admin.email,
+            from: process.env.ADMIN_EMAIL,
+            subject: 'Employee Management Admin Password Reset',
+            html: `
+                <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
+                <p>Please click on the following link to complete the process.</p>
+                <div style="background-color:#3f51b5; color:white;
+                padding:24px 2px; max-width: 50%; text-align:center">
+                <a style="color:white; text-decoration:none;" href="${req.body.domain}/admin/response-reset-password/${admin.resettoken}">RESET PASSWORD</a></div>
+                
+                <p>'If you did not request this, please ignore this email and your password will remain unchanged.</p>
+            `,
+        }
+        transporter.sendMail(mailOptions, (err, info) => {})
+    })
+}
+
+
+module.exports.ValidatePasswordToken = async (req, res) => {
+    if (!req.body.resettoken) {
+        return res
+            .status(500)
+            .json({
+                message: 'Token is required'
+            });
+    }
+    const admin = await Admin.findOne({
+        resettoken: req.body.resettoken
+    });
+    if (!admin) {
+        return res
+            .status(409)
+            .json({
+                message: 'Invalid URL'
+            });
+    }
+    Admin.findOne({
+        _id: admin._id
+    }).then(() => {
+        res.status(200).json({
+            message: 'Token verified successfully.'
+        });
+    }).catch((err) => {
+        console.log(err)
+        return res.status(500).send({
+            msg: err.message
+        });
+    });
+}
+
+module.exports.NewPassword = async (req, res) => {
+    Admin.findOne({
+        resettoken: req.body.resettoken
+    }, function (err, admin, next) {
+        if (!admin) {
+            return res
+                .status(409)
+                .json({
+                    message: 'Account does not exist'
+                });
+        }
+        else if (!admin.resettoken) {
+            return res
+                .status(409)
+                .json({
+                    message: 'Token has expired'
+                });
+        }
+        if (req.body.newPassword !== req.body.confirmPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Paswords do no match'
+            });
+        }
+
+        admin.password = Admin.hashPassword(req.body.newPassword);
+        admin.resettoken = null;
+        admin.save(function (err) {
+            if (err) {
+                return res
+                    .status(400)
+                    .json({
+                        message: 'Password can not reset.'
+                    });
+            } else {
+                admin.resettoken = null;
+                return res
+                    .status(201)
+                    .json({
+                        message: 'Password reset successfully'
+                    });
+            }
+        });
+    })
+}
+
+module.exports.getNotifications = async (req, res, next) => {
+
+    let counts = 0;
+    try {
+        await AdminNotification.count({}, (err, countDOC) => {
+            counts = countDOC
+
+        }).clone()
+    } catch (err) {
+        return next(err);
+    }
+
+    // AdminNotification.updateMany({ "isRead": false}, [{$set: {"isRead": true}}], {upsert: false})
+   
+
+    try {
+        AdminNotification.find((err, notifications) => {
+                if (!notifications) {
+                    return res.status(404).json({
+                        status: false,
+                        message: 'No Notifications found.'
+                    });
+                } else {
+                    return res.status(200).json({
+                        status: true,
+                        notifications: notifications,
+                        counts: counts
+                    });
+                }
+            }).sort({_id: -1}).limit(req.params.perPage)
+            .skip(+req.params.perPage * +(req.params.page - 1))
+
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.markAsReadAllNotifications = async (req, res, next) => {
+    try {
+        await AdminNotification.updateMany(
+            { isRead: false }, 
+            { $set: { isRead: true } }
+        ).then(result => {
+            return res.status(200).json({
+                status: true,
+                message: "Success"
+            })
+        }).catch(err => next(err));
+    } catch (err) {
+        return next(err);
+    }
+}

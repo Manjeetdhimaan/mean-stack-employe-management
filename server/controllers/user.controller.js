@@ -3,9 +3,13 @@ const passport = require('passport');
 const _ = require('lodash');
 
 const User = mongoose.model('User');
+const AdminNotification = mongoose.model('AdminNotification');
 const fileHelper = require('../util/file');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const {
+    sendApplyLeaveMail
+} = require("../util/otp.util");
 
 
 module.exports.register = (req, res, next) => {
@@ -317,10 +321,36 @@ module.exports.applyLeave = async (req, res, next) => {
             _id: req._id
         });
         //check if there is an attendance entry
-
+        const fromDate = data.from.getDate() + '-' + +data.from.getMonth() + 1 + '-' + data.from.getFullYear();
+        const toDate = data.to.getDate() + '-' + +data.to.getMonth() + 1 + '-' + data.to.getFullYear();
         user.leaves.push(data)
-        await user.save();
-        res.status(200).json(user);
+        await user.save().then(() => {
+            let adminNotification = new AdminNotification();
+            adminNotification.title = "applied for leave";
+            adminNotification.context = "from " + fromDate + " to " + toDate;
+            adminNotification.isRead = false;
+            adminNotification.user = {
+                fullName: user.fullName,
+                email: user.email,
+                imgUrl: user.imagePath,
+                userId: user._id
+            };
+
+            adminNotification.save().then(() => {
+                const leaveData = {
+                    from: fromDate,
+                    to: toDate,
+                    domain: req.body.domain
+                }
+                sendApplyLeaveMail(user, leaveData);
+                return res.status(200).json({
+                    success: true,
+                    message: 'Applied for leave successfully'
+                });
+            }).catch(err => next(err));
+
+        }).catch(err => next(err));
+        
 
     } catch (error) {
         console.log('Cannot find User', error);
@@ -367,14 +397,14 @@ module.exports.ResetPassword = async (req, res) => {
             service: 'Gmail',
             port: 465,
             auth: {
-                user: 'manjeetdhimaan60@gmail.com',
-                pass: 'lpaqbtmffjmepylc'
+                user: process.env.MAILER_AUTH_EMAIL,
+                pass: process.env.MAILER_AUTH_PASS
             }
         });
         // const resetLink = "<a href='" + req.body.domain + "/employee/response-reset-password/'><span>link</span></a>.<br>This is a <b>test</b> email."
         let mailOptions = {
             to: user.email,
-            from: user.email,
+            from: process.env.ADMIN_EMAIL,
             subject: 'Employee Management Password Reset',
             html: `
                 <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.</p>
@@ -433,8 +463,7 @@ module.exports.NewPassword = async (req, res) => {
                 .json({
                     message: 'User does not exist'
                 });
-        }
-        else if (!user.resettoken) {
+        } else if (!user.resettoken) {
             return res
                 .status(409)
                 .json({

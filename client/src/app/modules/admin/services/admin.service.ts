@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Admin } from '../models/admin.model';
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -17,6 +18,8 @@ export class AdminService {
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
    
   constructor(private http: HttpClient) { }
+
+  notifications = new Subject<any>();
 
   //HttpMethods
   isAdmin: boolean = false;
@@ -56,6 +59,11 @@ export class AdminService {
     return this.http.get(environment.apiBaseUrl + `/admin/getUsers/${page}/${perPage}`);
   }
 
+  getNotifications(page: number, perPage: number) {
+    this.isAdmin = true;
+    return this.http.get(environment.apiBaseUrl + `/admin/notifications/${page}/${perPage}`);
+  }
+
 
   checkIn(id: string) {
     this.isAdmin = true;
@@ -65,6 +73,11 @@ export class AdminService {
   checkAllUsers(data: any) {
     this.isAdmin = true;
     return this.http.post(environment.apiBaseUrl + `/admin/checkAllUsers`, data);
+  }
+
+  markAsReadAllNotifications(data: any) {
+    this.isAdmin = true;
+    return this.http.post(environment.apiBaseUrl + `/admin/markAsReadAllNotifications`, data);
   }
 
   checkOut(id: string, exitType:string) {
@@ -100,6 +113,18 @@ export class AdminService {
   deleteEmp(empId: any){
     this.isAdmin = true;
     return this.http.delete(environment.apiBaseUrl+`/admin/deleteUser/${empId}`);
+  }
+
+  requestReset(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/admin/req-reset-password`, body);
+  }
+
+  newPassword(body:any){
+    return this.http.post(`${environment.apiBaseUrl}/admin/new-password`, body);
+  }
+
+  ValidatePasswordToken(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/admin/validate-password-token`, body);
   }
 
 

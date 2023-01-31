@@ -8,3 +8,4 @@ mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true }, (err) =>
 
 require('./user.model');
 require('./admin.model');
+require('./admin-notifications.modal');

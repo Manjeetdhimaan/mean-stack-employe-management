@@ -17,7 +17,7 @@
                     <input formControlName="email" type="text" class="input form-control">
                     <div class="password-row">
                         <p class="label">Password</p>
-                        <a class="label forgot" routerLink="/forget-password">Forgot your password?</a>
+                        <a class="label forgot" routerLink="/admin/reset-password">Forgot your password?</a>
                     </div>
 
                     <div class="password-wrapper  form-group">
@@ -42,7 +42,7 @@
                         {{serverErrorMessages}}
                         <i class="pi pi-fw pi-trash" (click)="onClearErrMsg()"></i>
                     </div>
-                    <button class="continue-btn">Continue as Admin</button>
+                    <button class="continue-btn">CONTINUE AS ADMIN</button>
                     <p class="normal text-center no-account">Are you an Employee?
                         <a routerLink="/employee/login" class="link"> Employee Login</a>
                     </p>

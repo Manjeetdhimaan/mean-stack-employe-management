@@ -29,10 +29,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogContent, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatBadgeModule } from '@angular/material/badge';
 import { PaginatorModule } from 'primeng/paginator';
+
 import { AdminRegisterComponent } from './components/admin-register/admin-register.component';
+import { AdminRequestResetComponent } from './components/reset-password/admin-request-reset/admin-request-reset.component';
+import { AdminResponseResetComponent } from './components/reset-password/admin-response-reset/admin-response-reset.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,9 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     NotificationsComponent,
     AdminChangePasswordComponent,
     AddEmployeeComponent,
-    AdminRegisterComponent
+    AdminRegisterComponent,
+    AdminRequestResetComponent,
+    AdminResponseResetComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +73,7 @@ import { AdminRegisterComponent } from './components/admin-register/admin-regist
     MatNativeDateModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatBadgeModule,
     PaginatorModule,
     NgProgressModule.withConfig({
       color: "green"

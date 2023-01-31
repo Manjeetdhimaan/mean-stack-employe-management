@@ -37,7 +37,7 @@ export class EmployeeTimelineComponent implements OnInit {
   }
   userDetails: any = {};
   profileImageUrl: any =
-    'https://g99plus.b-cdn.net/AEMR/assets/img/profileDefault.png';
+    'assets/img/profileDefault.png';
 
   attendance: any[];
   id: string;

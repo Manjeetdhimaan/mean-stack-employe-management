@@ -88,3 +88,68 @@ exports.fast2sms = async ({
         next(error);
     }
 };
+
+exports.sendApplyLeaveMail = async (user, leaveData) => {
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        auth: {
+            user: process.env.MAILER_AUTH_EMAIL,
+            pass: process.env.MAILER_AUTH_PASS
+        }
+    });
+    const mailOptions = {
+        to: process.env.ADMIN_EMAIL,
+        from: user.email,
+        subject: `Applied for Leave ( ${leaveData.domain} )`,
+        html: `<h2>${user.fullName.toUpperCase()} applied for leave from ( ${leaveData.from} ) to ( ${leaveData.to} ) :</h2> 
+        <h3>Employee Name :  ${user.fullName.toUpperCase()}</h3>
+        <h3>Employee Email :  ${user.email}</h3>
+        <div style="background-color:#3f51b5; color:white;
+        padding:24px 2px; max-width: 50%; text-align:center">
+        <a style="color:white; text-decoration:none;" href="${leaveData.domain}/admin/employees/leaves/check/${user._id}">RESPOND TO LEAVE</a></div>`
+    }
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err)
+            //   res.send({error: error})
+        } else {
+            return {
+                res: info.response,
+                message: 'Details sent successfully'
+            };
+        }
+    })
+}
+
+exports.sendLeaveResponseMail = async (user, leaveData) => {
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        auth: {
+            user: process.env.MAILER_AUTH_EMAIL,
+            pass: process.env.MAILER_AUTH_PASS
+        }
+    });
+    const mailOptions = {
+        to: user.email,
+        from: user.email,
+        subject: `Response from admin for Applied Leave ( ${leaveData.domain} )`,
+        html: `<h3>${user.fullName.toUpperCase()}, You applied for leave from ( ${leaveData.from} ) to ( ${leaveData.to} )</h3> 
+        <h2>Your leave is <b>${leaveData.response}</b> by Admin.</h2>
+        <div style="background-color:#3f51b5; color:white;
+        padding:24px 2px; max-width: 50%; text-align:center">
+        <a style="color:white; text-decoration:none;" href="${leaveData.domain}/employee/leaves/check">CHECK YOUR LEAVES HERE</a></div>`
+    }
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err)
+            //   res.send({error: error})
+        } else {
+            return {
+                res: info.response,
+                message: 'Details sent successfully'
+            };
+        }
+    })
+}

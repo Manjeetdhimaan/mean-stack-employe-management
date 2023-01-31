@@ -8,7 +8,7 @@
             "ADMIN_PHONE": "9878627074",
             "MAILER_AUTH_EMAIL":"manjeetdhimaan60@gmail.com",
             "MAILER_AUTH_PASS": "lpaqbtmffjmepylc",
-            "ADMIN_EMAIL":"manjeetdhimaan60@gmail.com",
+            "ADMIN_EMAIL":"manjeetdhimaan60@gmail.com, manjeetdhimaan80@gmail.com",
             "OTP_KEY": "manajdji"
         },
         "production": {
@@ -20,7 +20,7 @@
             "ADMIN_PHONE": "9878627074",
             "MAILER_AUTH_EMAIL":"manjeetdhimaan60@gmail.com",
             "MAILER_AUTH_PASS": "lpaqbtmffjmepylc",
-            "ADMIN_EMAIL":"manjeetdhimaan60@gmail.com",
+            "ADMIN_EMAIL":"manjeetdhimaan60@gmail.com, manjeetdhimaan80@gmail.com",
             "OTP_KEY": "manajdji"
     }
 }

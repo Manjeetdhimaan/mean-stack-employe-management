@@ -5,7 +5,6 @@
         <app-employee [cardBgImage]="user['imagePath']" [name]="user['fullName']" [designation]="user['service']"  (selectUserEmitter)="onNavigateToUserProfile(user)" [showActions]="showActions"></app-employee>
       </div>
     </div>
-<p-paginator *ngIf="totalUsers>perPage"  [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
+<p-paginator *ngIf="totalUsers>perPage"  [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="rowsPerPageOptions" (onPageChange)="paginate($event)"></p-paginator>
 </div>
 <div  *ngIf="users?.length<=0 && !isLoading">No Users Found </div>
-

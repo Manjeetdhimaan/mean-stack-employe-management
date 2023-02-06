@@ -100,7 +100,7 @@
                 <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="Female">Female
                 </mat-radio-button>
               </mat-radio-group>
-              <mat-error>
+              <mat-error *ngIf="(addCusForm.controls['gender'].hasError('required') && addCusForm.controls['gender'].touched) || (addCusForm.controls['gender'].hasError('required') && submit)">
                 Please provide gender
               </mat-error>
             </div>

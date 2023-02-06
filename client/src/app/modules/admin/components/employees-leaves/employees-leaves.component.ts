@@ -20,6 +20,7 @@ export class EmployeesLeavesComponent implements OnInit {
   totalUsers: number;
   perPage: number = 8;
   currentPage: number;
+  rowsPerPageOptions = [8, 16, 32];
 
   isLoading: boolean = false;
 
@@ -67,17 +68,18 @@ export class EmployeesLeavesComponent implements OnInit {
     // event.page = Index of the new page
     // event.pageCount = Total number of pages
     // this.indexOfRenderedItem = event.page;
-    window.scroll({
-      top: 0,
-      behavior: 'smooth'
-    })
+ 
     this.perPage = event.rows
     this.adminService.getUsers(event.page + 1, event.rows).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.totalUsers = res['counts'];
         this.users = res['users'];
-        this.router.navigateByUrl(`admin/employees/leaves/check?page=${event.page + 1}`)
+        this.router.navigateByUrl(`admin/employees/leaves/check?page=${event.page + 1}`);
+        window.scroll({
+          top: 0,
+          behavior: 'smooth'
+        })
       },
       err => {
         this.isLoading = false;

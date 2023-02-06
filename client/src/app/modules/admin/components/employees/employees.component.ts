@@ -51,7 +51,7 @@ import { AdminService } from '../../services/admin.service';
               </div>
             </div>
         </div>
-        <p-paginator *ngIf="totalUsers>perPage" [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="[4, 8, 16]" (onPageChange)="paginate($event)"></p-paginator>
+        <p-paginator *ngIf="totalUsers>perPage" [rows]="10" [totalRecords]="totalUsers" [rowsPerPageOptions]="rowsPerPageOptions" (onPageChange)="paginate($event)"></p-paginator>
       </div>
       <div  *ngIf="users?.length<=0 && !isLoading">No Users Found </div>
       <!-- <button type="button" (click)="checkAllUsers()"> Check in All</button> -->
@@ -77,6 +77,7 @@ export class EmployeesComponent implements OnInit {
   perPage: number = 8;
   currentPage: number;
   isLoading: boolean = false;
+  rowsPerPageOptions = [8, 16, 32];
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -122,17 +123,18 @@ export class EmployeesComponent implements OnInit {
     // event.page = Index of the new page
     // event.pageCount = Total number of pages
     // this.indexOfRenderedItem = event.page;
-    window.scroll({
-      top: 0,
-      behavior: 'smooth'
-    })
+   
     this.perPage = event.rows
     this.adminService.getUsers(event.page + 1, event.rows).subscribe(
       (res: any) => {
         this.isLoading = false;
         this.totalUsers = res['counts'];
         this.users = res['users'];
-        this.router.navigateByUrl(`admin/employees?page=${event.page + 1}`)
+        this.router.navigateByUrl(`admin/employees?page=${event.page + 1}`);
+        window.scroll({
+          top: 0,
+          behavior: 'smooth'
+        })
       },
       err => {
         this.isLoading = false;

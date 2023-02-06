@@ -17,6 +17,7 @@ export class AddEmployeeComponent implements OnInit {
   public fname: string = `Ramesh`;
   public lname: string = `Suresh`;
   public addCusForm: FormGroup;
+  submit: boolean= false;
   wasFormChanged = false;
 
   constructor(
@@ -107,6 +108,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onAddEmployee() {
+    this.submit = true;
     if (!this.addCusForm.valid) {
       return;
     }

@@ -18,7 +18,7 @@ export class EmployeesLeavesComponent implements OnInit {
   showActions: boolean = false;
 
   totalUsers: number;
-  perPage: number = 4;
+  perPage: number = 8;
   currentPage: number;
 
   isLoading: boolean = false;

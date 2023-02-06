@@ -74,7 +74,7 @@ export class EmployeesComponent implements OnInit {
 
   users: any;
   totalUsers: number;
-  perPage: number = 4;
+  perPage: number = 8;
   currentPage: number;
   isLoading: boolean = false;
 
